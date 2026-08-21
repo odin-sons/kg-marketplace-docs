@@ -1,0 +1,84 @@
+name: Build and deploy docs site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/cache@v4
+        with:
+          path: .cache
+          # Caches fetched/optimized remote images (screenshots embedded in the
+          # docs) across builds — without this every push would re-download
+          # and re-encode every image from scratch.
+          key: eleventy-img-${{ hashFiles('**/*.md') }}
+          restore-keys: eleventy-img-
+      - run: npm ci
+      # Cloudflare Pages serves at the canonical domain's root — default
+      # pathPrefix ("/"), no env override needed.
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: _site
+      # GitHub Pages serves this repo as a project page under /kg-marketplace-docs/,
+      # not at its domain's root — same source, same commit, rebuilt with a
+      # pathPrefix so every href/src in the output resolves under that subpath.
+      # (See eleventy.config.js / styles/site.css comments for why this can't
+      # just be one shared build.)
+      - run: npm run build
+        env:
+          ELEVENTY_PATH_PREFIX: /kg-marketplace-docs/
+          ELEVENTY_OUTPUT_DIR: _site-ghpages
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-ghpages
+          path: _site-ghpages
+
+  deploy-github-pages:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-ghpages
+          path: _site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4
+        id: deployment
+
+  deploy-cloudflare-pages:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: _site
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy _site --project-name=marketplace

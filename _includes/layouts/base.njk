@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} — KG Marketplace Docs</title>
+  <script>
+    // Must run inline, synchronously, before the stylesheet below paints
+    // anything — an external file would add a network round trip on the
+    // critical path and still risk a flash of the wrong theme before it
+    // loads. "auto" (the default) sets nothing here and just leaves
+    // prefers-color-scheme in charge, same as if this script never ran.
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved === "light" || saved === "dark") {
+          document.documentElement.setAttribute("data-theme", saved);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/png" href="/icons/icon-16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/icons/icon-32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0c0c0c">
+  <link rel="stylesheet" href="/styles/site.css">
+</head>
+<body>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+    <span class="sr-only">Menu</span>
+    <span aria-hidden="true">☰</span>
+  </button>
+
+  <nav id="site-nav" class="site-nav">
+    <a class="site-nav__home" href="/">
+      <img class="site-nav__logo" src="/images/marketplace-logo.png" alt="Marketplace and Server NPCs logo" eleventy:widths="160,320" sizes="160px">
+      <span class="site-nav__home-text">Marketplace &amp; Server NPCs</span>
+    </a>
+    <div class="site-nav__version">
+      <label class="sr-only" for="version-switcher">Documentation version</label>
+      <select id="version-switcher" class="site-nav__version-select" data-own-version="{{ currentVersion }}">
+        {% for v in versions %}
+        <option value="{{ v.url }}"{% if v.current %} selected{% endif %}>v{{ v.version }}{% if v.current %} (current){% endif %}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="site-nav__theme">
+      <label class="sr-only" for="theme-switcher">Theme</label>
+      <select id="theme-switcher" class="site-nav__theme-select">
+        <option value="auto">Auto theme</option>
+        <option value="light">Light theme</option>
+        <option value="dark">Dark theme</option>
+      </select>
+    </div>
+    <div class="site-nav__group">
+      <ul>
+        <li><a href="/"{% if page.url == "/" %} aria-current="page"{% endif %}><span class="site-nav__link-text">Introduction</span></a></li>
+      </ul>
+    </div>
+    {% for group in nav %}
+    <div class="site-nav__group">
+      <p class="site-nav__group-title" role="heading" aria-level="2">
+        <span class="site-nav__group-title-main">{{ group.title }}</span>
+        {% if group.subtitle %}<span class="site-nav__group-title-sub">{{ group.subtitle }}</span>{% endif %}
+      </p>
+      <ul>
+        {% for item in group.items %}
+        <li{% if item.children %} class="site-nav__item--has-children"{% endif %}>
+          <a href="{{ item.href }}"{% if item.href == page.url %} aria-current="page"{% endif %}{% if item.external %} target="_blank" rel="noopener noreferrer"{% endif %}><span class="site-nav__link-text">{{ item.title }}</span>{% if item.external %}<span class="site-nav__external" aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span>{% endif %}</a>
+          {% if item.children %}
+          <ul class="site-nav__children">
+            {% for child in item.children %}
+            <li><a href="{{ child.href }}"{% if child.href == page.url %} aria-current="page"{% endif %}><span class="site-nav__link-text">{{ child.title }}</span></a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </nav>
+
+  <main class="site-main">
+    {{ content | safe }}
+  </main>
+
+  <script src="/scripts/nav-toggle.js"></script>
+  <script src="/scripts/nav-collapse.js"></script>
+  <script src="/scripts/image-lightbox.js"></script>
+  <script src="/scripts/image-rail.js"></script>
+  <script src="/scripts/version-switcher.js"></script>
+  <script src="/scripts/theme-switcher.js"></script>
+  <script src="/scripts/suggest-correction.js"></script>
+  <script src="/scripts/anchor-highlight.js"></script>
+  <script src="/scripts/page-toc.js"></script>
+</body>
+</html>

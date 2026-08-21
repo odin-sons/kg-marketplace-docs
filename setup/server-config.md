@@ -30,7 +30,7 @@ This example: interest pays out every 6 hours at 2%, players can list 25 items w
 | `BankerIncomeMultiplier` | `0` | Interest rate per payout. |
 | `BankerVIPIncomeMultiplier` | `0` | A separate, usually higher, interest rate for VIP players. |
 | `BankerInterestItems` | `All` | Which banked items actually earn interest. |
-| `FeedbackWebhookLink` | placeholder | Discord webhook for the Feedback NPC. |
+| <a id="feedback"></a>`FeedbackWebhookLink` | placeholder | Discord webhook for the Feedback NPC. |
 | `OrConditionSeparator` | `\|\|` | The symbol used for "OR" in [conditions](../concepts/conditions.md) — change this if `\|\|` conflicts with something else you use, though the default works fine for almost everyone. |
 | `ItemMarketLimit` | `15` | Maximum marketplace listing slots per player. |
 | `BlockedPlayers` | — | Player IDs blocked from the marketplace. |
@@ -44,7 +44,7 @@ This example: interest pays out every 6 hours at 2%, players can list 25 items w
 | `MaxAcceptedQuests` | `7` | Maximum active quests per player. |
 | `AllowKillQuestsInParty` | `true` | Whether a party member's kills count toward your Kill quests. |
 | `EnableKGChat` | `true` | Turns the custom chat window on or off. |
-| `MailPostRecipe` | `SwordCheat, 1` | What it costs to craft a mailbox — `item, amount`. |
+| <a id="mail"></a>`MailPostRecipe` | `SwordCheat, 1` | What it costs to craft a mailbox — `item, amount`. |
 | `MailPostWaitTime` | `5` | Minutes before sent mail can be picked up. |
 | `MailPostExcludeItems` | — | Items that cannot be mailed. |
 | `PieceSaverRecipe` | `SwordCheat, 1` | What it costs to craft a Piece Saver Crystal. |

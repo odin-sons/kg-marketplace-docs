@@ -16,7 +16,7 @@ Item: Coins, 50 | Skill_EXP: Bows, 20
 0
 ```
 
-![Adding the quest to its database file](https://i.imgur.com/ejk2NIl.png)
+![Adding the quest to its database file](../images/screenshots/ejk2NIl.png)
 
 What this says:
 - Quest type `Kill`, targeting `Wolf`, 5 of them, requiring at least star level `1` — see the level note on [Quests](../configs/quests.md#the-kill-level-field).
@@ -35,7 +35,7 @@ Quests are not attached directly to an NPC — you assign them through a profile
 wolf_pelts
 ```
 
-![Adding the quest to a profile](https://i.imgur.com/rhuUwUh.png)
+![Adding the quest to a profile](../images/screenshots/rhuUwUh.png)
 
 Any NPC set to profile `village_elder` will now offer this quest. Full reference: [Quest Profiles](../configs/quest-profiles.md).
 
@@ -47,7 +47,7 @@ With admin access, open the build menu and select the Marketplace Hammer. Place 
 - **Profile**: `village_elder`
 - Optionally set a **Name Override**, a **Dialogue**, and appearance settings.
 
-![Assigning the profile to the NPC](https://i.imgur.com/ba3gJUh.png)
+![Assigning the profile to the NPC](../images/screenshots/ba3gJUh.png)
 
 Full reference: [NPC system](../npc/npc-system.md), [Marketplace Hammer](../npc/marketplace-hammer.md).
 
@@ -59,19 +59,19 @@ Both files apply automatically within a moment of saving — no restart needed (
 
 Once accepted, the target creature gets a marker so the player can find it:
 
-![Quest target marker on a wolf](https://i.imgur.com/nVKKAud.png)
+![Quest target marker on a wolf](../images/screenshots/nVKKAud.png)
 
-![A closer look at the marker](https://i.imgur.com/GQKiXZG.png)
+![A closer look at the marker](../images/screenshots/GQKiXZG.png)
 
 Progress updates automatically as kills come in — the journal tracks how many of the required kills are done so far:
 
-![Kill progress tracked in the quest journal](https://i.imgur.com/RIOapFp.png)
+![Kill progress tracked in the quest journal](../images/screenshots/RIOapFp.png)
 
 Turning the quest in at the NPC hands out the reward:
 
-![Turning in a completed quest](https://i.imgur.com/5qZiacv.png)
+![Turning in a completed quest](../images/screenshots/5qZiacv.png)
 
-![Reward received](https://i.imgur.com/tlMY7jW.png)
+![Reward received](../images/screenshots/tlMY7jW.png)
 
 ### If the quest does not appear
 

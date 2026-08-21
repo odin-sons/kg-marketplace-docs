@@ -1,6 +1,6 @@
 # Marketplace Hammer
 
-![Marketplace Hammer in the build menu](https://i.imgur.com/iWZO1dp.png)
+![Marketplace Hammer in the build menu](../images/screenshots/iWZO1dp.png)
 
 The build-mode tool for placing and editing NPCs — the main way you create content for the [NPC system](npc-system.md). Available only to players with admin access (see `OverrideDebug` in [Server config](../setup/server-config.md)).
 
@@ -11,7 +11,7 @@ The build-mode tool for placing and editing NPCs — the main way you create con
 
    | Main tab | Fashion tab |
    |---|---|
-   | ![Main tab](https://i.imgur.com/jPPhADl.png) | ![Fashion tab](https://i.imgur.com/gyJCzsG.png) |
+   | ![Main tab](../images/screenshots/jPPhADl.png) | ![Fashion tab](../images/screenshots/gyJCzsG.png) |
 3. To record a patrol route, drop waypoints while holding the Hammer, then confirm — the route data is copied for you, ready to paste into a `SetNPCPatrol` command.
 4. To reuse this exact NPC elsewhere, use the Hammer's save option — this writes a template file and shows a confirmation message reminding you to run `mreloadnpcs` (see [Saved NPCs](../configs/saved-npcs.md)).
 

@@ -1,6 +1,6 @@
 # Console commands
 
-Type these into the in-game console (usually the F5 key). Most require admin access — a Steam ID listed in `OverrideDebug` (see [Server config](server-config.md)).
+Type these into the in-game console (usually the F5 key). Most require admin access — a Steam ID listed in `OverrideDebug` (see [Server config](server-config.md)) — but not all: anything marked "no" in the table below works for any player, admin or not.
 
 | Command | Arguments | Needs admin access? | What it does |
 |---|---|---|---|

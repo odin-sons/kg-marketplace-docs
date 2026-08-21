@@ -25,7 +25,7 @@ Every NPC also has an optional **Dialogue** field, separate from its Type — an
 
 ## Core identity settings
 
-![Main NPC settings panel](https://i.imgur.com/FYmh7jk.png)
+![Main NPC settings panel](../images/screenshots/FYmh7jk.png)
 
 | Setting | What it does |
 |---|---|
@@ -38,7 +38,7 @@ Every NPC also has an optional **Dialogue** field, separate from its Type — an
 
 ## Appearance settings
 
-![Fashion panel](https://i.imgur.com/9QHD0cX.png)
+![Fashion panel](../images/screenshots/9QHD0cX.png)
 
 Set through the NPC's fashion panel: left/right hand items, helmet, chest, legs, cape, hair, hair color, beard, beard color, skin color, model scale, hidden-item toggles, greeting/farewell text and animations, crafting animation, interact sound and animation, text size/height, and periodic idle animation/sound.
 

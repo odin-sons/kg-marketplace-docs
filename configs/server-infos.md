@@ -4,7 +4,7 @@
 
 Free-text info/rules/announcement pages shown by an Info NPC. Unlike most other config formats, this one is plain prose — write whatever text you want, and it displays as written (rich text formatting works too). Once you have written a profile here, put its name in an `Info`-type NPC's **Profile** field to make it live — see [Core identity settings](../npc/npc-system.md#core-identity-settings). It can also be reached remotely, without a nearby NPC, by listing it under `InfoProfiles` in [Distanced UI](distanced-ui.md).
 
-![Server Info page in-game](https://i.imgur.com/cwOiOsO.png)
+![Server Info page in-game](../images/screenshots/cwOiOsO.png)
 
 ## Example
 
@@ -31,5 +31,6 @@ Text written before any `[Section]` header goes to the `default` profile automat
 
 ## Related
 
+- [Profiles](../concepts/profiles.md) — how an info profile name groups entries across files.
 - [Prefabs and text markup](../concepts/prefabs-and-assets.md) — the `<image=>` tag.
 - [Distanced UI](distanced-ui.md) — remote access without a nearby NPC.

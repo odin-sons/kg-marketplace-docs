@@ -43,7 +43,7 @@ And what accepting a quest looks like from the NPC's side and the player's own j
 
 | NPC's quest offer | Player's quest journal |
 |---|---|
-| ![Quest shown at the NPC](https://i.imgur.com/c4FHGqG.png) | ![Quest journal after accepting a quest](https://i.imgur.com/lleU3rp.png) |
+| ![Quest shown at the NPC](../images/screenshots/c4FHGqG.png) | ![Quest journal after accepting a quest](../images/screenshots/lleU3rp.png) |
 
 ## A complete example, explained line by line
 
@@ -93,7 +93,7 @@ Most quest types show a marker on their target in the world, and can be toggled 
 
 | `Build` marker | `Harvest`/`Collect` marker | `Talk` marker |
 |---|---|---|
-| ![Build quest marker](https://i.imgur.com/AGJ4bGI.png) | ![Harvest and Collect quest marker](https://i.imgur.com/Rr3SMac.png) | ![Talk quest marker](https://i.imgur.com/Ejrhf5u.png) |
+| ![Build quest marker](../images/screenshots/AGJ4bGI.png) | ![Harvest and Collect quest marker](../images/screenshots/Rr3SMac.png) | ![Talk quest marker](../images/screenshots/Ejrhf5u.png) |
 
 ### The target line, by type
 
@@ -184,13 +184,13 @@ The level field on a `Kill` target is the minimum star rating the creature must 
 
 For example, changing a target line from `Wolf, 10` to `Wolf, 10, 2`:
 
-![Editing the target line to add a minimum level](https://i.imgur.com/hgInMiO.png)
+![Editing the target line to add a minimum level](../images/screenshots/hgInMiO.png)
 
 ...changes the in-game requirement so only 2-star-and-above wolves count, shown by the marker over qualifying wolves:
 
 | Target updated | Marker on a qualifying wolf |
 |---|---|
-| ![Quest target changed in-game](https://i.imgur.com/ZjP5S3z.png) | ![Marker only shows on 2-star-and-above wolves](https://i.imgur.com/r47i7qA.png) |
+| ![Quest target changed in-game](../images/screenshots/ZjP5S3z.png) | ![Marker only shows on 2-star-and-above wolves](../images/screenshots/r47i7qA.png) |
 
 **`KillAndCollect` works differently — its level field is one *higher* than the effective star minimum.** Writing `2` there requires only a 1-star-and-above creature, not 2-star; writing `1` requires no star at all. If you want a specific minimum star count on a `KillAndCollect` target, write that number plus one. This asymmetry is easy to get wrong, so double-check with a test kill if the exact star requirement matters for that quest.
 

@@ -1,8 +1,8 @@
-# Related tooling
+# VS Code extensions
 
-Third-party tools that make working with this mod's config files easier. This list will grow over time — if you build something that helps other admins write quests, dialogues, or zones for this mod, it belongs here.
+Extensions that make working with this mod's config files easier inside VS Code. This list will grow over time — if you build one that helps other admins write quests, dialogues, or zones for this mod, it belongs here.
 
-## Syntax highlighting for VS Code
+## Syntax highlighting
 
 **[KG Marketplace Syntax](https://github.com/odin-sons/kg-marketplace-syntax)** — a Visual Studio Code extension that adds syntax highlighting to `.cfg` config files for this mod.
 
@@ -18,10 +18,7 @@ It recognizes and colors:
 
 **Install:** open the Extensions panel in VS Code (Ctrl+Shift+X), search for "KG Marketplace Syntax", and click Install. Once installed, it activates automatically for any `.cfg` file you open. Full setup notes are in the extension's own README, linked above.
 
-## Coming later
-
-Tools for AI-assisted config generation, and possibly an MCP server built around this documentation, are planned additions to this page.
-
 ## Related
 
+- [Coming soon](coming-soon.md) — tools planned but not built yet, including AI-assisted config generation.
 - [Config file syntax](../concepts/config-syntax.md) — the format this extension highlights.

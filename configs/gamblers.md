@@ -42,6 +42,7 @@ Only the **last** data line under a `[profile]` header is used — writing two s
 
 ## Related
 
+- [Profiles](../concepts/profiles.md) — how a gambler profile name groups entries across files.
 - [Server config](../setup/server-config.md) — `GamblerEnableWinNotifications`.
 - [Distanced UI](distanced-ui.md) — remote access without a nearby NPC.
 - [Shop and economy guide](../guides/shop-and-economy.md).

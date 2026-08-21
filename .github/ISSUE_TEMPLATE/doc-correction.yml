@@ -1,0 +1,46 @@
+name: Documentation correction
+description: Report something wrong, outdated, or unclear on a page
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep this documentation accurate. If you selected text on a page and used "Suggest a correction," the page and quoted text below are already filled in for you.
+  - type: input
+    id: page-url
+    attributes:
+      label: Page
+      description: The page this is about
+      placeholder: https://.../configs/quests/
+    validations:
+      required: true
+  - type: textarea
+    id: selected-text
+    attributes:
+      label: Text in question
+      description: The exact text that's wrong, outdated, or unclear
+      render: markdown
+    validations:
+      required: false
+  - type: textarea
+    id: whats-wrong
+    attributes:
+      label: What's wrong
+      description: What's incorrect, outdated, or confusing about it
+    validations:
+      required: true
+  - type: textarea
+    id: suggested-fix
+    attributes:
+      label: Suggested fix
+      description: If you know what it should say instead, put it here (optional)
+    validations:
+      required: false
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod version
+      description: Which mod version you're running, if relevant
+    validations:
+      required: false

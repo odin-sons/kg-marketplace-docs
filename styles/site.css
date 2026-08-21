@@ -1,0 +1,786 @@
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --bg-nav: #f6f7f9;
+  --text: #1c1e21;
+  --text-muted: #5b6270;
+  --border: #e2e5ea;
+  --link: #1a5fb4;
+  --link-visited: #6b3fa0;
+  --code-bg: #f0f1f3;
+  --highlight-flash: rgba(26, 95, 180, 0.18);
+  --nav-width: 280px;
+  --max-content-width: 860px;
+  --rail-width: 400px;
+  --rail-gap: 30px;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* Three states: system default (no attribute, follows prefers-color-scheme),
+   or an explicit choice saved by scripts/theme-switcher.js and applied by
+   the blocking inline script in base.njk's <head> (before first paint, so
+   there's no flash of the wrong theme) via `data-theme="light"/"dark"` on
+   <html>. The media-query block is guarded with :not([data-theme="light"])
+   so an explicit light choice isn't overridden by a dark system preference;
+   the explicit [data-theme="dark"] block below covers the opposite case
+   (dark chosen on a light-preferring system) since a plain :root rule alone
+   can't out-rank a matched @media block on specificity. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #15171a;
+    --bg-nav: #1b1e22;
+    --text: #e7e9ec;
+    --text-muted: #9aa1ad;
+    --border: #2c2f34;
+    --link: #6fa8f5;
+    --link-visited: #b294e0;
+    --code-bg: #202327;
+    --highlight-flash: rgba(111, 168, 245, 0.22);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #15171a;
+  --bg-nav: #1b1e22;
+  --text: #e7e9ec;
+  --text-muted: #9aa1ad;
+  --border: #2c2f34;
+  --link: #6fa8f5;
+  --link-visited: #b294e0;
+  --highlight-flash: rgba(111, 168, 245, 0.22);
+  --code-bg: #202327;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+code, pre {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+
+code {
+  background: var(--code-bg);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 1em;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.doc img {
+  cursor: zoom-in;
+  transition: box-shadow 0.15s ease;
+}
+
+.doc img:hover,
+.doc img:focus-visible {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+body.lightbox-open {
+  overflow: hidden;
+}
+
+/* Once there's room for the content column *and* a rail at least half its
+   width beside it (280px nav + 860px column + 400px rail + 30px gap),
+   scripts/image-rail.js moves every standalone image (never a table-paired
+   side-by-side screenshot — `.doc > p:has(> picture:only-child)` excludes
+   those, they stay put) out of the text into `.image-rail`, a single
+   absolutely-positioned column beside it. Below this width the column
+   doesn't have that room, so the script leaves images exactly where the
+   markdown puts them, full block-level width, no special positioning.
+
+   The images are real `position: sticky` here — not JS-tracked `top`
+   values — for smooth, compositor-driven scrolling with zero per-frame
+   script work. A sticky element's stuck range is bounded by its own
+   containing block, i.e. its immediate parent — not by "the next sibling"
+   in some shared ancestor. So each image gets wrapped (by the script) in
+   its own `.image-rail__item`, sized via `min-height` to exactly the
+   vertical span of the page section it belongs to; the sticky image lives
+   *inside* that wrapper. That per-item boundary is what makes the browser
+   release one image and activate the next as scroll crosses each
+   wrapper's own edge — with everything sharing one `.image-rail` parent
+   instead, every image would happily stay stuck at once for the rest of
+   the page. */
+@media (min-width: 1570px) {
+  .doc {
+    position: relative;
+  }
+
+  .image-rail {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: var(--rail-gap);
+    width: var(--rail-width);
+  }
+
+  .image-rail__item > p {
+    position: sticky;
+    top: 2.5rem;
+    margin: 0;
+  }
+
+  .image-rail picture,
+  .image-rail img {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+  }
+
+  /* drop-shadow (a filter) instead of the box-shadow .doc img normally
+     gets on hover — box-shadow reads as a hard rectangular edge here,
+     against the sticky rail's own edge-to-edge stacking; drop-shadow
+     traces the image's actual (rounded) outline instead. */
+  .image-rail img {
+    transition: filter 0.15s ease;
+  }
+
+  .image-rail img:hover,
+  .image-rail img:focus-visible {
+    box-shadow: none;
+    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.25));
+  }
+}
+
+.suggest-correction {
+  position: absolute;
+  transform: translateX(-50%);
+  z-index: 50;
+  padding: 0.5rem 0.85rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.suggest-correction:hover {
+  opacity: 0.88;
+}
+
+.suggest-correction[hidden] {
+  display: none;
+}
+
+/* scripts/page-toc.js builds this from the current page's own h2/h3s (every
+   heading already has an id from IdAttributePlugin) — a thin tick per
+   heading, right edge, vertically centered on the viewport regardless of
+   scroll position. Collapsed, it's just the ticks; hovering (or focusing,
+   for keyboard users) expands every label into a readable panel at once —
+   deliberately floating on top of whatever's underneath, images included,
+   rather than trying to dodge the image rail that lives in this same
+   right-hand area on wide screens. Whichever section is actually in view
+   gets a brighter, wider tick and a bolder label, via .is-active. */
+.page-toc {
+  position: fixed;
+  top: 50%;
+  right: 1.25rem;
+  transform: translateY(-50%);
+  z-index: 45;
+}
+
+/* One shared panel background for the whole list, like a normal dropdown
+   menu — not a separate pill behind each row. It's transparent/borderless
+   collapsed (so it doesn't outline the bare ticks) and only becomes a real
+   card on hover/focus-within, sized to fit automatically since the list's
+   own box already shrinks to its widest row (the shrink-to-fit width from
+   align-items: flex-end below). */
+.page-toc__list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.page-toc:hover .page-toc__list,
+.page-toc:focus-within .page-toc__list {
+  background: var(--bg-nav);
+  border-color: var(--border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* A real flex row, not a stack of independently absolutely-positioned
+   labels — that earlier approach pinned each label to the vertical center
+   of its own 2px-tall tick, and since the label's actual text is much
+   taller than the gap between ticks, neighboring labels overlapped each
+   other as soon as more than a couple were open at once. Growing each
+   row's own width (and letting its height follow the label's line-height)
+   keeps every row inside normal document flow, so the column naturally
+   pushes later rows down as earlier ones grow — the browser's ordinary
+   no-overlap guarantee for block/flex layout, instead of trying to
+   recreate it by hand with fixed coordinates. */
+.page-toc__link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.page-toc__link:hover,
+.page-toc__link:focus-visible {
+  background: var(--border);
+}
+
+.page-toc__tick {
+  flex: 0 0 auto;
+  display: block;
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--text-muted);
+  opacity: 0.55;
+  transition: background 0.15s ease, opacity 0.15s ease, width 0.15s ease;
+}
+
+.page-toc__item--h3 .page-toc__tick {
+  width: 8px;
+}
+
+.page-toc__label {
+  flex: 0 1 auto;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.3;
+  transition: max-width 0.2s ease, opacity 0.15s ease;
+}
+
+.page-toc:hover .page-toc__label,
+.page-toc:focus-within .page-toc__label {
+  max-width: 260px;
+  opacity: 1;
+}
+
+.page-toc__link.is-active .page-toc__tick {
+  background: var(--link);
+  opacity: 1;
+  width: 22px;
+}
+
+.page-toc__item--h3 .page-toc__link.is-active .page-toc__tick {
+  width: 14px;
+}
+
+.page-toc__link.is-active .page-toc__label {
+  color: var(--link);
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-toc__tick,
+  .page-toc__label {
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .page-toc {
+    display: none;
+  }
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 11, 13, 0.82);
+}
+
+.lightbox__stage {
+  position: relative;
+  max-width: 92vw;
+  max-height: 92vh;
+  display: flex;
+}
+
+.lightbox__img {
+  position: relative;
+  max-width: 92vw;
+  max-height: 92vh;
+  width: auto;
+  height: auto;
+  border-radius: 6px;
+  filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
+  display: block;
+}
+
+.lightbox__close {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lightbox__close:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doc img {
+    transition: none;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+  display: block;
+  overflow-x: auto;
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.5em 0.75em;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: var(--bg-nav);
+}
+
+/* scripts/anchor-highlight.js adds this to whatever #id was jumped to (a
+   heading, or — for a single row inside a much bigger table, like a
+   specific setting in Server config — the <tr> around a hand-placed empty
+   <a id="..."> in that row's first cell) after scrolling it into view, so
+   the destination is obvious even when the URL bar's own jump would have
+   been easy to miss. */
+.anchor-highlight {
+  animation: anchor-highlight-flash 2.2s ease-out;
+}
+
+@keyframes anchor-highlight-flash {
+  0%, 15% {
+    background: var(--highlight-flash);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anchor-highlight {
+    animation: none;
+    background: var(--highlight-flash);
+  }
+}
+
+blockquote {
+  margin: 1em 0;
+  padding: 0.25em 1em;
+  border-left: 3px solid var(--border);
+  color: var(--text-muted);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.nav-toggle {
+  display: none;
+}
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--nav-width);
+  overflow-y: auto;
+  background: var(--bg-nav);
+  border-right: 1px solid var(--border);
+  padding: 1.25rem 1rem 3rem;
+}
+
+.site-nav__home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: center;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.site-nav__logo {
+  width: 160px;
+  height: 160px;
+  border-radius: 0;
+}
+
+.site-nav__home-text {
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+.site-nav__version {
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+.site-nav__theme {
+  margin: 0.5rem 0 1.5rem;
+  text-align: center;
+}
+
+.site-nav__version-select,
+.site-nav__theme-select {
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  background: var(--bg-nav);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  max-width: 100%;
+}
+
+.site-nav__version-select:hover,
+.site-nav__theme-select:hover {
+  border-color: var(--text-muted);
+}
+
+.site-nav__group {
+  border-top: 1px solid var(--border);
+  padding-top: 0.85rem;
+  margin-top: 0.85rem;
+}
+
+.site-nav__group:first-of-type {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.site-nav__group-title {
+  margin: 0 0 0.4rem;
+  line-height: 1.25;
+}
+
+.site-nav__group-title-main {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.site-nav__group-title-sub {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+
+.site-nav__group-title:not(:has(.site-nav__group-title-sub)) .site-nav__group-title-main {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* The group title has no link of its own (unlike an item row), so the
+   whole row becomes the toggle button — JS moves the title-main/title-sub
+   spans inside it. min-height 2.75rem (44px) keeps even a single-line,
+   no-subtitle group (Tooling, Reference, ...) at a full touch-friendly
+   target, matching .site-nav__toggle's own minimum. */
+.site-nav__group-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 2.75rem;
+  margin: -0.4rem -0.4rem 0;
+  padding: 0.4rem;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.site-nav__group-toggle:hover,
+.site-nav__group-toggle:focus-visible {
+  background: var(--border);
+}
+
+.site-nav__group-title-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.site-nav__group-toggle::after {
+  content: "▸";
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  transition: transform 0.15s ease;
+}
+
+.site-nav__group-toggle[aria-expanded="true"]::after {
+  transform: rotate(90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav__group-toggle::after {
+    transition: none;
+  }
+}
+
+.site-nav__group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav__group li a {
+  display: block;
+  padding: 0.6rem 0.85rem;
+  margin: 0.2rem 0;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.site-nav__group li a:hover {
+  background: var(--border);
+}
+
+.site-nav__link-text {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.site-nav__group li a:hover .site-nav__link-text {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav__link-text {
+    transition: none;
+  }
+}
+
+.site-nav__external {
+  display: inline-block;
+  margin-left: 0.3em;
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+
+.site-nav__group li a[aria-current="page"] {
+  background: var(--link);
+  color: #fff;
+}
+
+.site-nav__item--has-children {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.site-nav__item--has-children > a {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.site-nav__toggle {
+  /* 44x44 CSS px meets the WCAG 2.5.5 / mobile-platform recommended minimum
+     touch target size — negative margin pulls the extra hit-area back in
+     visually so it doesn't blow out the row height, without shrinking the
+     actual clickable box itself. */
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: -0.5rem -0.5rem -0.5rem 0;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.site-nav__toggle::before {
+  content: "▸";
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.site-nav__toggle[aria-expanded="true"]::before {
+  transform: rotate(90deg);
+}
+
+.site-nav__toggle:hover,
+.site-nav__toggle:focus-visible {
+  background: var(--border);
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav__toggle::before {
+    transition: none;
+  }
+}
+
+.site-nav__children {
+  flex-basis: 100%;
+  list-style: none;
+  margin: 0 0 0.2rem;
+  padding: 0 0 0 1rem;
+  border-left: 1px solid var(--border);
+}
+
+.site-nav__children li a {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.site-nav__children li a:hover {
+  color: inherit;
+}
+
+.site-main {
+  margin-left: var(--nav-width);
+  padding: 2.5rem 2rem 5rem;
+  max-width: var(--max-content-width);
+}
+
+.doc__edit {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .nav-toggle {
+    display: block;
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 20;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 1.1rem;
+  }
+
+  .site-nav {
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    z-index: 15;
+    padding-top: 4rem;
+  }
+
+  .site-nav.is-open {
+    transform: translateX(0);
+  }
+
+  .site-main {
+    margin-left: 0;
+    padding: 4.5rem 1.25rem 3rem;
+  }
+}

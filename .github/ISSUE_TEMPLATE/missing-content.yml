@@ -1,0 +1,19 @@
+name: Missing documentation
+description: Something isn't covered, or a page you expected doesn't exist
+title: "[Docs]: "
+labels: ["documentation", "enhancement"]
+body:
+  - type: textarea
+    id: what-is-missing
+    attributes:
+      label: What's missing
+      description: What were you trying to find, and where did you look for it?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Anything that would help — a link to the mod feature this is about, a related page, a config example, etc.
+    validations:
+      required: false

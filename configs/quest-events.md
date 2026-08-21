@@ -4,7 +4,7 @@
 
 Quest Events let you attach [commands](../concepts/commands.md) and [conditions](../concepts/conditions.md) to a quest's lifecycle — accepting it, completing it, cancelling it, timing out, or the player dying while it is active. This is how a quest can do more than just hand out a reward — spawn a boss on accept, remove borrowed gear if the player dies, teleport them somewhere on completion.
 
-![A quest event file, editing directly](https://i.imgur.com/Qcp98Rx.png)
+![A quest event file, editing directly](../images/screenshots/Qcp98Rx.png)
 
 ## Example
 

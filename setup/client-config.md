@@ -2,11 +2,13 @@
 
 `BepInEx/config/MarketplaceAndServerNPCs.cfg` — the standard per-player settings file, set individually by each player (or by whoever is hosting). This is separate from [Server config](server-config.md) and is never shared between players.
 
+Unlike most of this documentation, this page isn't admin-only — anyone playing on a server using this mod can edit their own copy of this file to change their own keybinds, chat window, and UI, with no server access needed.
+
 ## `[General]`
 
 | Setting | Default | What it controls |
 |---|---|---|
-| `Use Marketplace Locally` | `false` | Turns on singleplayer/local mode — see [Server, client, or singleplayer](../README.md#server-client-or-singleplayer). |
+| `Use Marketplace Locally` | `false` | Turns on singleplayer/local mode — see [Server, client, or singleplayer](installation.md#server-client-or-singleplayer). |
 | `Quest Journal Keycode` | `J` | The key that opens/closes the quest journal. |
 | `Show Quest Mark` | — | Toggles quest target markers on the map/compass — can also be flipped in-game with the `mquestmarker` command. |
 | `DisableMapNPCControl` | — | Turns off the NPC map-control overlay. |
@@ -46,4 +48,4 @@
 ## Related
 
 - [Server config](server-config.md) — the separate, server-wide settings file.
-- [File structure](file-structure.md), [Server, client, or singleplayer](../README.md#server-client-or-singleplayer).
+- [File structure](file-structure.md), [Server, client, or singleplayer](installation.md#server-client-or-singleplayer).

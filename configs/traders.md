@@ -4,7 +4,7 @@
 
 Fixed-price shop listings for a Trader NPC — spend a set item to get a set item back, no randomness involved. Once you have written a profile here, put its name in a `Trader`-type NPC's **Profile** field to make it live — see [Core identity settings](../npc/npc-system.md#core-identity-settings). It can also be reached remotely, without a nearby NPC, by listing it under `TraderProfiles` in [Distanced UI](distanced-ui.md).
 
-![Trader UI in-game](https://i.imgur.com/WMFaYl4.png)
+![Trader UI in-game](../images/screenshots/WMFaYl4.png)
 
 The `x1` / `x5` / `x10` / `x100` buttons in the top right of the trade window scale a trade's quantities on both sides at once for faster bulk trading — `Coins, 5, Wood, 1` at `x100` becomes 500 Coins for 100 Wood, not a different trade.
 
@@ -22,7 +22,7 @@ Each line is one trade offer. Format: `cost item, cost amount, result item, resu
 
 Assigning the profile to an NPC's **Profile** field:
 
-![Assigning a Trader profile to an NPC](https://i.imgur.com/BjPrHIS.png)
+![Assigning a Trader profile to an NPC](../images/screenshots/BjPrHIS.png)
 
 ## Trading more than one item per side
 
@@ -44,7 +44,7 @@ BlackMetal, 1, AxeBlackMetal, 1, 9, Coins, 25 = AxeBlackMetal, 1, 10, Wood, 123
 
 Spend 1 BlackMetal, a level-9 Iron Axe, and 25 Coins, to receive a level-10 Iron Axe and 123 Wood:
 
-![A multi-item trade with quality on both sides](https://i.imgur.com/tkb8MM5.png)
+![A multi-item trade with quality on both sides](../images/screenshots/tkb8MM5.png)
 
 You can mix plain 4/5-field lines and `=`-bundled lines freely within the same profile:
 
@@ -58,7 +58,7 @@ Coins, 0 = AxeBlackMetal, 1, 9
 Coins, 0, BlackMetal, 5
 ```
 
-![Several trade formats offered by the same profile](https://i.imgur.com/eTT5SbT.png)
+![Several trade formats offered by the same profile](../images/screenshots/eTT5SbT.png)
 
 ## Pets as trade results
 
@@ -72,11 +72,11 @@ Stone, 100, Wolf, 1, 5
 Ruby, 25, Boar, 10, 2
 ```
 
-![A pets-only trader profile](https://i.imgur.com/10OELul.png)
+![A pets-only trader profile](../images/screenshots/10OELul.png)
 
 Trading Stone for a tamed Wolf, or Ruby for a tamed Boar:
 
-![Trading for a tamed pet in-game](https://i.imgur.com/W4YHMKr.png)
+![Trading for a tamed pet in-game](../images/screenshots/W4YHMKr.png)
 
 A creature is only recognized on the **result** side — the cost side always expects a plain item.
 
@@ -103,6 +103,7 @@ Configs/Traders/18-00_23-00/evening_specials.cfg
 
 ## Related
 
+- [Profiles](../concepts/profiles.md) — how a trader profile name groups trades across files.
 - [Scheduling a config to a time window](../concepts/time-windows.md).
 - [Distanced UI](distanced-ui.md) — remote access without a nearby NPC.
 - [Shop and economy guide](../guides/shop-and-economy.md).

@@ -1,6 +1,6 @@
 # File structure
 
-A map of every folder and file the mod creates or uses, and what lives where. For how to install the mod itself, see [Installation](../README.md#installation) on the main page.
+A map of every folder and file the mod creates or uses, and what lives where. For how to install the mod itself, see [Installation](installation.md) on the main page.
 
 ## First run
 
@@ -8,9 +8,9 @@ Start the server once after installing. On first run, it creates a `Marketplace`
 
 ## Server folders
 
-Present on a dedicated server, or on a client hosting a game (or a singleplayer game with local mode turned on — see [Server, client, or singleplayer](../README.md#server-client-or-singleplayer)):
+Present on a dedicated server, or on a client hosting a game (or a singleplayer game with local mode turned on — see [Server, client, or singleplayer](installation.md#server-client-or-singleplayer)):
 
-![Server-side Marketplace folder](https://i.imgur.com/KNm9w56.png)
+![Server-side Marketplace folder](../images/screenshots/KNm9w56.png)
 
 ```
 BepInEx/config/Marketplace/
@@ -36,13 +36,13 @@ BepInEx/config/Marketplace/
 
 `Configs/` on its own contains one subfolder per content type:
 
-![Configs subfolder listing](https://i.imgur.com/lrLPgZS.png)
+![Configs subfolder listing](../images/screenshots/lrLPgZS.png)
 
 ## Player-side folders
 
 Live next to `BepInEx/config/Marketplace/`, not inside it — present on every installation, whether or not that computer is also the server:
 
-![Client-only folders](https://i.imgur.com/NdYsvEV.png)
+![Client-only folders](../images/screenshots/NdYsvEV.png)
 
 | Folder | Purpose |
 |---|---|
@@ -57,7 +57,7 @@ Once you know where a file lives, the natural next question is what happens afte
 
 ## Related
 
-- [Installation](../README.md#installation) — how to get the mod installed in the first place.
-- [Server, client, or singleplayer](../README.md#server-client-or-singleplayer) — which of the folders above exist on which machine.
+- [Installation](installation.md) — how to get the mod installed in the first place.
+- [Server, client, or singleplayer](installation.md#server-client-or-singleplayer) — which of the folders above exist on which machine.
 - [Hot reload](hot-reload.md) — what happens after you edit a file in `Configs/`.
 - [Server config](server-config.md), [Client config](client-config.md).

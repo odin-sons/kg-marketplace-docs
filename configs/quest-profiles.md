@@ -44,6 +44,7 @@ This is the same as writing all four quest IDs on one line — useful for organi
 
 ## Related
 
+- [Profiles](../concepts/profiles.md) — how profile names group content across files in general.
 - [Quests](quests.md) — the quest definitions this profile lists.
 - [Distanced UI](distanced-ui.md) — remote access without a nearby NPC.
 - [First quest guide](../guides/first-quest.md).

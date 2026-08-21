@@ -18,6 +18,12 @@ If you are updating a server from a version older than 9.4.0, have every player 
 
 This mod version documented here (9.8.8) is well past this change; it only matters if you are jumping to a modern version from something very old.
 
+## Since 9.0.8: Transmogrification's visual-effects field is gone
+
+Versions 8.2.3 through 9.0.7 supported a fifth field on a [Transmogrification](../configs/transmogrification.md) line — a numbered visual-effect ID (1 through 20, plus 21 for "player's choice", added in 8.2.3) that layered a glowing effect on top of the reskinned item. The author's 9.0.8 release note: **"Removed transmogrification VFX's due to non-readable mesh."**
+
+If you're following an old guide or example that includes a fifth field on a Transmogrification line, drop it — it does nothing as of 9.0.8. Only the four documented fields (item, cost item, cost amount, ignore category) apply in this version. Two leftover text labels for it ("No Effect" / "Any Effect") still exist in the mod's translation file, but nothing reads them.
+
 ## General advice for any update
 
 - Read the entries between your current version and the new one in the [changelog](changelog.md) — the author calls out breaking changes there when they happen.

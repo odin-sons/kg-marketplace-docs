@@ -4,7 +4,7 @@
 
 Defines achievements tracked on the server leaderboard — kills, crafting, building, deaths, exploration, PvP kills. Requires `UseLeaderboard = true` in the [server config](../setup/server-config.md); otherwise the leaderboard does not run at all.
 
-![An achievement earned in-game](https://i.imgur.com/clRp8hT.png)
+![An achievement earned in-game](../images/screenshots/clRp8hT.png)
 
 ## Example
 

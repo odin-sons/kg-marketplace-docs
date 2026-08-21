@@ -21,5 +21,6 @@ Only the first data line under a `[profile]` header is used — a second line un
 
 ## Related
 
+- [Profiles](../concepts/profiles.md) — how profile names group content across files in general.
 - [Buffers](buffers.md) — the buff definitions this profile picks from.
 - [Distanced UI](distanced-ui.md) — remote access without a nearby NPC.
