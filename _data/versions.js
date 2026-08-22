@@ -6,7 +6,7 @@
 // Cloudflare preview for an older tag) happens to be serving this page.
 //
 // This file is both the per-build fallback AND, once THIS version is the
-// one deployed to https://marketplace.pages.dev (see CANONICAL_VERSIONS_URL
+// one deployed to https://kg-marketplace.pages.dev (see CANONICAL_VERSIONS_URL
 // in scripts/version-switcher.js), the live source every other build's
 // dropdown fetches at /versions.json (see versions.json.11ty.js) to learn
 // about versions released after they themselves were built.

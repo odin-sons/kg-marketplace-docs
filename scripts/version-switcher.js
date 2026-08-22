@@ -1,5 +1,5 @@
 (function () {
-  var CANONICAL_VERSIONS_URL = "https://marketplace.pages.dev/versions.json";
+  var CANONICAL_VERSIONS_URL = "https://kg-marketplace.pages.dev/versions.json";
 
   var select = document.getElementById("version-switcher");
   if (!select) return;
