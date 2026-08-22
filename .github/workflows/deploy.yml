@@ -13,24 +13,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
-          path: .cache
-          # Caches fetched/optimized remote images (screenshots embedded in the
-          # docs) across builds — without this every push would re-download
-          # and re-encode every image from scratch.
-          key: eleventy-img-${{ hashFiles('**/*.md') }}
+          path: .cache/@11ty/img
+          # eleventy-img (see eleventy.config.js) only re-encodes an image
+          # when its output file is missing from this folder — keyed on the
+          # source images themselves (not the .md prose) so a doc edit alone
+          # never invalidates it, and restore-keys falls back to the most
+          # recent cache available so a changed image doesn't cold-start the
+          # other 100+.
+          key: eleventy-img-${{ hashFiles('images/**') }}
           restore-keys: eleventy-img-
       - run: npm ci
       # Cloudflare Pages serves at the canonical domain's root — default
       # pathPrefix ("/"), no env override needed.
       - run: npm run build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: site
           path: _site
@@ -38,12 +41,14 @@ jobs:
       # not at its domain's root — same source, same commit, rebuilt with a
       # pathPrefix so every href/src in the output resolves under that subpath.
       # (See eleventy.config.js / styles/site.css comments for why this can't
-      # just be one shared build.)
+      # just be one shared build.) The image cache above already has every
+      # image from the first build, so this second pass only re-renders the
+      # HTML/CSS/JS — a few seconds, not a second full image-optimization pass.
       - run: npm run build
         env:
           ELEVENTY_PATH_PREFIX: /kg-marketplace-docs/
           ELEVENTY_OUTPUT_DIR: _site-ghpages
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: site-ghpages
           path: _site-ghpages
@@ -58,26 +63,34 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: site-ghpages
           path: _site
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
-      - uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v5
         id: deployment
 
   deploy-cloudflare-pages:
     needs: build
     runs-on: ubuntu-latest
+    # Gives this job the same clickable "View deployment" URL in the Actions
+    # UI that deploy-github-pages gets from its own environment block above.
+    # wrangler-action's own `deployment-url` output is the per-deploy alias
+    # (something like https://<hash>.kg-marketplace.pages.dev), not this
+    # project's stable domain, so the URL is hardcoded here instead.
+    environment:
+      name: cloudflare-pages
+      url: https://kg-marketplace.pages.dev
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: site
           path: _site
-      - uses: cloudflare/wrangler-action@v3
+      - uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

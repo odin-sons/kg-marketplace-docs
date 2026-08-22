@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { InputPathToUrlTransformPlugin, IdAttributePlugin, HtmlBasePlugin } from "@11ty/eleventy";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import { slug as githubSlug } from "github-slugger";
@@ -16,7 +18,6 @@ export default function (eleventyConfig) {
   // "/", so this is safe to always enable rather than only for the GitHub
   // Pages build.
   eleventyConfig.addPlugin(HtmlBasePlugin);
-
 
   eleventyConfig.addPassthroughCopy("styles");
   eleventyConfig.addPassthroughCopy("scripts");
@@ -49,6 +50,17 @@ export default function (eleventyConfig) {
     // directly at the site root next to index.html) — centralizing everything
     // under one folder instead keeps every page's own output directory clean.
     urlPath: "/img/",
+    // eleventy-img decides whether to re-encode an image by checking if its
+    // *output file* already exists on disk (see disk-cache.js in the
+    // package) — pointing that at dir.output directly means every build
+    // starts from an empty folder and reprocesses every image from scratch,
+    // which is most of what made CI builds slow. Writing through .cache
+    // instead — persisted across both the pathPrefix passes in a single job
+    // and across CI runs via actions/cache (deploy.yml) — means a build only
+    // ever pays to encode an image whose content actually changed; the
+    // eleventy.after hook below then copies what's cached into this run's
+    // real output directory.
+    outputDir: ".cache/@11ty/img/",
     sharpAvifOptions: { quality: 60 },
     sharpWebpOptions: { quality: 82 },
     sharpJpegOptions: { quality: 82 },
@@ -66,6 +78,17 @@ export default function (eleventyConfig) {
         sizes: "(max-width: 900px) 100vw, 796px",
       },
     },
+  });
+
+  eleventyConfig.on("eleventy.after", () => {
+    // Guards a build with no local <img>/<picture> ever having been
+    // encountered (nothing to copy yet) — without this, a first build on a
+    // fresh checkout, or an environment where the OS/AV/sync client is slow
+    // to settle a just-created directory, throws ENOENT here instead.
+    if (!fs.existsSync(".cache/@11ty/img/")) return;
+    fs.cpSync(".cache/@11ty/img/", path.join(eleventyConfig.directories.output, "img"), {
+      recursive: true,
+    });
   });
 
   // Rewrites internal links that point at another source file — e.g.
