@@ -752,49 +752,80 @@ blockquote {
   font-size: 0.9rem;
 }
 
-/* Sits above the rendered content (doc.njk) on every page that has a raw-
-   markdown copy (markdownUrl, computed in eleventy.config.js) — undefined,
-   and this whole block skipped, for the handful of pages that don't (e.g.
-   .github/PULL_REQUEST_TEMPLATE). */
+/* A collapsed-by-default disclosure (button + hidden panel, same
+   aria-expanded/aria-controls/hidden pattern as nav-collapse.js) rather than
+   an always-visible row of 7 links — screen readers hit one button, not a
+   wall of AI-provider links, on every single page before reaching the
+   actual content; sighted readers who just want to read see one small
+   control, not a bar of chrome. Floated right at the very top of .doc (see
+   doc.njk — this is the first thing inside <article>, right before the
+   rendered content's own <h1>) so the page's own title flows in beside it,
+   Vercel/Mintlify-style, without needing to know where that heading is. */
 .ai-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.35rem 0.7rem;
-  margin-bottom: 1.75rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.85rem;
+  position: relative;
+  float: right;
+  margin: 0 0 1rem 1rem;
+}
+
+.ai-actions__trigger {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-nav);
   color: var(--text-muted);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
 }
 
-.ai-actions__label {
-  font-weight: 600;
+.ai-actions__trigger:hover,
+.ai-actions__trigger[aria-expanded="true"] {
+  border-color: var(--link);
+  color: var(--text);
 }
 
-.ai-actions a {
+.ai-actions__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  min-width: 210px;
+  padding: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-nav);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  font-size: 0.85rem;
+}
+
+.ai-actions__menu[hidden] {
+  display: none;
+}
+
+.ai-actions__menu a {
   color: var(--link);
 }
 
 .ai-actions__copy {
-  padding: 0.15rem 0.55rem;
-  border: 1px solid var(--border);
-  border-radius: 5px;
+  padding: 0;
+  border: none;
   background: transparent;
   color: var(--link);
   font: inherit;
+  text-align: left;
   cursor: pointer;
 }
 
-.ai-actions__copy:hover,
-.ai-actions__copy:focus-visible {
-  background: var(--border);
-}
-
-.ai-actions__open {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 0.2em;
+.ai-actions__group-label {
+  margin: 0.3rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 @media (max-width: 900px) {

@@ -3,14 +3,15 @@ layout: layouts/base.njk
 ---
 <article class="doc">
   {% if markdownUrl %}
-  <div class="ai-actions">
-    <span class="ai-actions__label">Use with AI:</span>
-    <button type="button" class="ai-actions__copy" data-markdown-url="{{ markdownUrl }}">Copy page as Markdown</button>
-    <a href="{{ markdownUrl }}">View as Markdown</a>
-    <span class="ai-actions__open">Open in:
-      {% for link in aiLinks %}<a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">{{ link.name }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
-    </span>
-  </div>
+  <nav class="ai-actions" aria-label="Use this page with AI">
+    <button type="button" class="ai-actions__trigger" aria-expanded="false" aria-controls="ai-actions-menu">Use with AI <span aria-hidden="true">▾</span></button>
+    <div id="ai-actions-menu" class="ai-actions__menu" hidden>
+      <button type="button" class="ai-actions__copy" data-markdown-url="{{ markdownUrl }}">Copy page as Markdown</button>
+      <a href="{{ markdownUrl }}">View as Markdown</a>
+      <p class="ai-actions__group-label">Open in</p>
+      {% for link in aiLinks %}<a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">{{ link.name }}</a>{% endfor %}
+    </div>
+  </nav>
   {% endif %}
   {{ content | safe }}
   <div class="image-rail" hidden></div>
