@@ -837,6 +837,13 @@ blockquote {
   line-height: 1;
 }
 
+/* The build strips width/height from every icon (ai-provider-icons.js,
+   removeDimensions) so this is the only place size is set. */
+.ai-actions__icon svg {
+  width: 1em;
+  height: 1em;
+}
+
 .ai-actions__group-label {
   margin: 0.3rem 0 0;
   color: var(--text-muted);

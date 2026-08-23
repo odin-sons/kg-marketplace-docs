@@ -29,6 +29,16 @@ jobs:
           # other 100+.
           key: eleventy-img-${{ hashFiles('images/**') }}
           restore-keys: eleventy-img-
+      - uses: actions/cache@v6
+        with:
+          path: .cache/svgo
+          # Same idea as the image cache above, though the payoff is much
+          # smaller in practice: SVGO on the handful of icons in icons-src/
+          # already finishes in single-digit milliseconds uncached, so this
+          # mainly keeps the pattern consistent rather than fixing a real
+          # bottleneck (see ai-provider-icons.js).
+          key: svgo-${{ hashFiles('icons-src/**') }}
+          restore-keys: svgo-
       - run: npm ci
       # Cloudflare Pages serves at the canonical domain's root — default
       # pathPrefix ("/"), no env override needed.
