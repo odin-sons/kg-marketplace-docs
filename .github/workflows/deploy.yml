@@ -20,25 +20,13 @@ jobs:
           cache: npm
       - uses: actions/cache@v6
         with:
-          path: .cache/@11ty/img
-          # eleventy-img (see eleventy.config.js) only re-encodes an image
-          # when its output file is missing from this folder — keyed on the
-          # source images themselves (not the .md prose) so a doc edit alone
-          # never invalidates it, and restore-keys falls back to the most
-          # recent cache available so a changed image doesn't cold-start the
-          # other 100+.
-          key: eleventy-img-${{ hashFiles('images/**') }}
-          restore-keys: eleventy-img-
-      - uses: actions/cache@v6
-        with:
-          path: .cache/svgo
-          # Same idea as the image cache above, though the payoff is much
-          # smaller in practice: SVGO on the handful of icons in icons-src/
-          # already finishes in single-digit milliseconds uncached, so this
-          # mainly keeps the pattern consistent rather than fixing a real
-          # bottleneck (see ai-provider-icons.js).
-          key: svgo-${{ hashFiles('icons-src/**') }}
-          restore-keys: svgo-
+          path: .cache
+          # Covers both eleventy-img's screenshot cache (.cache/@11ty/img)
+          # and the SVGO icon cache (.cache/svgo) — one key over both source
+          # sets, with restore-keys falling back to the latest cache blob on
+          # any miss so an unrelated change doesn't cold-start the other.
+          key: build-${{ hashFiles('images/**', 'icons-src/**') }}
+          restore-keys: build-
       - run: npm ci
       # Cloudflare Pages serves at the canonical domain's root — default
       # pathPrefix ("/"), no env override needed.
