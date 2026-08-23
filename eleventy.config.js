@@ -186,6 +186,12 @@ export default function (eleventyConfig) {
   eleventyConfig.addGlobalData("viewMarkdownIcon", VIEW_MARKDOWN_ICON);
   eleventyConfig.addGlobalData("sidebarToggleIcon", SIDEBAR_TOGGLE_ICON);
 
+  // Pagefind's own JS/wasm/index chunks and its search-result URLs both need
+  // this build's pathPrefix — it indexes this build's own output directory
+  // with no knowledge of which subpath it'll actually be served under.
+  eleventyConfig.addGlobalData("pagefindBundlePath", pathPrefix + "pagefind/");
+  eleventyConfig.addGlobalData("pagefindBaseUrl", pathPrefix);
+
   // The root README.md becomes the homepage (/index.html) instead of the
   // default /README/index.html — every other page keeps Eleventy's normal
   // per-file permalink, since returning the untouched `data.permalink` here

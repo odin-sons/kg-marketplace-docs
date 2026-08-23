@@ -55,6 +55,29 @@
   --code-bg: #202327;
 }
 
+/* Pagefind's own CSS ships a `:root { --pf-background: #fff; ... }` block of
+   its own (plus a parallel `[data-pf-theme="dark"]` block we don't use) —
+   equal specificity to a plain `:root` rule, and it loads after this
+   stylesheet, so it would otherwise win the cascade and pin the search UI to
+   its light defaults regardless of our theme. The extra `html` bumps this
+   past that regardless of link order. Referencing our own vars (rather than
+   repeating literal colors per theme block) is enough on its own — var()
+   re-resolves whenever the underlying custom property does. */
+html:root {
+  --pf-text: var(--text);
+  --pf-text-secondary: var(--text-muted);
+  --pf-text-muted: var(--text-muted);
+  --pf-background: var(--bg);
+  --pf-border: var(--border);
+  --pf-border-focus: var(--link);
+  --pf-hover: var(--border);
+  --pf-mark: var(--link);
+  --pf-outline-focus: var(--link);
+  --pf-skeleton: var(--border);
+  --pf-skeleton-shine: var(--bg-nav);
+  --pf-font: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -593,6 +616,16 @@ blockquote {
 .site-nav__version-select:hover,
 .site-nav__theme-select:hover {
   border-color: var(--text-muted);
+}
+
+.site-nav__search {
+  margin: 0 0 1rem;
+}
+
+.site-nav__search-trigger {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .site-nav__group {

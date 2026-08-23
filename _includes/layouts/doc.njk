@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 ---
-<article class="doc">
+<article class="doc"{% if markdownUrl %} data-pagefind-body{% endif %}>
   {% if markdownUrl %}
   <nav class="ai-actions" aria-label="Use this page with AI">
     <button type="button" class="ai-actions__trigger" aria-expanded="false" aria-controls="ai-actions-menu">Use with AI <span aria-hidden="true">▾</span></button>

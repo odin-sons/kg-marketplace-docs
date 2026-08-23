@@ -32,8 +32,18 @@
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0c0c0c">
   <link rel="stylesheet" href="/styles/site.css">
+  <!-- Only exist once `npm run search-index` (pagefind) has run against this
+       build's output — a 404 here just leaves search inert, nothing else
+       breaks. bundle-path/base-url below are custom attributes on a custom
+       element, so unlike href/src above, HtmlBasePlugin never touches them —
+       pagefindBundlePath/pagefindBaseUrl carry the pathPrefix already baked
+       in (see eleventy.config.js). -->
+  <link href="/pagefind/pagefind-component-ui.css" rel="stylesheet">
+  <script src="/pagefind/pagefind-component-ui.js" type="module"></script>
 </head>
 <body>
+  <pagefind-config bundle-path="{{ pagefindBundlePath }}" base-url="{{ pagefindBaseUrl }}"></pagefind-config>
+
   <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
     <span class="sr-only">Menu</span>
     <span aria-hidden="true">☰</span>
@@ -63,6 +73,10 @@
         <option value="light">Light theme</option>
         <option value="dark">Dark theme</option>
       </select>
+    </div>
+    <div class="site-nav__search">
+      <pagefind-modal-trigger class="site-nav__search-trigger"></pagefind-modal-trigger>
+      <pagefind-modal></pagefind-modal>
     </div>
     <div class="site-nav__group">
       <ul>

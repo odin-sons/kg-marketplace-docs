@@ -31,6 +31,7 @@ jobs:
       # Cloudflare Pages serves at the canonical domain's root — default
       # pathPrefix ("/"), no env override needed.
       - run: npm run build
+      - run: npx pagefind --site _site
       - uses: actions/upload-artifact@v7
         with:
           name: site
@@ -50,6 +51,7 @@ jobs:
           # absolute URLs (see sitemap.xml.11ty.js) — defaults to the
           # Cloudflare domain otherwise, so only this pass needs it set.
           ELEVENTY_SITE_ORIGIN: https://odin-sons.github.io
+      - run: npx pagefind --site _site-ghpages
       - uses: actions/upload-artifact@v7
         with:
           name: site-ghpages
