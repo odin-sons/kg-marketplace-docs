@@ -29,3 +29,9 @@ Start the server once after installing. On first run, it creates a `Marketplace`
 ## Updating an existing server
 
 Most updates are a plain drop-in with nothing else to do. A few past versions changed something that needed manual action first — see [Migrations](../reference/migrations.md) to check whether the version jump you are making is one of them.
+
+## Related
+
+- [File structure](file-structure.md) — a full map of what gets created on first run.
+- [Client config](client-config.md) — includes the singleplayer local-mode toggle mentioned above.
+- [Migrations](../reference/migrations.md) — manual steps required by specific past version updates.

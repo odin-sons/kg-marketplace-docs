@@ -80,7 +80,7 @@ Turning the quest in at the NPC hands out the reward:
 - Confirm the NPC's Profile setting matches the `[village_elder]` header exactly.
 - If you edited an existing file and nothing changed, make sure you saved it and are editing the copy the running server actually uses.
 
-## Next steps
+## Related
 
 - [Quest chains](quest-chain.md) — link several quests into a story sequence.
 - [Dialogue trees](dialogue-tree.md) — give the NPC a full branching conversation instead of just a quest list.
