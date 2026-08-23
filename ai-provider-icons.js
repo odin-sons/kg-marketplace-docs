@@ -9,23 +9,23 @@
 // dark/light theme automatically. eleventy-img's own <img>-tag transform
 // pipeline (already used elsewhere in this file for screenshots) writes a
 // separate output file with a baked-in color instead, which would defeat
-// that — so this is a small parallel build step rather than a second use
-// of that plugin. Its default SVG format hook (format-hooks/svg.js in the
-// package) doesn't run SVGO either, for what it's worth: by default it's a
-// byte-for-byte passthrough, just with eleventy-img's own disk-cache
-// wrapped around it — there's no built-in SVG optimization to opt into.
-//
-// The optimize-and-cache step below is the same idea applied to inline
-// SVGs specifically: content-hash the source, skip re-running SVGO if a
-// cached optimized copy already exists on disk. Unlike the screenshot
-// cache this isn't fixing a measured slowdown — SVGO on seven small icons
-// finishes in low single-digit milliseconds regardless — it's here mainly
-// so the pattern matches (and so a much larger icon set later wouldn't
-// need revisiting this file).
+// that; its lower-level Image/queueImage API could in principle be coaxed
+// into returning a buffer without emitting HTML, but it's still built
+// around writing a real output file for its own disk-cache to check
+// against, and its default SVG format hook (format-hooks/svg.js in the
+// package) doesn't run SVGO anyway — just a byte-for-byte passthrough. So
+// this is a small parallel step, not a second use of that plugin — but the
+// *caching* underneath doesn't need to be hand-rolled: @11ty/eleventy-fetch
+// (already a transitive dependency of eleventy-img, added here as a direct
+// one) ships AssetCache, a general "cache this value on disk, keyed by its
+// own content" utility with no HTTP involved — exactly this problem,
+// already written and tested.
 import fs from "node:fs";
 import path from "node:path";
-import crypto from "node:crypto";
 import { optimize } from "svgo";
+import EleventyFetch from "@11ty/eleventy-fetch";
+
+const { AssetCache } = EleventyFetch;
 
 const SOURCE_DIR = "icons-src";
 const CACHE_DIR = ".cache/svgo";
@@ -50,32 +50,39 @@ const SVGO_CONFIG = {
   ],
 };
 
-function optimizeIcon(filename) {
-  const sourcePath = path.join(SOURCE_DIR, filename);
-  const raw = fs.readFileSync(sourcePath, "utf8");
+async function optimizeIcon(filename) {
+  const raw = fs.readFileSync(path.join(SOURCE_DIR, filename), "utf8");
 
-  const cacheKey = crypto.createHash("sha1").update(raw).digest("hex");
-  const cachePath = path.join(CACHE_DIR, `${cacheKey}.svg`);
-
-  if (fs.existsSync(cachePath)) {
-    return fs.readFileSync(cachePath, "utf8");
+  // The source content itself is the cache key (AssetCache hashes it), so
+  // an edited icon naturally invalidates its own entry — "*" duration
+  // means a hit never expires on its own, only a content change moves it.
+  const asset = new AssetCache(raw, CACHE_DIR);
+  if (asset.isCacheValid("*")) {
+    return asset.getCachedValue();
   }
 
   const { data } = optimize(raw, SVGO_CONFIG);
-
-  fs.mkdirSync(CACHE_DIR, { recursive: true });
-  fs.writeFileSync(cachePath, data, "utf8");
-
+  await asset.save(data, "text");
   return data;
 }
 
+const [chatgpt, perplexity, grok, claude, gemini, copyIcon, viewMarkdownIcon] = await Promise.all([
+  optimizeIcon("chatgpt.svg"),
+  optimizeIcon("perplexity.svg"),
+  optimizeIcon("grok.svg"),
+  optimizeIcon("claude.svg"),
+  optimizeIcon("gemini.svg"),
+  optimizeIcon("copy.svg"),
+  optimizeIcon("view-markdown.svg"),
+]);
+
 export const AI_PROVIDER_ICONS = {
-  ChatGPT: optimizeIcon("chatgpt.svg"),
-  Perplexity: optimizeIcon("perplexity.svg"),
-  Grok: optimizeIcon("grok.svg"),
-  Claude: optimizeIcon("claude.svg"),
-  Gemini: optimizeIcon("gemini.svg"),
+  ChatGPT: chatgpt,
+  Perplexity: perplexity,
+  Grok: grok,
+  Claude: claude,
+  Gemini: gemini,
 };
 
-export const COPY_ICON = optimizeIcon("copy.svg");
-export const VIEW_MARKDOWN_ICON = optimizeIcon("view-markdown.svg");
+export const COPY_ICON = copyIcon;
+export const VIEW_MARKDOWN_ICON = viewMarkdownIcon;
