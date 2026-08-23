@@ -1,54 +1,26 @@
-// Loads, SVGO-optimizes, and inlines the icons for the ai-actions dropdown
-// (doc.njk, via eleventyComputed.aiLinks/copyIcon/viewMarkdownIcon in
-// eleventy.config.js). Source SVGs live in icons-src/, untouched upstream
-// geometry — see each file's own header for where it came from.
-//
-// These have to end up as literal inline <svg> markup in the page (not an
-// <img src>) so fill/stroke="currentColor" can inherit .ai-actions__icon's
-// CSS color — that's what makes the icons follow the muted color and
-// dark/light theme automatically. eleventy-img's own <img>-tag transform
-// pipeline (already used elsewhere in this file for screenshots) writes a
-// separate output file with a baked-in color instead, which would defeat
-// that; its lower-level Image/queueImage API could in principle be coaxed
-// into returning a buffer without emitting HTML, but it's still built
-// around writing a real output file for its own disk-cache to check
-// against, and its default SVG format hook (format-hooks/svg.js in the
-// package) doesn't run SVGO anyway — just a byte-for-byte passthrough. So
-// this is a small parallel step, not a second use of that plugin — but the
-// *caching* underneath doesn't need to be hand-rolled: @11ty/eleventy-fetch
-// (already a transitive dependency of eleventy-img, added here as a direct
-// one) ships AssetCache, a general "cache this value on disk, keyed by its
-// own content" utility with no HTTP involved — exactly this problem,
-// already written and tested.
+// SVGO-optimized, inline icons for doc.njk's ai-actions dropdown. Stays
+// inline (not <img src>) so fill/stroke="currentColor" can inherit
+// .ai-actions__icon's CSS color. Sources live in icons-src/.
 import fs from "node:fs";
 import path from "node:path";
 import { optimize } from "svgo";
-import EleventyFetch from "@11ty/eleventy-fetch";
-
-const { AssetCache } = EleventyFetch;
+import { AssetCache } from "@11ty/eleventy-fetch";
 
 const SOURCE_DIR = "icons-src";
 const CACHE_DIR = ".cache/svgo";
 
+/** @type {import("svgo").Config} */
 const SVGO_CONFIG = {
-  // SVGO 4's preset-default no longer includes removeViewBox at all (unlike
-  // SVGO 2/3), so every icon's viewBox survives with no override needed —
-  // it's only sizing (width/height) that needs stripping, via the explicit
-  // plugin below, so CSS (.ai-actions__icon svg) stays the one source of
-  // truth for icon size instead of two that could disagree.
+  // Sizing lives in CSS only — removeDimensions strips width/height so
+  // there's no second, possibly-disagreeing source of truth.
   plugins: ["preset-default", "removeDimensions"],
 };
 
 async function optimizeIcon(filename) {
   const raw = fs.readFileSync(path.join(SOURCE_DIR, filename), "utf8");
 
-  // The source content itself is the cache key (AssetCache hashes it), so
-  // an edited icon naturally invalidates its own entry — "*" duration
-  // means a hit never expires on its own, only a content change moves it.
   const asset = new AssetCache(raw, CACHE_DIR);
-  if (asset.isCacheValid("*")) {
-    return asset.getCachedValue();
-  }
+  if (asset.isCacheValid("*")) return asset.getCachedValue();
 
   const { data } = optimize(raw, SVGO_CONFIG);
   await asset.save(data, "text");
