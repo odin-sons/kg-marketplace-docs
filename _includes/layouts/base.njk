@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ title }} — KG Marketplace Docs</title>
+  <link rel="canonical" href="{{ canonicalUrl }}">
+  <link rel="describedby" href="/llms.txt">
+  {% if markdownUrl %}<link rel="alternate" type="text/markdown" href="{{ markdownUrl }}">{% endif %}
   <script>
     // Must run inline, synchronously, before the stylesheet below paints
     // anything — an external file would add a network round trip on the

@@ -11,8 +11,17 @@ import { slug as githubSlug } from "github-slugger";
 // setting this env var only for the GitHub Pages pass.
 const pathPrefix = process.env.ELEVENTY_PATH_PREFIX || "/";
 
-// Content directories that get a raw-markdown passthrough copy (see below).
-// Kept in sync with the same list nav.js documents at the top of that file.
+// The domain every page's <link rel="canonical"> points at, on both mirrors
+// alike — matches CANONICAL_VERSIONS_URL in scripts/version-switcher.js and
+// the default in sitemap.xml.11ty.js/robots.txt.11ty.js. Unlike pathPrefix
+// this never varies per build: canonical's whole job is naming the one
+// preferred URL among duplicates, so both mirrors must agree on the same one.
+const CANONICAL_ORIGIN = "https://kg-marketplace.pages.dev";
+
+// Content directories that get a raw-markdown passthrough copy (see below) —
+// also drives which pages get a rel=alternate markdown link, since that link
+// would 404 for any page outside this list. Kept in sync with the same list
+// nav.js documents at the top of that file.
 const MARKDOWN_CONTENT_DIRS = ["api", "assets", "concepts", "configs", "guides", "npc", "reference", "setup", "tooling"];
 
 // Maps every content .md source to <its page's own output folder>/index.md
@@ -165,6 +174,31 @@ export default function (eleventyConfig) {
       if (data.title) return data.title; // explicit override, if ever set
       const match = data.page?.rawInput?.match(/^#\s+(.+?)\s*$/m);
       return match ? match[1] : data.page.fileSlug;
+    };
+  });
+
+  // Fed to <link rel="canonical"> in base.njk — always the same domain on
+  // both mirrors (see CANONICAL_ORIGIN above), computed here rather than in
+  // the template so base.njk only ever renders a value, never derives one.
+  eleventyConfig.addGlobalData("eleventyComputed.canonicalUrl", () => {
+    return (data) => CANONICAL_ORIGIN + data.page.url;
+  });
+
+  // Fed to <link rel="alternate" type="text/markdown"> in base.njk — the
+  // root-relative path to this page's raw-markdown passthrough copy (see
+  // above), left undefined for any page outside MARKDOWN_CONTENT_DIRS (e.g.
+  // .github/PULL_REQUEST_TEMPLATE, which Eleventy also happens to render as
+  // a page but which never gets an .md copy), so the template can just skip
+  // the tag rather than link to a 404.
+  eleventyConfig.addGlobalData("eleventyComputed.markdownUrl", () => {
+    return (data) => {
+      const inputPath = data.page?.inputPath ?? "";
+      if (inputPath === "./README.md") return "/index.md";
+
+      const topDir = inputPath.replace(/^\.\//, "").split("/")[0];
+      if (!MARKDOWN_CONTENT_DIRS.includes(topDir)) return undefined;
+
+      return data.page.url + "index.md";
     };
   });
 
