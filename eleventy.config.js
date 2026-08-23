@@ -3,6 +3,7 @@ import path from "node:path";
 import { InputPathToUrlTransformPlugin, IdAttributePlugin, HtmlBasePlugin } from "@11ty/eleventy";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import { slug as githubSlug } from "github-slugger";
+import { AI_PROVIDER_ICONS, COPY_ICON, VIEW_MARKDOWN_ICON } from "./ai-provider-icons.js";
 
 // "/" for Cloudflare Pages (served at the canonical domain's root) and local
 // dev; "/kg-marketplace-docs/" for the GitHub Pages mirror, which — as a
@@ -33,7 +34,7 @@ const AI_PROVIDERS = [
   { name: "Grok", prefillUrl: (prompt) => `https://grok.com/?q=${encodeURIComponent(prompt)}` },
   { name: "Claude", prefillUrl: () => "https://claude.ai/new" },
   { name: "Gemini", prefillUrl: () => "https://gemini.google.com/app" },
-];
+].map((provider) => ({ ...provider, icon: AI_PROVIDER_ICONS[provider.name] }));
 
 // Content directories that get a raw-markdown passthrough copy (see below) —
 // also drives which pages get a rel=alternate markdown link, since that link
@@ -175,6 +176,12 @@ export default function (eleventyConfig) {
   // repeated *.11tydata.js in each content directory.
   eleventyConfig.addGlobalData("layout", "layouts/doc.njk");
 
+  // Static (not per-page computed) — the "Copy"/"View as Markdown" icons in
+  // doc.njk's ai-actions menu never vary, unlike the per-provider icons
+  // above which ride along with aiLinks.
+  eleventyConfig.addGlobalData("copyIcon", COPY_ICON);
+  eleventyConfig.addGlobalData("viewMarkdownIcon", VIEW_MARKDOWN_ICON);
+
   // The root README.md becomes the homepage (/index.html) instead of the
   // default /README/index.html — every other page keeps Eleventy's normal
   // per-file permalink, since returning the untouched `data.permalink` here
@@ -229,7 +236,7 @@ export default function (eleventyConfig) {
     return (data) => {
       if (!data.markdownUrl) return undefined;
       const prompt = `Read this Marketplace and Server NPCs (Revamped) documentation page and help me with it: ${data.canonicalUrl}`;
-      return AI_PROVIDERS.map((provider) => ({ name: provider.name, url: provider.prefillUrl(prompt) }));
+      return AI_PROVIDERS.map((provider) => ({ name: provider.name, url: provider.prefillUrl(prompt), icon: provider.icon }));
     };
   });
 

@@ -806,6 +806,13 @@ blockquote {
   display: none;
 }
 
+.ai-actions__menu a,
+.ai-actions__copy {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
 .ai-actions__menu a {
   color: var(--link);
 }
@@ -818,6 +825,16 @@ blockquote {
   font: inherit;
   text-align: left;
   cursor: pointer;
+}
+
+/* Muted/monochrome regardless of the link text's own color (var(--link)) —
+   the icon is a quiet visual identifier for telling the provider links
+   apart at a glance, not something meant to draw the eye on its own. */
+.ai-actions__icon {
+  display: inline-flex;
+  color: var(--text-muted);
+  font-size: 1.1em;
+  line-height: 1;
 }
 
 .ai-actions__group-label {
