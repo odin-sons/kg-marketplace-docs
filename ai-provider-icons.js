@@ -31,23 +31,12 @@ const SOURCE_DIR = "icons-src";
 const CACHE_DIR = ".cache/svgo";
 
 const SVGO_CONFIG = {
-  plugins: [
-    {
-      name: "preset-default",
-      params: {
-        overrides: {
-          // Every icon is sized via CSS (.ai-actions__icon svg), not a
-          // fixed pixel box, so the viewBox has to survive — removing it
-          // is preset-default's default behavior whenever width/height are
-          // also present, which every source file here has.
-          removeViewBox: false,
-        },
-      },
-    },
-    // Strips width/height so sizing has exactly one source of truth (the
-    // CSS rule) instead of two that could disagree.
-    "removeDimensions",
-  ],
+  // SVGO 4's preset-default no longer includes removeViewBox at all (unlike
+  // SVGO 2/3), so every icon's viewBox survives with no override needed —
+  // it's only sizing (width/height) that needs stripping, via the explicit
+  // plugin below, so CSS (.ai-actions__icon svg) stays the one source of
+  // truth for icon size instead of two that could disagree.
+  plugins: ["preset-default", "removeDimensions"],
 };
 
 async function optimizeIcon(filename) {
