@@ -26,7 +26,17 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("apple-touch-icon.png");
   eleventyConfig.addPassthroughCopy("manifest.json");
   eleventyConfig.addPassthroughCopy("_headers");
+  eleventyConfig.addPassthroughCopy("robots.txt");
   eleventyConfig.addPassthroughCopy("reference/translations.English.yml");
+
+  // Raw markdown sibling for every doc page (e.g. /configs/quests.md next to
+  // /configs/quests/), untouched — same file an agent (or another tool) would
+  // see reading the source directly. A named allowlist rather than a blanket
+  // "**/*.md" specifically to keep node_modules and anything else out of
+  // this glob's reach; kept in sync with the content directories nav.js
+  // itself documents at the top of that file.
+  eleventyConfig.addPassthroughCopy("README.md");
+  eleventyConfig.addPassthroughCopy("{api,assets,concepts,configs,guides,npc,reference,setup,tooling}/**/*.md");
 
   // Runs on every rendered <img>/<picture> and replaces it with an
   // optimized, modern-format version, resized to how large it's actually

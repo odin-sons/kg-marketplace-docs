@@ -1,2 +1,10 @@
 /versions.json
   Access-Control-Allow-Origin: *
+
+# Raw markdown sources (see eleventy.config.js's **/*.md passthrough copy) —
+# without this they'd be served as text/plain, indistinguishable from any
+# other plain-text file to an agent doing content-type-based negotiation.
+# GitHub Pages has no equivalent to _headers, so this only takes effect on
+# the Cloudflare Pages mirror; the file itself is identical either way.
+/*.md
+  Content-Type: text/markdown; charset=utf-8
