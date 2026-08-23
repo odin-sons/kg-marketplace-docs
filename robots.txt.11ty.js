@@ -21,10 +21,17 @@ export default function () {
 # in the robots.txt spec, regardless of which one appears first.
 #
 # Machine-readable site index for agents/LLMs: /llms.txt
-# Raw markdown for any page: same URL with .md instead of the trailing slash
+# Raw markdown for any page: same URL plus index.md
 
 User-agent: *
 Allow: /
+# Content Signals (contentsignals.org) — usage preference after a crawler has
+# already accessed the content, distinct from the Allow above (which is
+# about access itself). All three "yes" because every other change in this
+# file/site this conversation has been about making these docs *more*
+# consumable by agents, not less — flip ai-train to "no" here alone if that
+# stops being true for training specifically.
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
 User-agent: GPTBot
 Allow: /

@@ -1,10 +1,19 @@
 /versions.json
   Access-Control-Allow-Origin: *
 
-# Raw markdown sources (see eleventy.config.js's **/*.md passthrough copy) —
+# Raw markdown copies (see markdownPassthroughMap in eleventy.config.js) —
 # without this they'd be served as text/plain, indistinguishable from any
 # other plain-text file to an agent doing content-type-based negotiation.
 # GitHub Pages has no equivalent to _headers, so this only takes effect on
 # the Cloudflare Pages mirror; the file itself is identical either way.
 /*.md
   Content-Type: text/markdown; charset=utf-8
+
+# RFC 8288 Link header, site-wide, pointing at the same llms.txt already
+# linked via <link rel="describedby"> in every page's <head> (base.njk) —
+# this is the HTTP-header-level equivalent for clients that fetch a
+# resource without parsing its HTML (or fetch something that isn't HTML at
+# all, e.g. one of the raw .md copies above). GitHub Pages can't carry this;
+# same caveat as the Content-Type rule above.
+/*
+  Link: </llms.txt>; rel="describedby"
