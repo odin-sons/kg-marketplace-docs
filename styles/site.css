@@ -764,7 +764,9 @@ blockquote {
 .ai-actions {
   position: relative;
   float: right;
-  margin: 0 0 1rem 1rem;
+  /* A float aligns to the top of the h1's line box, not its glyphs —
+     nudges the button down past that leading. */
+  margin: 0.5lh 0 1rem 1rem;
 }
 
 .ai-actions__trigger {
