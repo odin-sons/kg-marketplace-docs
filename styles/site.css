@@ -11,7 +11,6 @@
   --highlight-flash: rgba(26, 95, 180, 0.18);
   --nav-width: 280px;
   --max-content-width: 860px;
-  --rail-width: 400px;
   --rail-gap: 30px;
 }
 
@@ -119,28 +118,32 @@ body.lightbox-open {
   overflow: hidden;
 }
 
-/* Once there's room for the content column *and* a rail at least half its
-   width beside it (280px nav + 860px column + 400px rail + 30px gap),
-   scripts/image-rail.js moves every standalone image (never a table-paired
-   side-by-side screenshot — `.doc > p:has(> picture:only-child)` excludes
-   those, they stay put) out of the text into `.image-rail`, a single
-   absolutely-positioned column beside it. Below this width the column
-   doesn't have that room, so the script leaves images exactly where the
-   markdown puts them, full block-level width, no special positioning.
+/* Above 1570px, scripts/image-rail.js moves every standalone image (never
+   a table-paired side-by-side screenshot — `.doc > p:has(> picture:only-child)`
+   excludes those, they stay put) out of the text into `.image-rail`, a
+   column beside it. Below that width the script leaves images where the
+   markdown puts them, full block-level, no special positioning.
 
-   The images are real `position: sticky` here — not JS-tracked `top`
-   values — for smooth, compositor-driven scrolling with zero per-frame
-   script work. A sticky element's stuck range is bounded by its own
-   containing block, i.e. its immediate parent — not by "the next sibling"
-   in some shared ancestor. So each image gets wrapped (by the script) in
-   its own `.image-rail__item`, sized via `min-height` to exactly the
-   vertical span of the page section it belongs to; the sticky image lives
-   *inside* that wrapper. That per-item boundary is what makes the browser
-   release one image and activate the next as scroll crosses each
-   wrapper's own edge — with everything sharing one `.image-rail` parent
-   instead, every image would happily stay stuck at once for the rest of
-   the page. */
+   The images are real `position: sticky` — not JS-tracked `top` values —
+   for smooth, compositor-driven scrolling with zero per-frame script work.
+   A sticky element's stuck range is bounded by its own containing block
+   (its immediate parent), not "the next sibling" in some shared ancestor,
+   so each image gets wrapped (by the script) in its own `.image-rail__item`,
+   sized via `min-height` to exactly the vertical span of page it belongs
+   to — that per-item boundary is what releases one image and activates the
+   next as scroll crosses each wrapper's edge, instead of every image
+   staying stuck at once under one shared parent.
+
+   .image-rail's own left edge is CSS-anchored to .doc's right edge (anchor
+   positioning, Baseline 2026) rather than computed via JS — .doc's actual
+   position shifts with the sidebar-collapse state (sidebar-collapse.js),
+   and this tracks it with zero script involvement either way. Its width
+   fills whatever's left up to the viewport's own edge, capped at 600px, via
+   the standard "left + right both set, width auto, max-width caps it"
+   over-constrained resolution — browser-computed, not measured. */
 @media (min-width: 1570px) {
+  /* Fallback for the ~9% of browsers without anchor positioning yet —
+     fixed width, matches this project's original rail sizing. */
   .doc {
     position: relative;
   }
@@ -150,7 +153,22 @@ body.lightbox-open {
     top: 0;
     left: 100%;
     margin-left: var(--rail-gap);
-    width: var(--rail-width);
+    width: 400px;
+  }
+
+  @supports (anchor-name: --x) {
+    .doc {
+      position: static;
+      anchor-name: --doc;
+    }
+
+    .image-rail {
+      left: calc(anchor(--doc right) + var(--rail-gap));
+      margin-left: 0;
+      right: 1.5rem;
+      max-width: 600px;
+      width: auto;
+    }
   }
 
   .image-rail__item > p {
