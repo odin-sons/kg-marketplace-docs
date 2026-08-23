@@ -18,11 +18,30 @@ const pathPrefix = process.env.ELEVENTY_PATH_PREFIX || "/";
 // preferred URL among duplicates, so both mirrors must agree on the same one.
 const CANONICAL_ORIGIN = "https://kg-marketplace.pages.dev";
 
+// Providers with a documented, currently-working "open with prefilled
+// prompt" URL query param, checked directly against each one rather than
+// assumed — this class of URL trick tends to get pulled without notice
+// (claude.ai's own `?q=` was removed in Oct 2025). Kept as a flat list
+// specifically so adding or dropping a provider later is a one-line change,
+// not a template edit. Claude and Gemini don't support a prefill param at
+// all right now, so their entries just open a fresh chat — paired in the UI
+// with the "Copy page" button so the visitor pastes it in themselves
+// instead of the link silently doing nothing.
+const AI_PROVIDERS = [
+  { name: "ChatGPT", prefillUrl: (prompt) => `https://chatgpt.com/?q=${encodeURIComponent(prompt)}` },
+  { name: "Perplexity", prefillUrl: (prompt) => `https://www.perplexity.ai/?q=${encodeURIComponent(prompt)}` },
+  { name: "Grok", prefillUrl: (prompt) => `https://grok.com/?q=${encodeURIComponent(prompt)}` },
+  { name: "Claude", prefillUrl: () => "https://claude.ai/new" },
+  { name: "Gemini", prefillUrl: () => "https://gemini.google.com/app" },
+];
+
 // Content directories that get a raw-markdown passthrough copy (see below) —
 // also drives which pages get a rel=alternate markdown link, since that link
 // would 404 for any page outside this list. Kept in sync with the same list
-// nav.js documents at the top of that file.
-const MARKDOWN_CONTENT_DIRS = ["api", "assets", "concepts", "configs", "guides", "npc", "reference", "setup", "tooling"];
+// nav.js documents at the top of that file. Exported (rather than kept
+// module-private like everything else here) so llms-full.txt.11ty.js can
+// walk the same set of source files without a second hand-maintained list.
+export const MARKDOWN_CONTENT_DIRS = ["api", "assets", "concepts", "configs", "guides", "npc", "reference", "setup", "tooling"];
 
 // Maps every content .md source to <its page's own output folder>/index.md
 // — e.g. configs/quests.md -> configs/quests/index.md, sibling to that
@@ -199,6 +218,18 @@ export default function (eleventyConfig) {
       if (!MARKDOWN_CONTENT_DIRS.includes(topDir)) return undefined;
 
       return data.page.url + "index.md";
+    };
+  });
+
+  // Fed to the "Open in <AI>" bar in doc.njk — undefined wherever
+  // markdownUrl is (no raw-markdown copy means nothing to point an agent
+  // at), computed here so the template just loops a ready-made list rather
+  // than building URLs or encoding a prompt itself.
+  eleventyConfig.addGlobalData("eleventyComputed.aiLinks", () => {
+    return (data) => {
+      if (!data.markdownUrl) return undefined;
+      const prompt = `Read this Marketplace and Server NPCs (Revamped) documentation page and help me with it: ${data.canonicalUrl}`;
+      return AI_PROVIDERS.map((provider) => ({ name: provider.name, url: provider.prefillUrl(prompt) }));
     };
   });
 

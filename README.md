@@ -90,6 +90,8 @@ More screenshots for a specific module live on that module's own page — see **
 
 Prefer watching over reading? See [Video guides](guides/video-guides.md) for community walkthroughs.
 
+Want to ask an AI about this mod instead of reading? Every page has a "Use with AI" bar at the top — copy that page as Markdown, open it directly in ChatGPT/Perplexity/Grok, or paste it into Claude/Gemini. To hand an AI the whole documentation at once, grab [`/llms-full.txt`](/llms-full.txt) (one file, everything); for just a linked index, see [`/llms.txt`](/llms.txt).
+
 ## Support the author
 
 If this documentation or the mod itself saved you time, consider supporting KG, the mod's author:

@@ -752,6 +752,51 @@ blockquote {
   font-size: 0.9rem;
 }
 
+/* Sits above the rendered content (doc.njk) on every page that has a raw-
+   markdown copy (markdownUrl, computed in eleventy.config.js) — undefined,
+   and this whole block skipped, for the handful of pages that don't (e.g.
+   .github/PULL_REQUEST_TEMPLATE). */
+.ai-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.7rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.ai-actions__label {
+  font-weight: 600;
+}
+
+.ai-actions a {
+  color: var(--link);
+}
+
+.ai-actions__copy {
+  padding: 0.15rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--link);
+  font: inherit;
+  cursor: pointer;
+}
+
+.ai-actions__copy:hover,
+.ai-actions__copy:focus-visible {
+  background: var(--border);
+}
+
+.ai-actions__open {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.2em;
+}
+
 @media (max-width: 900px) {
   .nav-toggle {
     display: block;
