@@ -4,6 +4,9 @@ import { InputPathToUrlTransformPlugin, IdAttributePlugin, HtmlBasePlugin } from
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import { slug as githubSlug } from "github-slugger";
 import { AI_PROVIDER_ICONS, COPY_ICON, VIEW_MARKDOWN_ICON } from "./ai-provider-icons.js";
+import { loadIcon } from "./svg-icons.js";
+
+const SIDEBAR_TOGGLE_ICON = await loadIcon("chevron-left.svg");
 
 // "/" for Cloudflare Pages (served at the canonical domain's root) and local
 // dev; "/kg-marketplace-docs/" for the GitHub Pages mirror, which — as a
@@ -181,6 +184,7 @@ export default function (eleventyConfig) {
   // above which ride along with aiLinks.
   eleventyConfig.addGlobalData("copyIcon", COPY_ICON);
   eleventyConfig.addGlobalData("viewMarkdownIcon", VIEW_MARKDOWN_ICON);
+  eleventyConfig.addGlobalData("sidebarToggleIcon", SIDEBAR_TOGGLE_ICON);
 
   // The root README.md becomes the homepage (/index.html) instead of the
   // default /README/index.html — every other page keeps Eleventy's normal

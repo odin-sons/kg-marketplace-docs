@@ -472,6 +472,65 @@ blockquote {
   background: var(--bg-nav);
   border-right: 1px solid var(--border);
   padding: 1.25rem 1rem 3rem;
+  transition: transform 0.2s ease;
+}
+
+/* Desktop-only sidebar collapse (mobile already has its own hamburger
+   drawer below). Edge tab at the sidebar's right border, flips sides and
+   rotates when collapsed; state lives in data-sidebar (set on <html> by
+   the blocking script in base.njk, toggled by sidebar-collapse.js). */
+.sidebar-collapse-toggle {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .sidebar-collapse-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 1.25rem;
+    left: calc(var(--nav-width) - 14px);
+    z-index: 25;
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--bg-nav);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: left 0.2s ease;
+  }
+
+  .sidebar-collapse-toggle:hover,
+  .sidebar-collapse-toggle:focus-visible {
+    color: var(--text);
+    border-color: var(--link);
+  }
+
+  .sidebar-collapse-toggle svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease;
+  }
+
+  :root[data-sidebar="collapsed"] .site-nav {
+    transform: translateX(-100%);
+  }
+
+  :root[data-sidebar="collapsed"] .sidebar-collapse-toggle {
+    left: 0.75rem;
+  }
+
+  :root[data-sidebar="collapsed"] .sidebar-collapse-toggle svg {
+    transform: rotate(180deg);
+  }
+
+  /* max-width already caps .site-main (below) — overriding its fixed
+     margin-left to auto is what re-centers the column in the freed space. */
+  :root[data-sidebar="collapsed"] .site-main {
+    margin-inline: auto;
+  }
 }
 
 .site-nav__home {
@@ -872,7 +931,6 @@ blockquote {
 
   .site-nav {
     transform: translateX(-100%);
-    transition: transform 0.2s ease;
     z-index: 15;
     padding-top: 4rem;
   }

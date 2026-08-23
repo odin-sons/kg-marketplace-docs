@@ -10,14 +10,16 @@
   <script>
     // Must run inline, synchronously, before the stylesheet below paints
     // anything — an external file would add a network round trip on the
-    // critical path and still risk a flash of the wrong theme before it
-    // loads. "auto" (the default) sets nothing here and just leaves
-    // prefers-color-scheme in charge, same as if this script never ran.
+    // critical path and still risk a flash of the wrong state before it
+    // loads.
     (function () {
       try {
-        var saved = localStorage.getItem("theme");
-        if (saved === "light" || saved === "dark") {
-          document.documentElement.setAttribute("data-theme", saved);
+        var theme = localStorage.getItem("theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.setAttribute("data-theme", theme);
+        }
+        if (localStorage.getItem("sidebarCollapsed") === "true") {
+          document.documentElement.setAttribute("data-sidebar", "collapsed");
         }
       } catch (e) {}
     })();
@@ -35,6 +37,10 @@
   <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
     <span class="sr-only">Menu</span>
     <span aria-hidden="true">☰</span>
+  </button>
+
+  <button class="sidebar-collapse-toggle" type="button" aria-expanded="true" aria-controls="site-nav" aria-label="Collapse sidebar">
+    {{ sidebarToggleIcon | safe }}
   </button>
 
   <nav id="site-nav" class="site-nav">
@@ -92,6 +98,7 @@
   </main>
 
   <script src="/scripts/nav-toggle.js"></script>
+  <script src="/scripts/sidebar-collapse.js"></script>
   <script src="/scripts/nav-collapse.js"></script>
   <script src="/scripts/image-lightbox.js"></script>
   <script src="/scripts/image-rail.js"></script>
