@@ -15,12 +15,21 @@ Present on a dedicated server, or on a client hosting a game (or a singleplayer 
 ```
 BepInEx/config/Marketplace/
 ├─ Configs/                        ← all content configs, see ../configs/
-│  ├─ Quests/  QuestProfiles/  QuestEvents/
-│  ├─ Dialogues/  CustomSpawnData/
+│  ├─ Quests/
+│  ├─ QuestProfiles/
+│  ├─ QuestEvents/
+│  ├─ Dialogues/
+│  ├─ CustomSpawnData/
 │  ├─ Territories/
-│  ├─ Traders/  Bankers/  Teleporters/  Gamblers/
-│  ├─ Buffers/  BufferProfiles/  Transmogrifications/
-│  ├─ ServerInfos/  LeaderboardAchievements/
+│  ├─ Traders/
+│  ├─ Bankers/
+│  ├─ Teleporters/
+│  ├─ Gamblers/
+│  ├─ Buffers/
+│  ├─ BufferProfiles/
+│  ├─ Transmogrifications/
+│  ├─ ServerInfos/
+│  ├─ LeaderboardAchievements/
 │  ├─ SyncedLocalizer/
 │  ├─ Factions.yml
 │  └─ RandomNpcSpeech.yml
