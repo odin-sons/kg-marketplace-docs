@@ -106,12 +106,12 @@ img {
 
 .doc img {
   cursor: zoom-in;
-  transition: box-shadow 0.15s ease;
+  transition: filter 0.15s ease;
 }
 
 .doc img:hover,
 .doc img:focus-visible {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.25));
 }
 
 body.lightbox-open {
@@ -182,14 +182,6 @@ body.lightbox-open {
     width: 100%;
     max-width: 100%;
     display: block;
-  }
-
-  /* drop-shadow (a filter) instead of the box-shadow .doc img normally
-     gets on hover — box-shadow reads as a hard rectangular edge here,
-     against the sticky rail's own edge-to-edge stacking; drop-shadow
-     traces the image's actual (rounded) outline instead. */
-  .image-rail img {
-    transition: filter 0.15s ease;
   }
 
   .image-rail img:hover,
