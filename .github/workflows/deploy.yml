@@ -48,6 +48,10 @@ jobs:
         env:
           ELEVENTY_PATH_PREFIX: /kg-marketplace-docs/
           ELEVENTY_OUTPUT_DIR: _site-ghpages
+          # sitemap.xml/robots.txt need this build's own domain in their
+          # absolute URLs (see sitemap.xml.11ty.js) — defaults to the
+          # Cloudflare domain otherwise, so only this pass needs it set.
+          ELEVENTY_SITE_ORIGIN: https://odin-sons.github.io
       - uses: actions/upload-artifact@v7
         with:
           name: site-ghpages

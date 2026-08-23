@@ -26,7 +26,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("apple-touch-icon.png");
   eleventyConfig.addPassthroughCopy("manifest.json");
   eleventyConfig.addPassthroughCopy("_headers");
-  eleventyConfig.addPassthroughCopy("robots.txt");
   eleventyConfig.addPassthroughCopy("reference/translations.English.yml");
 
   // Raw markdown sibling for every doc page (e.g. /configs/quests.md next to
