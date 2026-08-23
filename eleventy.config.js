@@ -11,6 +11,31 @@ import { slug as githubSlug } from "github-slugger";
 // setting this env var only for the GitHub Pages pass.
 const pathPrefix = process.env.ELEVENTY_PATH_PREFIX || "/";
 
+// Content directories that get a raw-markdown passthrough copy (see below).
+// Kept in sync with the same list nav.js documents at the top of that file.
+const MARKDOWN_CONTENT_DIRS = ["api", "assets", "concepts", "configs", "guides", "npc", "reference", "setup", "tooling"];
+
+// Maps every content .md source to <its page's own output folder>/index.md
+// — e.g. configs/quests.md -> configs/quests/index.md, sibling to that
+// page's index.html — rather than a same-named configs/quests.md sibling.
+// The obvious-looking sibling name collides with a completely different
+// Eleventy feature: InputPathToUrlTransformPlugin (below) rewrites *any*
+// href/src across the whole site that matches a real template's source
+// path, including inside a <link> tag we control — so a raw-markdown link
+// literally named after its own source file kept getting "corrected" back
+// to that same page's HTML URL. Nothing under content-dir/slug/index.md
+// exists as a real template source, so nothing matches and it's left alone.
+function markdownPassthroughMap() {
+  const map = { "README.md": "index.md" };
+  for (const dir of MARKDOWN_CONTENT_DIRS) {
+    for (const entry of fs.readdirSync(dir, { recursive: true })) {
+      if (!entry.endsWith(".md")) continue;
+      map[`${dir}/${entry}`] = `${dir}/${entry.slice(0, -3)}/index.md`;
+    }
+  }
+  return map;
+}
+
 export default function (eleventyConfig) {
   // Rewrites every root-relative href/src/srcset in the rendered HTML output
   // (nav links, the stylesheet, script tags, favicons, eleventy-img output,
@@ -28,14 +53,12 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("_headers");
   eleventyConfig.addPassthroughCopy("reference/translations.English.yml");
 
-  // Raw markdown sibling for every doc page (e.g. /configs/quests.md next to
-  // /configs/quests/), untouched — same file an agent (or another tool) would
-  // see reading the source directly. A named allowlist rather than a blanket
-  // "**/*.md" specifically to keep node_modules and anything else out of
-  // this glob's reach; kept in sync with the content directories nav.js
-  // itself documents at the top of that file.
-  eleventyConfig.addPassthroughCopy("README.md");
-  eleventyConfig.addPassthroughCopy("{api,assets,concepts,configs,guides,npc,reference,setup,tooling}/**/*.md");
+  // Raw markdown copy for every doc page (e.g. /configs/quests/index.md next
+  // to that page's own index.html), untouched — same file an agent (or
+  // another tool) would see reading the source directly. See
+  // markdownPassthroughMap's own comment for why the output path isn't just
+  // configs/quests.md.
+  eleventyConfig.addPassthroughCopy(markdownPassthroughMap());
 
   // Runs on every rendered <img>/<picture> and replaces it with an
   // optimized, modern-format version, resized to how large it's actually

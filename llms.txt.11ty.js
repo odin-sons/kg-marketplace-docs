@@ -9,12 +9,13 @@ const base = pathPrefix.replace(/\/$/, "");
 function mdHref(href) {
   // href is a clean-URL site path (e.g. "/configs/quests/", or
   // "/setup/server-config/#mail" for an anchor-only nav child) — the raw
-  // markdown sibling lives one level up, at the same name with .md instead
-  // of the trailing slash (see the **/*.md passthrough copy in
-  // eleventy.config.js). A raw markdown file has no notion of an in-page
-  // anchor, so the fragment is dropped along with the trailing slash.
-  const path = href.split("#")[0].replace(/\/$/, "");
-  return base + path + ".md";
+  // markdown copy lives inside that same page's own output folder, as
+  // index.md next to its index.html (see markdownPassthroughMap's comment
+  // in eleventy.config.js for why it's not a same-named .md sibling
+  // instead). A raw markdown file has no notion of an in-page anchor, so
+  // the fragment is dropped.
+  const path = href.split("#")[0];
+  return base + path + "index.md";
 }
 
 export const data = {
@@ -32,7 +33,7 @@ export default function (data) {
     "",
     "Every link below is the raw Markdown source for that page — the same file this site is built from — rather than the rendered HTML.",
     "",
-    `- [Introduction](${base}/README.md)`,
+    `- [Introduction](${base}/index.md)`,
   ];
 
   for (const group of data.nav) {
