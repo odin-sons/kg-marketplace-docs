@@ -22,19 +22,21 @@ const pathPrefix = process.env.ELEVENTY_PATH_PREFIX || "/";
 // preferred URL among duplicates, so both mirrors must agree on the same one.
 const CANONICAL_ORIGIN = "https://kg-marketplace.pages.dev";
 
-// Providers with a documented, currently-working "open with prefilled
-// prompt" URL, checked directly against each one rather than assumed — this
-// class of URL trick tends to get pulled without notice (claude.ai's own web
-// `?q=` was removed in Oct 2025, and Microsoft Copilot's own `?q=` is a
-// known-broken regression as of writing — both skipped for exactly that
-// reason). A provider only gets a link here once we know it actually lands
-// with the prompt already there; every other AI tool is left off entirely
-// rather than opening a blank chat with no indication anything happened —
-// checked directly against ChatGPT/Perplexity/Grok/Claude/AI Studio, and
-// against every major Chinese chat product (DeepSeek, Kimi, Doubao, Qwen
-// Chat, Ernie Bot, ChatGLM, Tencent Yuanbao) with nothing found for any of
-// them. Kept as a flat list specifically so adding or dropping a provider
-// later is a one-line change, not a template edit.
+// Providers with a documented or hand-confirmed, currently-working "open
+// with prefilled prompt" URL — this class of URL trick tends to get pulled
+// without notice (claude.ai's own web `?q=` was removed in Oct 2025, and
+// Microsoft Copilot's own `?q=` is a known-broken regression as of writing —
+// both skipped for exactly that reason). A provider only gets a link here
+// once we know it actually lands with the prompt already there; every other
+// AI tool is left off entirely rather than opening a blank chat with no
+// indication anything happened. Kept as a flat list specifically so adding
+// or dropping a provider later is a one-line change, not a template edit.
+//
+// Checked directly, not assumed, against every entry below plus everything
+// that *didn't* make the list: Qwen Chat, Kimi, and ChatGLM confirmed by
+// hand as not working (no `?q=`/`?query=`/`?prompt=`/`?message=`/`?input=`
+// lands anything in the input box); Doubao, Ernie Bot, and Tencent Yuanbao
+// have no documented mechanism either and weren't hand-tested (no account).
 //
 // Claude has no *web* prefill param, but does have a documented Desktop
 // deep-link scheme (same one Mintlify's own "Open in Claude" button uses):
@@ -56,6 +58,7 @@ const AI_PROVIDERS = [
   { name: "Grok", prefillUrl: (prompt) => `https://grok.com/?q=${encodeURIComponent(prompt)}` },
   { name: "Claude", prefillUrl: (prompt) => `claude://claude.ai/new?q=${encodeURIComponent(prompt)}` },
   { name: "Google AI Studio", prefillUrl: (prompt) => `https://aistudio.google.com/apps?prompt=${encodeURIComponent(prompt)}` },
+  { name: "DeepSeek", prefillUrl: (prompt) => `https://chat.deepseek.com/?q=${encodeURIComponent(prompt)}` },
 ].map((provider) => ({ ...provider, icon: AI_PROVIDER_ICONS[provider.name] }));
 
 // Content directories that get a raw-markdown passthrough copy (see below) —

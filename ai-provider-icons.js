@@ -4,7 +4,7 @@
 // shared with the sidebar-toggle icon via svg-icons.js.
 import { loadIcon } from "./svg-icons.js";
 
-const [chatgpt, perplexity, grok, claude, geminiSpark, copyIcon, viewMarkdownIcon] = await Promise.all([
+const [chatgpt, perplexity, grok, claude, geminiSpark, deepseek, copyIcon, viewMarkdownIcon] = await Promise.all([
   loadIcon("chatgpt.svg"),
   loadIcon("perplexity.svg"),
   loadIcon("grok.svg"),
@@ -13,6 +13,7 @@ const [chatgpt, perplexity, grok, claude, geminiSpark, copyIcon, viewMarkdownIco
   // closed unmerged) — reused for the AI Studio menu entry since it's the
   // same Google-AI sparkle mark AI Studio's own UI uses.
   loadIcon("gemini.svg"),
+  loadIcon("deepseek.svg"),
   loadIcon("copy.svg"),
   loadIcon("view-markdown.svg"),
 ]);
@@ -23,6 +24,7 @@ export const AI_PROVIDER_ICONS = {
   Grok: grok,
   Claude: claude,
   "Google AI Studio": geminiSpark,
+  DeepSeek: deepseek,
 };
 
 export const COPY_ICON = copyIcon;
