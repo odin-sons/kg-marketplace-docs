@@ -67,7 +67,7 @@ const AI_PROVIDERS = [
   { name: "Perplexity", prefillUrl: (prompt) => `https://www.perplexity.ai/?q=${encodeURIComponent(prompt)}` },
   { name: "Grok", prefillUrl: (prompt) => `https://grok.com/?q=${encodeURIComponent(prompt)}` },
   { name: "DeepSeek", prefillUrl: (prompt) => `https://chat.deepseek.com/?q=${encodeURIComponent(prompt)}` },
-  { name: "Claude", prefillUrl: (prompt) => `claude://claude.ai/new?q=${encodeURIComponent(prompt)}` },
+  { name: "Claude Desktop", prefillUrl: (prompt) => `claude://claude.ai/new?q=${encodeURIComponent(prompt)}` },
   { name: "Google AI Studio", prefillUrl: (prompt) => `https://aistudio.google.com/apps?prompt=${encodeURIComponent(prompt)}` },
 ].map((provider) => ({ ...provider, icon: AI_PROVIDER_ICONS[provider.name] }));
 

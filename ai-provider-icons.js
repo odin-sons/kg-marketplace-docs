@@ -22,7 +22,7 @@ export const AI_PROVIDER_ICONS = {
   ChatGPT: chatgpt,
   Perplexity: perplexity,
   Grok: grok,
-  Claude: claude,
+  "Claude Desktop": claude,
   "Google AI Studio": geminiSpark,
   DeepSeek: deepseek,
 };
