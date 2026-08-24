@@ -31,7 +31,7 @@ Please read the rules below.
 
 Any script works in a header name, including Cyrillic and Chinese — none of these formats restrict you to specific characters.
 
-If you write data lines before any `[Section]` header, they land in a profile literally called `default` — this is intentional and safe to rely on. Several NPC types come pre-set to use the `default` profile in-game.
+If you write data lines before any `[Section]` header, they land in a profile literally called `default` in most formats — this is intentional and safe to rely on, and several NPC types come pre-set to use the `default` profile in-game. [Dialogues](../configs/dialogues.md) and the quest database (not [Quest Profiles](../configs/quest-profiles.md) — the file where you write `[QuestID]` quests themselves) are the exception: unlabeled lines before the first header there are silently skipped instead of landing anywhere.
 
 ## Separators used across formats
 
