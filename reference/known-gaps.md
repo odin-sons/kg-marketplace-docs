@@ -2,10 +2,6 @@
 
 Things in the **current mod version (9.8.8)** that look like they should work based on folder names, in-game text, or their own naming, but do not — or that behave differently from what their name suggests. Every entry below is checked directly against the mod's own source, not guessed. This page is about present-day behavior, not about updating between versions; for that, see [Migrations](migrations.md).
 
-## Lootboxes do not currently work
-
-A `Configs/Lootboxes/` folder is created automatically, and there is even a Discord webhook message template for it (see [Discord Webhooks](../configs/discord-webhooks.md)) — but no code anywhere in the mod parses a lootbox file into anything. The folder is only registered with the same generic file-watcher every other module uses, which is why it gets created and picked up by [Hot reload](../setup/hot-reload.md) at all — nothing downstream of that turns its contents into an actual lootbox. If you find an old guide describing a Lootbox file format (`[UID]` / `TYPE` / item / description / icon), it does not apply here. **Do not build content around this folder** — it currently does nothing.
-
 ## `PlayerHasOneOfCustomDataKeys` does not match its name
 
 This [condition](../concepts/conditions.md) is true when the player's data **differs** from the referenced data set on at least one value — not when the player "has one of" the listed values, despite the name. In the mod's own condition-evaluation code, this check returns true the moment it finds one value that does *not* match, and only reaches `return false` if every value matched. Its sibling, `PlayerHasAllCustomDataKeys` (true only when every value matches), behaves the way its name suggests. Test this one with known values before relying on it for anything important.
