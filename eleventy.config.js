@@ -38,10 +38,13 @@ const CANONICAL_ORIGIN = "https://kg-marketplace.pages.dev";
 // from quietly seeding a conversation) — so `copyPromptFirst` stays on too,
 // a free safety net for visitors without the desktop app.
 //
-// Gemini has no equivalent at all, on the web or via a desktop scheme —
-// Mintlify's own reference implementation doesn't offer a Gemini option
-// either, only Google AI Studio (a different, developer-facing product) —
-// so it keeps the clipboard-only fallback.
+// Gemini itself (gemini.google.com) has no equivalent at all, on the web or
+// via a desktop scheme — matches Mintlify's own reference implementation,
+// which doesn't offer a Gemini option either. It offers Google AI Studio
+// instead (a separate, developer-facing product built on the same models),
+// and that one does have a working, if undocumented, prefill param —
+// confirmed by hand: aistudio.google.com/apps?prompt=<prompt> lands with the
+// prompt already in the box. So AI Studio's the one linked here, not Gemini.
 const AI_PROVIDERS = [
   { name: "ChatGPT", prefillUrl: (prompt) => `https://chatgpt.com/?q=${encodeURIComponent(prompt)}` },
   { name: "Perplexity", prefillUrl: (prompt) => `https://www.perplexity.ai/?q=${encodeURIComponent(prompt)}` },
@@ -52,12 +55,7 @@ const AI_PROVIDERS = [
     copyPromptFirst: true,
     copyPromptHint: "Opens the prompt directly in Claude Desktop if you have it installed. Also copies it to your clipboard either way, just in case.",
   },
-  {
-    name: "Gemini",
-    prefillUrl: () => "https://gemini.google.com/app",
-    copyPromptFirst: true,
-    copyPromptHint: "Copies the prompt to your clipboard, then opens Gemini — paste it into the new chat.",
-  },
+  { name: "Google AI Studio", prefillUrl: (prompt) => `https://aistudio.google.com/apps?prompt=${encodeURIComponent(prompt)}` },
 ].map((provider) => ({ ...provider, icon: AI_PROVIDER_ICONS[provider.name] }));
 
 // Content directories that get a raw-markdown passthrough copy (see below) —
