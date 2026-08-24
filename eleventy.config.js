@@ -28,15 +28,17 @@ const CANONICAL_ORIGIN = "https://kg-marketplace.pages.dev";
 // (claude.ai's own `?q=` was removed in Oct 2025). Kept as a flat list
 // specifically so adding or dropping a provider later is a one-line change,
 // not a template edit. Claude and Gemini don't support a prefill param at
-// all right now, so their entries just open a fresh chat — paired in the UI
-// with the "Copy page" button so the visitor pastes it in themselves
-// instead of the link silently doing nothing.
+// all right now (re-checked Aug 2026 — still no native `?q=`/`?prompt=` on
+// either), so `copyPromptFirst` marks them: ai-actions.js copies the prompt
+// to the clipboard on click, same as the "Copy page" button, right before
+// the link opens a blank chat — so the visitor lands with the prompt one
+// paste away instead of an empty box.
 const AI_PROVIDERS = [
   { name: "ChatGPT", prefillUrl: (prompt) => `https://chatgpt.com/?q=${encodeURIComponent(prompt)}` },
   { name: "Perplexity", prefillUrl: (prompt) => `https://www.perplexity.ai/?q=${encodeURIComponent(prompt)}` },
   { name: "Grok", prefillUrl: (prompt) => `https://grok.com/?q=${encodeURIComponent(prompt)}` },
-  { name: "Claude", prefillUrl: () => "https://claude.ai/new" },
-  { name: "Gemini", prefillUrl: () => "https://gemini.google.com/app" },
+  { name: "Claude", prefillUrl: () => "https://claude.ai/new", copyPromptFirst: true },
+  { name: "Gemini", prefillUrl: () => "https://gemini.google.com/app", copyPromptFirst: true },
 ].map((provider) => ({ ...provider, icon: AI_PROVIDER_ICONS[provider.name] }));
 
 // Content directories that get a raw-markdown passthrough copy (see below) —
@@ -246,7 +248,12 @@ export default function (eleventyConfig) {
     return (data) => {
       if (!data.markdownUrl) return undefined;
       const prompt = `Read this Marketplace and Server NPCs (Revamped) documentation page and help me with it: ${data.canonicalUrl}`;
-      return AI_PROVIDERS.map((provider) => ({ name: provider.name, url: provider.prefillUrl(prompt), icon: provider.icon }));
+      return AI_PROVIDERS.map((provider) => ({
+        name: provider.name,
+        url: provider.prefillUrl(prompt),
+        icon: provider.icon,
+        copyPrompt: provider.copyPromptFirst ? prompt : undefined,
+      }));
     };
   });
 

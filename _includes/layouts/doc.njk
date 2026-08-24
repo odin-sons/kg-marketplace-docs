@@ -9,7 +9,7 @@ layout: layouts/base.njk
       <button type="button" class="ai-actions__copy" data-markdown-url="{{ markdownUrl }}"><span class="ai-actions__icon">{{ copyIcon | safe }}</span> Copy page as Markdown</button>
       <a href="{{ markdownUrl }}"><span class="ai-actions__icon">{{ viewMarkdownIcon | safe }}</span> View as Markdown</a>
       <p class="ai-actions__group-label">Open in</p>
-      {% for link in aiLinks %}<a href="{{ link.url }}" target="_blank" rel="noopener noreferrer"><span class="ai-actions__icon">{{ link.icon | safe }}</span> {{ link.name }}</a>{% endfor %}
+      {% for link in aiLinks %}<a href="{{ link.url }}" target="_blank" rel="noopener noreferrer"{% if link.copyPrompt %} class="ai-actions__copy-prompt-link" data-copy-prompt="{{ link.copyPrompt }}" title="Copies the prompt to your clipboard, then opens {{ link.name }} — paste it into the new chat"{% endif %}><span class="ai-actions__icon">{{ link.icon | safe }}</span> {{ link.name }}</a>{% endfor %}
     </div>
   </nav>
   {% endif %}

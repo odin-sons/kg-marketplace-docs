@@ -63,4 +63,17 @@
         }, 2000);
       });
   });
+
+  // Claude and Gemini don't support a prefill-via-URL param (see
+  // eleventy.config.js), so these links carry the prompt as a data
+  // attribute instead: copy it to the clipboard on click, same gesture that
+  // opens the new chat, so it's a paste away rather than a blank box. The
+  // write must happen synchronously in this handler (not after a fetch, like
+  // the button above) — Clipboard API access requires the call to still be
+  // inside the click's user-activation window.
+  menu.querySelectorAll("[data-copy-prompt]").forEach(function (link) {
+    link.addEventListener("click", function () {
+      navigator.clipboard.writeText(link.dataset.copyPrompt);
+    });
+  });
 })();
