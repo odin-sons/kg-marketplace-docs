@@ -23,22 +23,41 @@ const pathPrefix = process.env.ELEVENTY_PATH_PREFIX || "/";
 const CANONICAL_ORIGIN = "https://kg-marketplace.pages.dev";
 
 // Providers with a documented, currently-working "open with prefilled
-// prompt" URL query param, checked directly against each one rather than
-// assumed — this class of URL trick tends to get pulled without notice
-// (claude.ai's own `?q=` was removed in Oct 2025). Kept as a flat list
-// specifically so adding or dropping a provider later is a one-line change,
-// not a template edit. Claude and Gemini don't support a prefill param at
-// all right now (re-checked Aug 2026 — still no native `?q=`/`?prompt=` on
-// either), so `copyPromptFirst` marks them: ai-actions.js copies the prompt
-// to the clipboard on click, same as the "Copy page" button, right before
-// the link opens a blank chat — so the visitor lands with the prompt one
-// paste away instead of an empty box.
+// prompt" URL, checked directly against each one rather than assumed — this
+// class of URL trick tends to get pulled without notice (claude.ai's own web
+// `?q=` was removed in Oct 2025). Kept as a flat list specifically so adding
+// or dropping a provider later is a one-line change, not a template edit.
+//
+// Claude has no *web* prefill param, but does have a documented Desktop
+// deep-link scheme (same one Mintlify's own "Open in Claude" button uses):
+// claude://claude.ai/new?q=<prompt>, capped around 14,000 characters, all
+// values URL-encoded. It only does anything if Claude Desktop is installed
+// and registered as the protocol handler — silently inert otherwise, and
+// even when it works, Claude's own UI flags the prefilled text as
+// externally-sourced (expected: the same protection stops a malicious page
+// from quietly seeding a conversation) — so `copyPromptFirst` stays on too,
+// a free safety net for visitors without the desktop app.
+//
+// Gemini has no equivalent at all, on the web or via a desktop scheme —
+// Mintlify's own reference implementation doesn't offer a Gemini option
+// either, only Google AI Studio (a different, developer-facing product) —
+// so it keeps the clipboard-only fallback.
 const AI_PROVIDERS = [
   { name: "ChatGPT", prefillUrl: (prompt) => `https://chatgpt.com/?q=${encodeURIComponent(prompt)}` },
   { name: "Perplexity", prefillUrl: (prompt) => `https://www.perplexity.ai/?q=${encodeURIComponent(prompt)}` },
   { name: "Grok", prefillUrl: (prompt) => `https://grok.com/?q=${encodeURIComponent(prompt)}` },
-  { name: "Claude", prefillUrl: () => "https://claude.ai/new", copyPromptFirst: true },
-  { name: "Gemini", prefillUrl: () => "https://gemini.google.com/app", copyPromptFirst: true },
+  {
+    name: "Claude",
+    prefillUrl: (prompt) => `claude://claude.ai/new?q=${encodeURIComponent(prompt)}`,
+    copyPromptFirst: true,
+    copyPromptHint: "Opens the prompt directly in Claude Desktop if you have it installed. Also copies it to your clipboard either way, just in case.",
+  },
+  {
+    name: "Gemini",
+    prefillUrl: () => "https://gemini.google.com/app",
+    copyPromptFirst: true,
+    copyPromptHint: "Copies the prompt to your clipboard, then opens Gemini — paste it into the new chat.",
+  },
 ].map((provider) => ({ ...provider, icon: AI_PROVIDER_ICONS[provider.name] }));
 
 // Content directories that get a raw-markdown passthrough copy (see below) —
@@ -253,6 +272,7 @@ export default function (eleventyConfig) {
         url: provider.prefillUrl(prompt),
         icon: provider.icon,
         copyPrompt: provider.copyPromptFirst ? prompt : undefined,
+        copyPromptHint: provider.copyPromptHint,
       }));
     };
   });
