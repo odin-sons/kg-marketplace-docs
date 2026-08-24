@@ -58,17 +58,20 @@ const CANONICAL_ORIGIN = "https://kg-marketplace.pages.dev";
 // and that one does have a working, if undocumented, prefill param —
 // confirmed by hand: aistudio.google.com/apps?prompt=<prompt> lands with the
 // prompt already in the box. So AI Studio's the one linked here, not Gemini.
-// Plain web-chat providers first, harnesses (Claude — opens the Desktop
-// app, not a page; Google AI Studio — a developer platform, not a
-// consumer chatbot) last, so the dropdown leads with the options anyone
-// can use in a browser tab before the two that assume more of the visitor.
+// Ordered by how likely a random visitor is to actually land somewhere:
+// plain web-chat providers first (open in any browser, no account or app
+// needed to at least see the prompt land), then Google AI Studio (still a
+// normal web page, just a developer-facing product), then Claude Desktop
+// dead last — the only one handled by a custom protocol (claude://) rather
+// than https://, so it's the only one that does *nothing at all*, not even
+// a page, for a visitor without that exact app installed.
 const AI_PROVIDERS = [
   { name: "ChatGPT", prefillUrl: (prompt) => `https://chatgpt.com/?q=${encodeURIComponent(prompt)}` },
   { name: "Perplexity", prefillUrl: (prompt) => `https://www.perplexity.ai/?q=${encodeURIComponent(prompt)}` },
   { name: "Grok", prefillUrl: (prompt) => `https://grok.com/?q=${encodeURIComponent(prompt)}` },
   { name: "DeepSeek", prefillUrl: (prompt) => `https://chat.deepseek.com/?q=${encodeURIComponent(prompt)}` },
-  { name: "Claude Desktop", prefillUrl: (prompt) => `claude://claude.ai/new?q=${encodeURIComponent(prompt)}` },
   { name: "Google AI Studio", prefillUrl: (prompt) => `https://aistudio.google.com/apps?prompt=${encodeURIComponent(prompt)}` },
+  { name: "Claude Desktop", prefillUrl: (prompt) => `claude://claude.ai/new?q=${encodeURIComponent(prompt)}` },
 ].map((provider) => ({ ...provider, icon: AI_PROVIDER_ICONS[provider.name] }));
 
 // Content directories that get a raw-markdown passthrough copy (see below) —
