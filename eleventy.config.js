@@ -33,10 +33,16 @@ const CANONICAL_ORIGIN = "https://kg-marketplace.pages.dev";
 // or dropping a provider later is a one-line change, not a template edit.
 //
 // Checked directly, not assumed, against every entry below plus everything
-// that *didn't* make the list: Qwen Chat, Kimi, and ChatGLM confirmed by
-// hand as not working (no `?q=`/`?query=`/`?prompt=`/`?message=`/`?input=`
-// lands anything in the input box); Doubao, Ernie Bot, and Tencent Yuanbao
-// have no documented mechanism either and weren't hand-tested (no account).
+// that *didn't* make the list. Chinese chat products: Qwen Chat, Kimi, and
+// ChatGLM confirmed by hand as not working (no `?q=`/`?query=`/`?prompt=`/
+// `?message=`/`?input=` lands anything in the input box); Doubao, Ernie Bot,
+// and Tencent Yuanbao have no documented mechanism either and weren't
+// hand-tested (no account). Elsewhere: Meta AI and Mistral's Le Chat/Vibe
+// both confirmed by hand as not working (param either ignored or stripped
+// on redirect); Pi.ai redirects straight to a fresh conversation ID with no
+// sign the param did anything; HuggingChat (shut down Jul 2025) and Phind
+// (shut down Jan 2026) no longer exist; Poe.com and You.com require an
+// account before the chat UI is even reachable, so neither was hand-tested.
 //
 // Claude has no *web* prefill param, but does have a documented Desktop
 // deep-link scheme (same one Mintlify's own "Open in Claude" button uses):
