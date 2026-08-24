@@ -6,10 +6,11 @@ layout: layouts/base.njk
   <nav class="ai-actions" aria-label="Use this page with AI">
     <button type="button" class="ai-actions__trigger" aria-expanded="false" aria-controls="ai-actions-menu">Use with AI <span aria-hidden="true">▾</span></button>
     <div id="ai-actions-menu" class="ai-actions__menu" hidden>
+      <button type="button" class="ai-actions__copy-prompt" data-prompt="{{ aiPrompt }}"><span class="ai-actions__icon">{{ copyIcon | safe }}</span> Copy prompt</button>
       <button type="button" class="ai-actions__copy" data-markdown-url="{{ markdownUrl }}"><span class="ai-actions__icon">{{ copyIcon | safe }}</span> Copy page as Markdown</button>
       <a href="{{ markdownUrl }}"><span class="ai-actions__icon">{{ viewMarkdownIcon | safe }}</span> View as Markdown</a>
       <p class="ai-actions__group-label">Open in</p>
-      {% for link in aiLinks %}<a href="{{ link.url }}" target="_blank" rel="noopener noreferrer"{% if link.copyPrompt %} class="ai-actions__copy-prompt-link" data-copy-prompt="{{ link.copyPrompt }}" title="{{ link.copyPromptHint }}"{% endif %}><span class="ai-actions__icon">{{ link.icon | safe }}</span> {{ link.name }}</a>{% endfor %}
+      {% for link in aiLinks %}<a href="{{ link.url }}" target="_blank" rel="noopener noreferrer"><span class="ai-actions__icon">{{ link.icon | safe }}</span> {{ link.name }}</a>{% endfor %}
     </div>
   </nav>
   {% endif %}

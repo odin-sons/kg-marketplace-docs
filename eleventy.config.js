@@ -25,18 +25,23 @@ const CANONICAL_ORIGIN = "https://kg-marketplace.pages.dev";
 // Providers with a documented, currently-working "open with prefilled
 // prompt" URL, checked directly against each one rather than assumed — this
 // class of URL trick tends to get pulled without notice (claude.ai's own web
-// `?q=` was removed in Oct 2025). Kept as a flat list specifically so adding
-// or dropping a provider later is a one-line change, not a template edit.
+// `?q=` was removed in Oct 2025, and Microsoft Copilot's own `?q=` is a
+// known-broken regression as of writing — both skipped for exactly that
+// reason). A provider only gets a link here once we know it actually lands
+// with the prompt already there; every other AI tool is left off entirely
+// rather than opening a blank chat with no indication anything happened —
+// checked directly against ChatGPT/Perplexity/Grok/Claude/AI Studio, and
+// against every major Chinese chat product (DeepSeek, Kimi, Doubao, Qwen
+// Chat, Ernie Bot, ChatGLM, Tencent Yuanbao) with nothing found for any of
+// them. Kept as a flat list specifically so adding or dropping a provider
+// later is a one-line change, not a template edit.
 //
 // Claude has no *web* prefill param, but does have a documented Desktop
 // deep-link scheme (same one Mintlify's own "Open in Claude" button uses):
 // claude://claude.ai/new?q=<prompt>, capped around 14,000 characters, all
-// values URL-encoded. It only does anything if Claude Desktop is installed
-// and registered as the protocol handler — silently inert otherwise, and
-// even when it works, Claude's own UI flags the prefilled text as
-// externally-sourced (expected: the same protection stops a malicious page
-// from quietly seeding a conversation) — so `copyPromptFirst` stays on too,
-// a free safety net for visitors without the desktop app.
+// values URL-encoded. Only does anything if Claude Desktop is installed and
+// registered as the protocol handler — silently inert otherwise, same as
+// any of the others failing to resolve without an account.
 //
 // Gemini itself (gemini.google.com) has no equivalent at all, on the web or
 // via a desktop scheme — matches Mintlify's own reference implementation,
@@ -49,12 +54,7 @@ const AI_PROVIDERS = [
   { name: "ChatGPT", prefillUrl: (prompt) => `https://chatgpt.com/?q=${encodeURIComponent(prompt)}` },
   { name: "Perplexity", prefillUrl: (prompt) => `https://www.perplexity.ai/?q=${encodeURIComponent(prompt)}` },
   { name: "Grok", prefillUrl: (prompt) => `https://grok.com/?q=${encodeURIComponent(prompt)}` },
-  {
-    name: "Claude",
-    prefillUrl: (prompt) => `claude://claude.ai/new?q=${encodeURIComponent(prompt)}`,
-    copyPromptFirst: true,
-    copyPromptHint: "Opens the prompt directly in Claude Desktop if you have it installed. Also copies it to your clipboard either way, just in case.",
-  },
+  { name: "Claude", prefillUrl: (prompt) => `claude://claude.ai/new?q=${encodeURIComponent(prompt)}` },
   { name: "Google AI Studio", prefillUrl: (prompt) => `https://aistudio.google.com/apps?prompt=${encodeURIComponent(prompt)}` },
 ].map((provider) => ({ ...provider, icon: AI_PROVIDER_ICONS[provider.name] }));
 
@@ -257,20 +257,29 @@ export default function (eleventyConfig) {
     };
   });
 
+  // The prompt text itself — fed both to aiLinks below (URL-encoded into
+  // each provider's prefill link) and directly to doc.njk's own "Copy
+  // prompt" button (data.aiPrompt, verbatim), so a visitor whose AI tool of
+  // choice isn't one of the ones with a working prefill link can still grab
+  // exactly what those links would have sent.
+  eleventyConfig.addGlobalData("eleventyComputed.aiPrompt", () => {
+    return (data) => {
+      if (!data.markdownUrl) return undefined;
+      return `Read this Marketplace and Server NPCs (Revamped) documentation page and help me with it: ${data.canonicalUrl}`;
+    };
+  });
+
   // Fed to the "Open in <AI>" bar in doc.njk — undefined wherever
   // markdownUrl is (no raw-markdown copy means nothing to point an agent
   // at), computed here so the template just loops a ready-made list rather
-  // than building URLs or encoding a prompt itself.
+  // than building URLs itself.
   eleventyConfig.addGlobalData("eleventyComputed.aiLinks", () => {
     return (data) => {
-      if (!data.markdownUrl) return undefined;
-      const prompt = `Read this Marketplace and Server NPCs (Revamped) documentation page and help me with it: ${data.canonicalUrl}`;
+      if (!data.aiPrompt) return undefined;
       return AI_PROVIDERS.map((provider) => ({
         name: provider.name,
-        url: provider.prefillUrl(prompt),
+        url: provider.prefillUrl(data.aiPrompt),
         icon: provider.icon,
-        copyPrompt: provider.copyPromptFirst ? prompt : undefined,
-        copyPromptHint: provider.copyPromptHint,
       }));
     };
   });

@@ -911,7 +911,8 @@ blockquote {
 }
 
 .ai-actions__menu a,
-.ai-actions__copy {
+.ai-actions__copy,
+.ai-actions__copy-prompt {
   display: flex;
   align-items: center;
   gap: 0.5em;
@@ -921,7 +922,8 @@ blockquote {
   color: var(--link);
 }
 
-.ai-actions__copy {
+.ai-actions__copy,
+.ai-actions__copy-prompt {
   padding: 0;
   border: none;
   background: transparent;

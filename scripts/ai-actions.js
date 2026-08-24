@@ -33,47 +33,52 @@
     }
   });
 
-  var copyButton = menu.querySelector(".ai-actions__copy");
-  if (!copyButton) return;
+  // Flashes a button's label to `text` for 2s, then restores whatever it
+  // said before this call — shared by both copy buttons below so a second
+  // click (or a click on the other button) while the flash is still showing
+  // doesn't leave it stuck.
+  function flashLabel(button, text) {
+    if (!button.dataset.defaultLabel) button.dataset.defaultLabel = button.textContent;
+    clearTimeout(button._resetTimer);
+    button.textContent = text;
+    button._resetTimer = setTimeout(function () {
+      button.textContent = button.dataset.defaultLabel;
+    }, 2000);
+  }
 
-  var defaultLabel = copyButton.textContent;
-  var resetTimer;
-
-  copyButton.addEventListener("click", function () {
-    var url = copyButton.dataset.markdownUrl;
-
-    fetch(url)
-      .then(function (res) {
-        if (!res.ok) throw new Error("bad response");
-        return res.text();
-      })
-      .then(function (markdown) {
-        return navigator.clipboard.writeText(markdown);
-      })
-      .then(function () {
-        copyButton.textContent = "Copied!";
-      })
-      .catch(function () {
-        copyButton.textContent = "Couldn't copy — try “View as Markdown” instead";
-      })
-      .finally(function () {
-        clearTimeout(resetTimer);
-        resetTimer = setTimeout(function () {
-          copyButton.textContent = defaultLabel;
-        }, 2000);
-      });
-  });
-
-  // Claude and Gemini don't support a prefill-via-URL param (see
-  // eleventy.config.js), so these links carry the prompt as a data
-  // attribute instead: copy it to the clipboard on click, same gesture that
-  // opens the new chat, so it's a paste away rather than a blank box. The
-  // write must happen synchronously in this handler (not after a fetch, like
-  // the button above) — Clipboard API access requires the call to still be
-  // inside the click's user-activation window.
-  menu.querySelectorAll("[data-copy-prompt]").forEach(function (link) {
-    link.addEventListener("click", function () {
-      navigator.clipboard.writeText(link.dataset.copyPrompt);
+  var copyPromptButton = menu.querySelector(".ai-actions__copy-prompt");
+  if (copyPromptButton) {
+    copyPromptButton.addEventListener("click", function () {
+      navigator.clipboard
+        .writeText(copyPromptButton.dataset.prompt)
+        .then(function () {
+          flashLabel(copyPromptButton, "Copied!");
+        })
+        .catch(function () {
+          flashLabel(copyPromptButton, "Couldn't copy");
+        });
     });
-  });
+  }
+
+  var copyButton = menu.querySelector(".ai-actions__copy");
+  if (copyButton) {
+    copyButton.addEventListener("click", function () {
+      var url = copyButton.dataset.markdownUrl;
+
+      fetch(url)
+        .then(function (res) {
+          if (!res.ok) throw new Error("bad response");
+          return res.text();
+        })
+        .then(function (markdown) {
+          return navigator.clipboard.writeText(markdown);
+        })
+        .then(function () {
+          flashLabel(copyButton, "Copied!");
+        })
+        .catch(function () {
+          flashLabel(copyButton, "Couldn't copy — try “View as Markdown” instead");
+        });
+    });
+  }
 })();
