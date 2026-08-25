@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ title }} — KG Marketplace Docs</title>
-  <link rel="canonical" href="{{ canonicalUrl }}">
+  {% if noIndex %}<meta name="robots" content="noindex">{% endif %}
+  {% if canonicalUrl %}<link rel="canonical" href="{{ canonicalUrl }}">{% endif %}
   <link rel="describedby" href="/llms.txt">
   {% if markdownUrl %}<link rel="alternate" type="text/markdown" href="{{ markdownUrl }}">{% endif %}
   <script>

@@ -1,0 +1,58 @@
+name: Deploy archived docs version
+
+# Separate from deploy.yml on purpose: this targets a completely different
+# audience (a frozen past mod version, Cloudflare-only, single build pass,
+# no GitHub Pages mirror — see _data/versions.js for why) and touching it
+# should never risk the main deploy pipeline.
+on:
+  push:
+    branches: ["version/**"]
+
+concurrency:
+  # Scoped per branch, not shared with deploy.yml's "pages" group — deploying
+  # version/9.8.8 and version/9.8.9 (or the current main build) are
+  # independent targets and shouldn't queue behind each other. Two quick
+  # pushes to the *same* version branch should still cancel-and-replace
+  # rather than deploy out of order.
+  group: pages-archive-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: cloudflare-pages-archive
+      url: ${{ steps.deploy.outputs.pages-deployment-alias-url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/cache@v6
+        with:
+          path: .cache
+          key: build-${{ hashFiles('images/**', 'icons-src/**') }}
+          restore-keys: build-
+      - run: npm ci
+      # No ELEVENTY_PATH_PREFIX/ELEVENTY_SITE_ORIGIN pass here — archived
+      # versions are Cloudflare-only, served at their own alias's root, so
+      # the defaults (pathPrefix "/", origin kg-marketplace.pages.dev) apply
+      # same as the regular Cloudflare build. ELEVENTY_ARCHIVED_VERSION
+      # flips canonical/robots off — see eleventy.config.js and
+      # robots.txt.11ty.js — so this snapshot doesn't compete with the
+      # current docs in search results.
+      - run: npm run build
+        env:
+          ELEVENTY_ARCHIVED_VERSION: "true"
+      - run: npx pagefind --site _site
+      - uses: cloudflare/wrangler-action@v4
+        id: deploy
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # --branch controls the alias URL (dots/slashes in the branch name
+          # become hyphens, e.g. version/9.8.8 -> version-9-8-8.kg-marketplace.pages.dev)
+          # — no native git integration needed for this to work, confirmed
+          # against Cloudflare's own docs on branch alias generation.
+          command: pages deploy _site --project-name=kg-marketplace --branch=${{ github.ref_name }}

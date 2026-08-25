@@ -5,6 +5,7 @@
 // build each need their own absolute Sitemap URL, not one shared constant.
 const siteOrigin = process.env.ELEVENTY_SITE_ORIGIN || "https://kg-marketplace.pages.dev";
 const pathPrefix = (process.env.ELEVENTY_PATH_PREFIX || "/").replace(/\/$/, "");
+const isArchivedVersion = process.env.ELEVENTY_ARCHIVED_VERSION === "true";
 
 export const data = {
   permalink: "robots.txt",
@@ -14,6 +15,16 @@ export const data = {
 };
 
 export default function () {
+  // A frozen past mod version (see eleventy.config.js's isArchivedVersion)
+  // shouldn't compete with the current docs in search results — every
+  // page already carries noindex (base.njk), this is the belt-and-braces
+  // crawl-level block to match. No Sitemap: line for the same reason.
+  if (isArchivedVersion) {
+    return `User-agent: *
+Disallow: /
+`;
+  }
+
   return `# Nothing on this site is disallowed — it's public mod documentation. AI
 # crawlers are listed individually (rather than relying on the User-agent: *
 # block alone) so that if a path-specific Disallow is ever added under *,

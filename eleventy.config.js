@@ -15,11 +15,23 @@ const SIDEBAR_TOGGLE_ICON = await loadIcon("chevron-left.svg");
 // setting this env var only for the GitHub Pages pass.
 const pathPrefix = process.env.ELEVENTY_PATH_PREFIX || "/";
 
-// The domain every page's <link rel="canonical"> points at, on both mirrors
-// alike — matches CANONICAL_VERSIONS_URL in scripts/version-switcher.js and
-// the default in sitemap.xml.11ty.js/robots.txt.11ty.js. Unlike pathPrefix
-// this never varies per build: canonical's whole job is naming the one
-// preferred URL among duplicates, so both mirrors must agree on the same one.
+// Set only by .github/workflows/deploy-archived-version.yml, when building a
+// frozen past mod version for its own version/* branch alias (see
+// _data/versions.js). Such a build's content can genuinely differ from the
+// current docs, so it must not claim to be a duplicate of them (no
+// canonical pointing at CANONICAL_ORIGIN below) or compete with them in
+// search results (noIndex, consumed by base.njk; robots.txt.11ty.js
+// disallows the whole build outright) — the approach Docusaurus's own
+// versioned-docs settled on after finding a self-referential canonical
+// "does nothing" per Google's own guidance.
+const isArchivedVersion = process.env.ELEVENTY_ARCHIVED_VERSION === "true";
+
+// The domain every current-version page's <link rel="canonical"> points at,
+// on both mirrors alike — matches CANONICAL_VERSIONS_URL in
+// scripts/version-switcher.js and the default in
+// sitemap.xml.11ty.js/robots.txt.11ty.js. Unlike pathPrefix this never
+// varies per build: canonical's whole job is naming the one preferred URL
+// among duplicates, so both mirrors must agree on the same one.
 const CANONICAL_ORIGIN = "https://kg-marketplace.pages.dev";
 
 // Providers with a documented or hand-confirmed, currently-working "open
@@ -251,9 +263,16 @@ export default function (eleventyConfig) {
   // Fed to <link rel="canonical"> in base.njk — always the same domain on
   // both mirrors (see CANONICAL_ORIGIN above), computed here rather than in
   // the template so base.njk only ever renders a value, never derives one.
+  // undefined for an archived-version build (see isArchivedVersion above) —
+  // base.njk skips the tag entirely rather than rendering one.
   eleventyConfig.addGlobalData("eleventyComputed.canonicalUrl", () => {
-    return (data) => CANONICAL_ORIGIN + data.page.url;
+    return (data) => (isArchivedVersion ? undefined : CANONICAL_ORIGIN + data.page.url);
   });
+
+  // Fed to a <meta name="robots"> tag in base.njk — true only for an
+  // archived-version build. Not per-page computed data since it's the same
+  // for every page in a given build.
+  eleventyConfig.addGlobalData("noIndex", isArchivedVersion);
 
   // Fed to <link rel="alternate" type="text/markdown"> in base.njk — the
   // root-relative path to this page's raw-markdown passthrough copy (see
