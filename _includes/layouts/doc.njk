@@ -17,6 +17,6 @@ layout: layouts/base.njk
   {{ content | safe }}
   <div class="image-rail" hidden></div>
   <p class="doc__edit">
-    <a href="https://github.com/odin-sons/kg-marketplace-docs/edit/main/{{ page.inputPath | replace('./', '') }}">Edit this page on GitHub</a>
+    <a href="https://github.com/odin-sons/kg-marketplace-docs/edit/{{ editBranch }}/{{ page.inputPath | replace('./', '') }}">Edit this page on GitHub</a>
   </p>
 </article>

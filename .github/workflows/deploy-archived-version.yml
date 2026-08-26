@@ -57,6 +57,10 @@ jobs:
           ELEVENTY_ARCHIVED_VERSION: "true"
           ELEVENTY_SITE_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
           ELEVENTY_CANONICAL_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
+          # So "Edit this page on GitHub" opens this version's own branch,
+          # not main's (different) current copy of the same file — see
+          # eleventy.config.js's editBranch.
+          ELEVENTY_GIT_BRANCH: ${{ github.ref_name }}
       - run: npx pagefind --site _site
       - uses: cloudflare/wrangler-action@v4
         id: deploy

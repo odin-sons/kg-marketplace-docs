@@ -15,6 +15,15 @@ const SIDEBAR_TOGGLE_ICON = await loadIcon("chevron-left.svg");
 // setting this env var only for the GitHub Pages pass.
 const pathPrefix = process.env.ELEVENTY_PATH_PREFIX || "/";
 
+// Fed to doc.njk's "Edit this page on GitHub" link — which branch's copy of
+// the file to open. "main" for the regular build (both mirrors: there's
+// nothing version-specific about which branch has the current content), the
+// actual version/* branch name for an archived build (set by
+// deploy-archived-version.yml to github.ref_name) so that link edits the
+// same frozen content the reader is actually looking at, not main's current
+// (different) version of that file.
+const editBranch = process.env.ELEVENTY_GIT_BRANCH || "main";
+
 // Set only by .github/workflows/deploy-archived-version.yml, when building a
 // frozen past mod version for its own version/* branch alias (see
 // _data/versions.js). Such a build's content can genuinely differ from the
@@ -281,6 +290,8 @@ export default function (eleventyConfig) {
   // archived-version build. Not per-page computed data since it's the same
   // for every page in a given build.
   eleventyConfig.addGlobalData("noIndex", isArchivedVersion);
+
+  eleventyConfig.addGlobalData("editBranch", editBranch);
 
   // Fed to <link rel="alternate" type="text/markdown"> in base.njk — the
   // root-relative path to this page's raw-markdown passthrough copy (see
