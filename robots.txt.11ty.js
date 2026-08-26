@@ -1,9 +1,3 @@
-// Templated (not a static passthrough file) specifically so the Sitemap:
-// line below can point at *this build's own* domain — see sitemap.xml.11ty.js
-// for why the two must agree: Google only accepts a sitemap that lists URLs
-// on the same host serving it, so the GitHub Pages build and the Cloudflare
-// build each need their own absolute Sitemap URL, not one shared constant.
-const siteOrigin = process.env.ELEVENTY_SITE_ORIGIN || "https://kg-marketplace.pages.dev";
 const pathPrefix = (process.env.ELEVENTY_PATH_PREFIX || "/").replace(/\/$/, "");
 const isArchivedVersion = process.env.ELEVENTY_ARCHIVED_VERSION === "true";
 
@@ -24,6 +18,17 @@ export default function () {
 Disallow: /
 `;
   }
+
+  // So the Sitemap: line below can point at *this build's own* domain —
+  // see sitemap.xml.11ty.js for why the two must agree: Google only accepts
+  // a sitemap that lists URLs on the same host serving it, so the GitHub
+  // Pages build and the Cloudflare build each need their own absolute
+  // Sitemap URL. Required, not defaulted — see CANONICAL_ORIGIN's comment
+  // in eleventy.config.js for why.
+  if (!process.env.ELEVENTY_SITE_ORIGIN) {
+    throw new Error("ELEVENTY_SITE_ORIGIN must be set — see deploy.yml");
+  }
+  const siteOrigin = process.env.ELEVENTY_SITE_ORIGIN;
 
   return `# Nothing on this site is disallowed — it's public mod documentation. AI
 # crawlers are listed individually (rather than relying on the User-agent: *

@@ -28,11 +28,19 @@ const isArchivedVersion = process.env.ELEVENTY_ARCHIVED_VERSION === "true";
 
 // The domain every current-version page's <link rel="canonical"> points at,
 // on both mirrors alike — matches CANONICAL_VERSIONS_URL in
-// scripts/version-switcher.js and the default in
-// sitemap.xml.11ty.js/robots.txt.11ty.js. Unlike pathPrefix this never
+// scripts/version-switcher.js (intentionally still hardcoded there — the
+// switcher must always look at that one fixed spot regardless of which
+// build served the page, unlike this constant) and the same env var
+// sitemap.xml.11ty.js/robots.txt.11ty.js read. Unlike pathPrefix this never
 // varies per build: canonical's whole job is naming the one preferred URL
-// among duplicates, so both mirrors must agree on the same one.
-const CANONICAL_ORIGIN = "https://kg-marketplace.pages.dev";
+// among duplicates, so both mirrors must agree on the same one — required
+// rather than defaulted so the actual domain lives in exactly one place
+// (deploy.yml/deploy-archived-version.yml's own env blocks), not scattered
+// across every file that needs it.
+if (!process.env.ELEVENTY_CANONICAL_ORIGIN) {
+  throw new Error("ELEVENTY_CANONICAL_ORIGIN must be set — see deploy.yml");
+}
+const CANONICAL_ORIGIN = process.env.ELEVENTY_CANONICAL_ORIGIN;
 
 // Providers with a documented or hand-confirmed, currently-working "open
 // with prefilled prompt" URL — this class of URL trick tends to get pulled

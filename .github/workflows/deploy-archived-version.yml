@@ -17,6 +17,13 @@ concurrency:
   group: pages-archive-${{ github.ref_name }}
   cancel-in-progress: true
 
+env:
+  # Same value, same reasoning as deploy.yml's own copy of this — see there.
+  # Two separate literals (one per workflow file) rather than one shared
+  # source, since GitHub Actions has no cross-workflow env/include mechanism
+  # short of a repository Variable, which wasn't introduced for this.
+  CANONICAL_DOMAIN: https://kg-marketplace.pages.dev
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -35,16 +42,21 @@ jobs:
           key: build-${{ hashFiles('images/**', 'icons-src/**') }}
           restore-keys: build-
       - run: npm ci
-      # No ELEVENTY_PATH_PREFIX/ELEVENTY_SITE_ORIGIN pass here — archived
-      # versions are Cloudflare-only, served at their own alias's root, so
-      # the defaults (pathPrefix "/", origin kg-marketplace.pages.dev) apply
-      # same as the regular Cloudflare build. ELEVENTY_ARCHIVED_VERSION
+      # No ELEVENTY_PATH_PREFIX — archived versions are Cloudflare-only,
+      # served at their own alias's root, same as the regular Cloudflare
+      # build (default pathPrefix "/"). ELEVENTY_SITE_ORIGIN/
+      # ELEVENTY_CANONICAL_ORIGIN are still required env vars even though
+      # ELEVENTY_ARCHIVED_VERSION means canonicalUrl ends up unused (see
+      # eleventy.config.js) — the build fails fast without them regardless,
+      # so simplest to always pass them. ELEVENTY_ARCHIVED_VERSION itself
       # flips canonical/robots off — see eleventy.config.js and
       # robots.txt.11ty.js — so this snapshot doesn't compete with the
       # current docs in search results.
       - run: npm run build
         env:
           ELEVENTY_ARCHIVED_VERSION: "true"
+          ELEVENTY_SITE_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
+          ELEVENTY_CANONICAL_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
       - run: npx pagefind --site _site
       - uses: cloudflare/wrangler-action@v4
         id: deploy

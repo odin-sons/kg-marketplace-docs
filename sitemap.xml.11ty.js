@@ -8,8 +8,13 @@
 // host: Google's own cross-domain sitemap rules only accept a sitemap
 // listing URLs on the same host that serves it (or one you've separately
 // verified in Search Console) — a GitHub Pages build whose sitemap only
-// lists kg-marketplace.pages.dev URLs would be invalid under that rule.
-const siteOrigin = process.env.ELEVENTY_SITE_ORIGIN || "https://kg-marketplace.pages.dev";
+// listed the Cloudflare domain's URLs would be invalid under that rule.
+// Required, not defaulted — see CANONICAL_ORIGIN's comment in
+// eleventy.config.js for why.
+if (!process.env.ELEVENTY_SITE_ORIGIN) {
+  throw new Error("ELEVENTY_SITE_ORIGIN must be set — see deploy.yml");
+}
+const siteOrigin = process.env.ELEVENTY_SITE_ORIGIN;
 const pathPrefix = (process.env.ELEVENTY_PATH_PREFIX || "/").replace(/\/$/, "");
 
 export const data = {

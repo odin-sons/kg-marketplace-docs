@@ -9,6 +9,14 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  # The one place this domain is written down for this whole file — every
+  # job/step below references it rather than repeating the literal, and
+  # eleventy.config.js/robots.txt.11ty.js/sitemap.xml.11ty.js take it (or
+  # ELEVENTY_SITE_ORIGIN) as a required env var rather than a hardcoded
+  # fallback, so changing it here is the only edit a domain change needs.
+  CANONICAL_DOMAIN: https://kg-marketplace.pages.dev
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,8 +37,13 @@ jobs:
           restore-keys: build-
       - run: npm ci
       # Cloudflare Pages serves at the canonical domain's root — default
-      # pathPrefix ("/"), no env override needed.
+      # pathPrefix ("/"), no override needed. ELEVENTY_SITE_ORIGIN and
+      # ELEVENTY_CANONICAL_ORIGIN happen to be the same value on this pass;
+      # see the GitHub Pages pass below for why they're not always equal.
       - run: npm run build
+        env:
+          ELEVENTY_SITE_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
+          ELEVENTY_CANONICAL_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
       - run: npx pagefind --site _site
       - uses: actions/upload-artifact@v7
         with:
@@ -47,10 +60,13 @@ jobs:
         env:
           ELEVENTY_PATH_PREFIX: /kg-marketplace-docs/
           ELEVENTY_OUTPUT_DIR: _site-ghpages
-          # sitemap.xml/robots.txt need this build's own domain in their
-          # absolute URLs (see sitemap.xml.11ty.js) — defaults to the
-          # Cloudflare domain otherwise, so only this pass needs it set.
+          # sitemap.xml/robots.txt need *this build's own* domain in their
+          # absolute URLs (see sitemap.xml.11ty.js) — GitHub Pages, unlike
+          # the Cloudflare pass above. canonicalUrl stays CANONICAL_DOMAIN
+          # regardless of pass — canonical's whole job is naming the one
+          # preferred URL among mirrors, so it can't vary per build.
           ELEVENTY_SITE_ORIGIN: https://odin-sons.github.io
+          ELEVENTY_CANONICAL_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
       - run: npx pagefind --site _site-ghpages
       - uses: actions/upload-artifact@v7
         with:
