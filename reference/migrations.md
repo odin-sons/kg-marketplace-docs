@@ -1,8 +1,14 @@
 # Migrations
 
-Most updates to this mod are safe to install directly. This page lists the exceptions — points in the [changelog](changelog.md) where the mod author explicitly warned that updating requires an extra step, or could break existing server data if you are not careful.
+Most updates to this mod are safe to install directly. This page lists the exceptions — points in the [changelog](changelog.md) where the mod author explicitly warned that updating requires an extra step, or could break existing server data if you are not careful. A couple of entries below are flagged from source-checking a fix instead (noted as such) rather than an author warning, when the fix itself silently changes existing content's behavior.
 
 If you are updating across a version not listed here, a plain update is expected to be safe. When in doubt, back up your `Marketplace` folder and save file before updating a live server either way.
+
+## Updating to 9.8.9: re-check any `KillAndCollect` quest's level field
+
+Not an author-flagged warning — found by checking the fix itself. Before 9.8.9, `KillAndCollect`'s level field required one star *less* than the number written (see the now-removed entry on [Known gaps](known-gaps.md) for past versions), so existing quests written to work around that — e.g. writing `3` to mean "2-star minimum" — now require one star *more* than originally intended, since 9.8.9 makes the field mean exactly what's written (matching plain [`Kill`](../configs/quests.md#the-kill-level-field)).
+
+If you have any `KillAndCollect` quests already live, check their level field against what you actually want after updating — a quest that used to accept 1-star-and-above creatures at level `2` now requires 2-star-and-above.
 
 ## Updating to 9.8.6 or 9.8.7: test quests locally first
 

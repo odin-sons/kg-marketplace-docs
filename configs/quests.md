@@ -120,7 +120,7 @@ This type needs more detail per target — creature, kill count, level, then a l
 GoblinRaider, 5, 2, ear, none, none, none, none, none
 ```
 
-Kill 5 at-least-1-star Goblin Raiders and collect 5 "ear" trophies (a quest-only item created just for this quest, not a real item you can get any other way). **The level field here works differently from plain `Kill`** — see [The `Kill` level field](#the-kill-level-field) for the exact difference before you rely on a specific star count.
+Kill 5 at-least-2-star Goblin Raiders and collect 5 "ear" trophies (a quest-only item created just for this quest, not a real item you can get any other way). The level field here works exactly like plain `Kill`'s — see [The `Kill` level field](#the-kill-level-field).
 
 ## Reward types
 
@@ -180,7 +180,7 @@ A quest that is on cooldown still shows in the NPC's list (with a countdown) as 
 
 ## The `Kill` level field
 
-The level field on a `Kill` target is the minimum star rating the creature must have — write `2` and only 2-star-and-above creatures count, write `0` or leave it off entirely and any star rating counts. What you write is exactly what shows up in-game, both in the quest journal and on the target requirement — there is no hidden offset to account for.
+The level field on a `Kill` target (and, as of mod version 9.8.9, `KillAndCollect`'s — the two used to disagree here, see [Migrations](../reference/migrations.md)) is the minimum star rating the creature must have — write `2` and only 2-star-and-above creatures count, write `0` or leave it off entirely and any star rating counts. What you write is exactly what shows up in-game, both in the quest journal and on the target requirement — there is no hidden offset to account for.
 
 For example, changing a target line from `Wolf, 10` to `Wolf, 10, 2`:
 
@@ -191,8 +191,6 @@ For example, changing a target line from `Wolf, 10` to `Wolf, 10, 2`:
 | Target updated | Marker on a qualifying wolf |
 |---|---|
 | ![Quest target changed in-game](../images/screenshots/ZjP5S3z.png) | ![Marker only shows on 2-star-and-above wolves](../images/screenshots/r47i7qA.png) |
-
-**`KillAndCollect` works differently — its level field is one *higher* than the effective star minimum.** Writing `2` there requires only a 1-star-and-above creature, not 2-star; writing `1` requires no star at all. If you want a specific minimum star count on a `KillAndCollect` target, write that number plus one. This asymmetry is easy to get wrong, so double-check with a test kill if the exact star requirement matters for that quest.
 
 ## A full worked example
 
