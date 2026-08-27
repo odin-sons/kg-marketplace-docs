@@ -8,8 +8,11 @@ This documentation covers **9.8.9**, the top entry below. If your server is runn
 
 
 ## [9.8.9]
-- Bugfixes
-- Some dialogue commands logic fixes
+
+**Bug fixes:**
+- `KillAndCollect`'s level field now matches `Kill`'s — see [Migrations](migrations.md).
+- `PlayerHasOneOfCustomDataKeys` fixed for bool/int/string — see [Known gaps](known-gaps.md).
+- `GiveBuff` duration cap changed from `1`s to `0` — see [Known gaps](known-gaps.md).
 
 ## [9.8.8]
 - Fixed Saved NPCs model not showing up when building presets with hammer
