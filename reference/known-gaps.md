@@ -8,7 +8,7 @@ As of 9.8.9 this [condition](../concepts/conditions.md) works as named for bool/
 
 ## `GiveBuff`'s duration argument is effectively always zero
 
-As of 9.8.9 the optional duration you can pass to the `GiveBuff` command is passed into `Mathf.Min(0, yourValue)` — for any ordinary positive duration, that evaluates to `0` every time, so the argument no longer has any real effect (previously it clamped to `1` second instead of `0`; either way, there's still no way to give a longer duration through this argument). If you need a buff to last a specific amount of time, set its duration on the buff itself (see [Buffers](../configs/buffers.md)) and leave the duration argument off the `GiveBuff` command entirely — that path works correctly.
+As of 9.8.9 the optional duration you can pass to the `GiveBuff` command is passed into `Mathf.Min(0, yourValue)` — for any ordinary positive duration, that evaluates to `0` every time, so the argument no longer has any real effect (previously it clamped to `1` second instead of `0`; either way, there's still no way to give a longer duration through this argument). If you need a buff to last a specific amount of time, set its duration on the buff itself (see [Buffers](../configs/buffers.md)) and leave the duration argument off the `GiveBuff` command entirely — that path works correctly. The mod author has confirmed this is a known issue and said it'll be fixed in the version after 9.8.9 — this entry will be removed once that ships.
 
 ## `ConsoleCommand` can run anything
 
