@@ -4,7 +4,7 @@ Things in the **current mod version (9.8.9)** that look like they should work ba
 
 ## `PlayerHasOneOfCustomDataKeys` doesn't match its name — for float values specifically
 
-As of 9.8.9 this [condition](../concepts/conditions.md) works as named for bool/int/string custom data: true when the player's data has one of the listed values. The float check alone was missed — it's still inverted, true when the player's float value **differs** from the referenced one rather than matches it. Test a float-keyed check with known values before relying on it; bool/int/string checks no longer need that caution.
+As of 9.8.9 this [condition](../concepts/conditions.md) works as named for bool/int/string custom data: true when the player's data has one of the listed values. The float check alone was missed — it's still inverted, true when the player's float value **differs** from the referenced one rather than matches it. Test a float-keyed check with known values before relying on it; bool/int/string checks no longer need that caution. The mod author has confirmed this and said it'll be fixed in the version after 9.8.9 — this entry will be removed once that ships.
 
 ## `GiveBuff`'s duration argument is effectively always zero
 
