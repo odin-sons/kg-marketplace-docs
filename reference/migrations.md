@@ -6,7 +6,7 @@ If you are updating across a version not listed here, a plain update is expected
 
 ## Updating to 9.8.9: re-check any `KillAndCollect` quest's level field
 
-Not an author-flagged warning — found by checking the fix itself. Before 9.8.9, `KillAndCollect`'s level field required one star *less* than the number written (see the now-removed entry on [Known gaps](known-gaps.md) for past versions), so existing quests written to work around that — e.g. writing `3` to mean "2-star minimum" — now require one star *more* than originally intended, since 9.8.9 makes the field mean exactly what's written (matching plain [`Kill`](../configs/quests.md#the-kill-level-field)).
+Not an author-flagged warning — found by checking the fix itself. Before 9.8.9, `KillAndCollect`'s level field required one star *less* than the number written (see the now-removed entry on [Known gaps](known-gaps.md) for past versions), so existing quests written to work around that — e.g. writing `3` to mean "2-star minimum" — now require one star *more* than originally intended, since 9.8.9 makes the field mean exactly what's written (matching plain [`Kill`](../configs/quests.md#the-target-line-by-type)).
 
 If you have any `KillAndCollect` quests already live, check their level field against what you actually want after updating — a quest that used to accept 1-star-and-above creatures at level `2` now requires 2-star-and-above.
 

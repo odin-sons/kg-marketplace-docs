@@ -19,7 +19,7 @@ Item: Coins, 50 | Skill_EXP: Bows, 20
 ![Adding the quest to its database file](../images/screenshots/ejk2NIl.png)
 
 What this says:
-- Quest type `Kill`, targeting `Wolf`, 5 of them, requiring at least star level `1` — see the level note on [Quests](../configs/quests.md#the-kill-level-field).
+- Quest type `Kill`, targeting `Wolf`, 5 of them, requiring at least star level `1` — see [the target line format](../configs/quests.md#the-target-line-by-type) on Quests.
 - Reward: 50 Coins and 20 Bow skill experience.
 - Cooldown `0` — the quest can be repeated right away.
 - No unlock requirement — leaving the last line empty means it is available immediately.
@@ -72,6 +72,18 @@ Turning the quest in at the NPC hands out the reward:
 ![Turning in a completed quest](../images/screenshots/5qZiacv.png)
 
 ![Reward received](../images/screenshots/tlMY7jW.png)
+
+### Trying a different level requirement
+
+The level field on a `Kill` target is the minimum star rating the creature must have, exactly as written — no hidden offset to account for. Change the target line from `Wolf, 5, 1` to `Wolf, 5, 2`:
+
+![Editing the target line to add a minimum level](../images/screenshots/hgInMiO.png)
+
+...and the in-game requirement changes to match — only 2-star-and-above wolves count now, shown by the marker over qualifying wolves:
+
+| Target updated | Marker on a qualifying wolf |
+|---|---|
+| ![Quest target changed in-game](../images/screenshots/ZjP5S3z.png) | ![Marker only shows on 2-star-and-above wolves](../images/screenshots/r47i7qA.png) |
 
 ### If the quest does not appear
 

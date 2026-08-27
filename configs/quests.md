@@ -65,7 +65,7 @@ Item: Coins, 50 | Skill_EXP: Bows, 20
 | 1 | `Kill` | The quest type — what kind of objective this is. See [Quest types](#quest-types) below. |
 | 2 | `Wolf Culling` | The quest's title, shown in the quest journal. |
 | 3 | `The village needs...` | The description text. |
-| 4 | `Wolf, 5, 1` | The target: kill Wolves, 5 of them, minimum star level 1 — see [the note below](#the-kill-level-field) for exactly how this field works. |
+| 4 | `Wolf, 5, 1` | The target: kill Wolves, 5 of them, minimum star level 1 — see [the target line format](#the-target-line-by-type) for exactly how this field works. |
 | 5 | `Item: Coins, 50 \| Skill_EXP: Bows, 20` | Rewards: 50 Coins and 20 Bow skill experience. |
 | 6 | `0` | Cooldown in seconds — `0` means the quest is repeatable immediately after completion. |
 | 7 (not shown above, optional) | unlock requirements | Left empty here — no requirements, so this quest is available right away. See [Conditions](../concepts/conditions.md). |
@@ -104,7 +104,7 @@ Wolf, 5, 1 | Boar, 3, 1
 ```
 (kill 5 wolves and 3 boars, each at least 1-star, all counting toward the same quest)
 
-- **`Kill`**: `creature, amount, level` — level is the minimum star rating the creature must have, `0` (or omit it) for no requirement at all.
+- **`Kill`**: `creature, amount, level` — level is the minimum star rating the creature must have, exactly as written with no hidden offset, `0` (or omit it) for no requirement at all.
 - **`Collect`** / **`Craft`**: `item, amount, level` — level is item quality.
 - **`Harvest`** / **`Build`**: `object, amount` — no level field.
 - **`Talk`**: the full NPC name, in quotes if it has a space — e.g. `"Village Elder"`.
@@ -120,7 +120,7 @@ This type needs more detail per target — creature, kill count, level, then a l
 GoblinRaider, 5, 2, ear, none, none, none, none, none
 ```
 
-Kill 5 at-least-2-star Goblin Raiders and collect 5 "ear" trophies (a quest-only item created just for this quest, not a real item you can get any other way). The level field here works exactly like plain `Kill`'s — see [The `Kill` level field](#the-kill-level-field).
+Kill 5 at-least-2-star Goblin Raiders and collect 5 "ear" trophies (a quest-only item created just for this quest, not a real item you can get any other way). The level field here works exactly like plain `Kill`'s, above — as of mod version 9.8.9; before that the two disagreed, see [Migrations](../reference/migrations.md).
 
 ## Reward types
 
@@ -177,20 +177,6 @@ Without either tag, a quest whose requirements are not yet met still shows up in
 ## Cooldown and quest-list visibility
 
 A quest that is on cooldown still shows in the NPC's list (with a countdown) as long as the remaining cooldown is under 5000 in-game days. Past that, it disappears from the list entirely once completed — this is the trick behind "one-time" quests: set the cooldown to something like `10000` and the quest vanishes for that player for good after their first completion, instead of reappearing once the cooldown would normally expire.
-
-## The `Kill` level field
-
-The level field on a `Kill` target (and, as of mod version 9.8.9, `KillAndCollect`'s — the two used to disagree here, see [Migrations](../reference/migrations.md)) is the minimum star rating the creature must have — write `2` and only 2-star-and-above creatures count, write `0` or leave it off entirely and any star rating counts. What you write is exactly what shows up in-game, both in the quest journal and on the target requirement — there is no hidden offset to account for.
-
-For example, changing a target line from `Wolf, 10` to `Wolf, 10, 2`:
-
-![Editing the target line to add a minimum level](../images/screenshots/hgInMiO.png)
-
-...changes the in-game requirement so only 2-star-and-above wolves count, shown by the marker over qualifying wolves:
-
-| Target updated | Marker on a qualifying wolf |
-|---|---|
-| ![Quest target changed in-game](../images/screenshots/ZjP5S3z.png) | ![Marker only shows on 2-star-and-above wolves](../images/screenshots/r47i7qA.png) |
 
 ## A full worked example
 
