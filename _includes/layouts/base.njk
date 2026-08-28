@@ -140,5 +140,17 @@
   <script src="/scripts/anchor-highlight.js" defer></script>
   <script src="/scripts/page-toc.js" defer></script>
   <script src="/scripts/ai-actions.js" defer></script>
+  <script src="/scripts/sw-update-banner.js" defer></script>
+  <script>
+    // Registers after load, not blocking the page, and only once
+    // everything else has settled — swPath already carries this build's
+    // own pathPrefix (see eleventy.config.js; HtmlBasePlugin only rewrites
+    // href/src attributes, not JS string content, so it can't do this one).
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("{{ swPath }}");
+      });
+    }
+  </script>
 </body>
 </html>

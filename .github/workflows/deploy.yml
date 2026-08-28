@@ -44,6 +44,10 @@ jobs:
         env:
           ELEVENTY_SITE_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
           ELEVENTY_CANONICAL_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
+          # sw.js.11ty.js bakes this into its own cache name — new commit,
+          # new SHA, new service-worker bytes, which is the actual signal
+          # browsers use to install an update and drop old caches.
+          ELEVENTY_BUILD_ID: ${{ github.sha }}
       - run: npx pagefind --site _site
       - uses: actions/upload-artifact@v7
         with:
@@ -67,6 +71,7 @@ jobs:
           # preferred URL among mirrors, so it can't vary per build.
           ELEVENTY_SITE_ORIGIN: https://odin-sons.github.io
           ELEVENTY_CANONICAL_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
+          ELEVENTY_BUILD_ID: ${{ github.sha }}
       - run: npx pagefind --site _site-ghpages
       - uses: actions/upload-artifact@v7
         with:
