@@ -51,6 +51,14 @@ A GitHub Actions workflow (`.github/workflows/deploy.yml`) builds the site once 
 - **GitHub Pages** — works everywhere, including for readers in regions where Cloudflare is blocked.
 - **Cloudflare Pages** — faster, nicer domain.
 
+### Publishing a new mod version
+
+The single-commit "push straight to `main`" flow above is for small, standalone edits. Updating the docs for a new mod version is usually a bigger, multi-step job (re-checking fixes against the mod's own source, several rounds of wording) — pushing that straight to `main` commit by commit would trigger a full rebuild+deploy on every small step. Use a branch instead, and merge into `main` as one clean step once it's ready.
+
+That branch's name matters, but not for the reason you'd expect: don't name it `version/<the-new-version>`, even though that might feel like the obvious choice while you're working toward that version becoming current. `version/*` is reserved for a different, later moment — see below — and naming your in-progress branch that way collides with the name you'll need once.
+
+Once a version is no longer current (a newer one has replaced it), cut a `version/<old-version>` branch (e.g. `version/9.8.9`) from `main`'s tip at that exact moment, before starting work on the next update — this freezes that version's docs exactly as they stood. Pushing a `version/*` branch triggers its own deploy, to a standalone, `noindex`ed Cloudflare Pages alias (dots become hyphens: `version/9.8.9` → `version-9-8-9.kg-marketplace.pages.dev`) — see `.github/workflows/deploy-archived-version.yml` for the workflow, `_data/versions.js`'s own comment for how to wire a newly-cut archive into the sidebar's version dropdown, and `scripts/version-switcher.js` for how a reader gets there.
+
 ### One-time setup for a new fork/mirror (not needed on the existing repo)
 
 - GitHub repo → Settings → Pages → set "Source" to **GitHub Actions**.
