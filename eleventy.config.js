@@ -208,22 +208,29 @@ export default function (eleventyConfig) {
     },
   });
 
-  // The homepage's hero image (README's "Marketplace banner") is that page's
-  // Largest Contentful Paint element, but eleventyImageTransformPlugin above
-  // defaults every <img> to loading="lazy" (see its own comment) — for the
-  // one image LCP actually measures, that only delays its discovery instead
-  // of helping it. Registered after the plugin above so it runs on the
-  // already-optimized <img loading="lazy" ...> markup (transforms execute in
-  // registration order), not the raw markdown-generated tag.
-  eleventyConfig.addTransform("lcp-hero-priority", function (content) {
-    if (this.page.inputPath !== "./README.md") return content;
-    // Matched per-<img> tag rather than one combined regex — attribute order
-    // on the plugin-generated tag (loading/decoding/src/alt/...) isn't
-    // something to rely on staying fixed.
-    return content.replace(/<img\b[^>]*>/g, (tag) => {
-      if (!tag.includes('alt="Marketplace banner"')) return tag;
+  // A page's first in-content image is its likely Largest Contentful Paint
+  // candidate, but eleventyImageTransformPlugin above defaults every <img>
+  // to loading="lazy" (see its own comment) — for that one instance, on
+  // whichever page it occurs, lazy-loading only delays LCP instead of
+  // helping it. Applies uniformly to every page's <main> (not hardcoded to
+  // any one page): the nav's own logo lives outside <main>, so it's excluded
+  // structurally rather than by name/path, and every image after the first
+  // keeps the plugin's default lazy behavior. Registered after the plugin
+  // above so it runs on the already-optimized <img loading="lazy" ...>
+  // markup (transforms execute in registration order), not the raw
+  // markdown-generated tag.
+  eleventyConfig.addTransform("eager-load-first-in-content-image", function (content) {
+    const main = content.match(/<main\b[^>]*>[\s\S]*?<\/main>/);
+    if (!main) return content;
+
+    let firstImageSeen = false;
+    const updatedMain = main[0].replace(/<img\b[^>]*>/, (tag) => {
+      firstImageSeen = true;
       return tag.replace('loading="lazy"', 'loading="eager" fetchpriority="high"');
     });
+    if (!firstImageSeen) return content;
+
+    return content.slice(0, main.index) + updatedMain + content.slice(main.index + main[0].length);
   });
 
   eleventyConfig.on("eleventy.after", () => {
