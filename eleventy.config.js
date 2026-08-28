@@ -281,6 +281,21 @@ export default function (eleventyConfig) {
   eleventyConfig.addGlobalData("pagefindBundlePath", pathPrefix + "pagefind/");
   eleventyConfig.addGlobalData("pagefindBaseUrl", pathPrefix);
 
+  // Service worker registration path — same reasoning as pagefindBundlePath
+  // above (HtmlBasePlugin only rewrites href/src attributes, not arbitrary
+  // JS string content, so the inline registration snippet in base.njk needs
+  // pathPrefix baked in here instead).
+  eleventyConfig.addGlobalData("swPath", pathPrefix + "sw.js");
+
+  // Cache-name suffix for sw.js.11ty.js — CI sets this to the commit SHA
+  // (see deploy.yml/deploy-archived-version.yml); local builds fall back to
+  // a timestamp so a plain `npm run build` still gets a working, if
+  // unstable, cache name. Changing this string is what makes the service
+  // worker's own bytes differ between builds, which is what the browser
+  // actually detects to install a new worker and drop old caches on
+  // activate — see sw.js.11ty.js.
+  eleventyConfig.addGlobalData("buildId", process.env.ELEVENTY_BUILD_ID || String(Date.now()));
+
   // The root README.md becomes the homepage (/index.html) instead of the
   // default /README/index.html — every other page keeps Eleventy's normal
   // per-file permalink, since returning the untouched `data.permalink` here
