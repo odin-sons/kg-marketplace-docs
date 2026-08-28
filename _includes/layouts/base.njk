@@ -39,7 +39,15 @@
        element, so unlike href/src above, HtmlBasePlugin never touches them —
        pagefindBundlePath/pagefindBaseUrl carry the pathPrefix already baked
        in (see eleventy.config.js). -->
-  <link href="/pagefind/pagefind-component-ui.css" rel="stylesheet">
+  <!-- Non-blocking: this only styles <pagefind-modal>'s contents, which stay
+       hidden until search is opened, so there's nothing on-screen for it to
+       flash unstyled — unlike site.css above, which stays a normal blocking
+       stylesheet since it covers the nav/layout visible immediately.
+       preload+onload-swap is the standard dependency-free pattern; the
+       noscript fallback covers the (rare) no-JS case, where the onload swap
+       never fires. -->
+  <link rel="preload" href="/pagefind/pagefind-component-ui.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/pagefind/pagefind-component-ui.css"></noscript>
   <script src="/pagefind/pagefind-component-ui.js" type="module"></script>
 </head>
 <body>
