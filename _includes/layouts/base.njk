@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ title }} — KG Marketplace Docs</title>
+  <meta name="description" content="{{ siteDescription }}">
   {% if noIndex %}<meta name="robots" content="noindex">{% endif %}
   {% if canonicalUrl %}<link rel="canonical" href="{{ canonicalUrl }}">{% endif %}
   <link rel="describedby" href="/llms.txt">
@@ -120,16 +121,24 @@
     {{ content | safe }}
   </main>
 
-  <script src="/scripts/nav-toggle.js"></script>
-  <script src="/scripts/sidebar-collapse.js"></script>
-  <script src="/scripts/nav-collapse.js"></script>
-  <script src="/scripts/image-lightbox.js"></script>
-  <script src="/scripts/image-rail.js"></script>
-  <script src="/scripts/version-switcher.js"></script>
-  <script src="/scripts/theme-switcher.js"></script>
-  <script src="/scripts/suggest-correction.js"></script>
-  <script src="/scripts/anchor-highlight.js"></script>
-  <script src="/scripts/page-toc.js"></script>
-  <script src="/scripts/ai-actions.js"></script>
+  <!-- defer, not just placement at the end of body: these already run after
+       the DOM is parsed either way, but `defer` also lets the browser fetch
+       all of them in parallel starting as soon as the parser sees them,
+       instead of the sequential fetch-then-execute-then-next-fetch chain a
+       plain synchronous <script> does at this point — Lighthouse flagged
+       exactly that chain as render-blocking. Execution order is preserved
+       (defer scripts run in document order), so nothing here changes when
+       any of these actually runs relative to the others. -->
+  <script src="/scripts/nav-toggle.js" defer></script>
+  <script src="/scripts/sidebar-collapse.js" defer></script>
+  <script src="/scripts/nav-collapse.js" defer></script>
+  <script src="/scripts/image-lightbox.js" defer></script>
+  <script src="/scripts/image-rail.js" defer></script>
+  <script src="/scripts/version-switcher.js" defer></script>
+  <script src="/scripts/theme-switcher.js" defer></script>
+  <script src="/scripts/suggest-correction.js" defer></script>
+  <script src="/scripts/anchor-highlight.js" defer></script>
+  <script src="/scripts/page-toc.js" defer></script>
+  <script src="/scripts/ai-actions.js" defer></script>
 </body>
 </html>

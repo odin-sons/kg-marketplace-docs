@@ -208,6 +208,24 @@ export default function (eleventyConfig) {
     },
   });
 
+  // The homepage's hero image (README's "Marketplace banner") is that page's
+  // Largest Contentful Paint element, but eleventyImageTransformPlugin above
+  // defaults every <img> to loading="lazy" (see its own comment) — for the
+  // one image LCP actually measures, that only delays its discovery instead
+  // of helping it. Registered after the plugin above so it runs on the
+  // already-optimized <img loading="lazy" ...> markup (transforms execute in
+  // registration order), not the raw markdown-generated tag.
+  eleventyConfig.addTransform("lcp-hero-priority", function (content) {
+    if (this.page.inputPath !== "./README.md") return content;
+    // Matched per-<img> tag rather than one combined regex — attribute order
+    // on the plugin-generated tag (loading/decoding/src/alt/...) isn't
+    // something to rely on staying fixed.
+    return content.replace(/<img\b[^>]*>/g, (tag) => {
+      if (!tag.includes('alt="Marketplace banner"')) return tag;
+      return tag.replace('loading="lazy"', 'loading="eager" fetchpriority="high"');
+    });
+  });
+
   eleventyConfig.on("eleventy.after", () => {
     // Guards a build with no local <img>/<picture> ever having been
     // encountered (nothing to copy yet) — without this, a first build on a
@@ -292,6 +310,14 @@ export default function (eleventyConfig) {
   eleventyConfig.addGlobalData("noIndex", isArchivedVersion);
 
   eleventyConfig.addGlobalData("editBranch", editBranch);
+
+  // Fed to <meta name="description"> in base.njk — one fixed sitewide value
+  // rather than per-page, since this is a single-purpose docs site with no
+  // distinct value proposition to state per page.
+  eleventyConfig.addGlobalData(
+    "siteDescription",
+    "Marketplace and Server NPCs (Revamped) adds server-configurable NPCs and mechanics to Valheim — a player-to-player marketplace, shops, quests, dialogue trees, zones, banking, gambling, transmog, and more."
+  );
 
   // Fed to <link rel="alternate" type="text/markdown"> in base.njk — the
   // root-relative path to this page's raw-markdown passthrough copy (see
