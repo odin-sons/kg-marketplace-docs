@@ -989,3 +989,36 @@ blockquote {
     padding: 4.5rem 1.25rem 3rem;
   }
 }
+
+/* Shown by scripts/sw-update-banner.js once a background revalidation
+   (sw.js.11ty.js) finds the page currently open no longer matches what's
+   on the server. */
+.sw-update-banner {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.7rem 0.7rem 0.7rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-nav);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  font-size: 0.9rem;
+}
+
+.sw-update-banner button {
+  flex-shrink: 0;
+  padding: 0.4rem 0.85rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--link);
+  color: var(--bg);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}

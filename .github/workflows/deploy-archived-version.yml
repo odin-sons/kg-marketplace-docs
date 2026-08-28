@@ -61,6 +61,9 @@ jobs:
           # not main's (different) current copy of the same file — see
           # eleventy.config.js's editBranch.
           ELEVENTY_GIT_BRANCH: ${{ github.ref_name }}
+          # Same reasoning as deploy.yml's copy — see sw.js.11ty.js. Archived
+          # builds get their own working, distinct service worker too.
+          ELEVENTY_BUILD_ID: ${{ github.sha }}
       - run: npx pagefind --site _site
       - uses: cloudflare/wrangler-action@v4
         id: deploy
