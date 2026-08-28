@@ -19,4 +19,7 @@
 // entry for the version now being built. Once *this* change itself is
 // deployed to the canonical domain, every older build's switcher picks up
 // the new entry automatically.
-export default [{ version: "9.8.8", url: "/", current: true }];
+export default [
+  { version: "9.8.8", url: "https://version-9-8-8.kg-marketplace.pages.dev/" },
+  { version: "9.8.9", url: "/", current: true },
+];
