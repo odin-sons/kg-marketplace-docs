@@ -18,9 +18,22 @@ export default function (data) {
   // forever with no revalidation: there's no such thing as a stale hit.
   const HASHED_ASSET = /\/img\/[^/]+\.(?:avif|webp|jpe?g|png)$/;
 
+  // base.njk preloads this one via <link rel="preload" as="style"
+  // onload="...rel='stylesheet'">, not a plain <link rel="stylesheet"> —
+  // that trick depends on the browser's own preload cache recognizing the
+  // later stylesheet load as the same request its scanner already fetched.
+  // A service worker sits in between and answers with its own Response
+  // object even when the bytes are identical, which breaks that
+  // correlation — confirmed live as Edge's own "cross-world service worker
+  // resource mismatch" warning. Any future resource using this same
+  // preload+swap technique needs the same exclusion; today this is the
+  // only one.
+  const PRELOAD_SWAPPED_ASSET = /\/pagefind\/pagefind-component-ui\.css$/;
+
   return `// Auto-generated for build ${data.buildId} — do not edit by hand.
 const CACHE_NAME = ${JSON.stringify(CACHE_NAME)};
 const HASHED_ASSET = ${HASHED_ASSET.toString()};
+const PRELOAD_SWAPPED_ASSET = ${PRELOAD_SWAPPED_ASSET.toString()};
 
 self.addEventListener("install", () => {
   // Take over immediately rather than waiting for every open tab with the
@@ -46,6 +59,7 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return; // cross-origin (e.g. the version switcher's own /versions.json fetch to the canonical domain) — leave alone, no CORS guarantee to safely cache an opaque response.
+  if (PRELOAD_SWAPPED_ASSET.test(url.pathname)) return; // see its own comment above — let the browser handle this one natively.
 
   event.respondWith(handleFetch(request));
 });
