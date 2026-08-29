@@ -123,14 +123,25 @@
   <script src="/scripts/page-toc.js" defer></script>
   <script src="/scripts/ai-actions.js" defer></script>
   <script src="/scripts/sw-update-banner.js" defer></script>
-  <link rel="stylesheet" href="/pagefind/pagefind-component-ui.css">
-  <script src="/pagefind/pagefind-component-ui.js" type="module"></script>
   <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", function () {
+    window.addEventListener("load", function () {
+      if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("{{ swPath }}");
-      });
-    }
+      }
+
+      // Injected here (not a static <link>/<script src>) so the browser's preload scanner
+      // never discovers it — a static tag gets fetched immediately regardless of its position
+      // in the document, since the scanner reads the whole downloaded HTML up front.
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "{{ pagefindBundlePath }}pagefind-component-ui.css";
+      document.head.appendChild(link);
+
+      var script = document.createElement("script");
+      script.type = "module";
+      script.src = "{{ pagefindBundlePath }}pagefind-component-ui.js";
+      document.body.appendChild(script);
+    });
   </script>
 </body>
 </html>

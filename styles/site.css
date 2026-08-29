@@ -547,6 +547,13 @@ blockquote {
   margin: 0 0 1rem;
 }
 
+/* Reserves the height pagefind's own CSS gives this element once it loads/defines, so there's
+   nothing to shift when it does — matches the trigger's actual rendered height (36px). */
+pagefind-modal-trigger:not(:defined) {
+  display: block;
+  height: 36px;
+}
+
 .site-nav__search-trigger {
   display: block;
   width: 100%;
