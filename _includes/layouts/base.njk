@@ -34,6 +34,13 @@
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0c0c0c">
   <link rel="stylesheet" href="/styles/site.css">
+  <!-- Nav sections render pre-collapsed (see navWithState in
+       eleventy.config.js) on the assumption a click handler
+       (scripts/nav-collapse.js) will be along to expand them — for the
+       rare visitor without JS, that click handler never attaches, so
+       this forces every collapsed section back open instead of leaving
+       it permanently stuck hidden. -->
+  <noscript><style>#site-nav [hidden] { display: block !important; }</style></noscript>
   <!-- Only exist once `npm run search-index` (pagefind) has run against this
        build's output — a 404 here just leaves search inert, nothing else
        breaks. bundle-path/base-url below are custom attributes on a custom
@@ -93,18 +100,25 @@
         <li><a href="/"{% if page.url == "/" %} aria-current="page"{% endif %}><span class="site-nav__link-text">Introduction</span></a></li>
       </ul>
     </div>
-    {% for group in nav %}
+    {% for group in navWithState %}
+    {% set groupIndex = loop.index0 %}
     <div class="site-nav__group">
       <p class="site-nav__group-title" role="heading" aria-level="2">
-        <span class="site-nav__group-title-main">{{ group.title }}</span>
-        {% if group.subtitle %}<span class="site-nav__group-title-sub">{{ group.subtitle }}</span>{% endif %}
+        <button type="button" class="site-nav__group-toggle" aria-expanded="{{ group.active }}" aria-controls="nav-group-{{ groupIndex }}">
+          <span class="site-nav__group-title-text">
+            <span class="site-nav__group-title-main">{{ group.title }}</span>
+            {% if group.subtitle %}<span class="site-nav__group-title-sub">{{ group.subtitle }}</span>{% endif %}
+          </span>
+        </button>
       </p>
-      <ul>
+      <ul id="nav-group-{{ groupIndex }}"{% if not group.active %} hidden{% endif %}>
         {% for item in group.items %}
+        {% set itemIndex = loop.index0 %}
         <li{% if item.children %} class="site-nav__item--has-children"{% endif %}>
           <a href="{{ item.href }}"{% if item.href == page.url %} aria-current="page"{% endif %}{% if item.external %} target="_blank" rel="noopener noreferrer"{% endif %}><span class="site-nav__link-text">{{ item.title }}</span>{% if item.external %}<span class="site-nav__external" aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span>{% endif %}</a>
           {% if item.children %}
-          <ul class="site-nav__children">
+          <button type="button" class="site-nav__toggle" aria-expanded="{{ item.active }}" aria-controls="nav-children-{{ groupIndex }}-{{ itemIndex }}" aria-label="Toggle {{ item.title }} sub-pages"></button>
+          <ul class="site-nav__children" id="nav-children-{{ groupIndex }}-{{ itemIndex }}"{% if not item.active %} hidden{% endif %}>
             {% for child in item.children %}
             <li><a href="{{ child.href }}"{% if child.href == page.url %} aria-current="page"{% endif %}><span class="site-nav__link-text">{{ child.title }}</span></a></li>
             {% endfor %}
