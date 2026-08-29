@@ -8,13 +8,10 @@ export const data = {
 export default function (data) {
   const CACHE_NAME = `docs-${data.buildId}`;
   const HASHED_ASSET = /\/img\/[^/]+\.(?:avif|webp|jpe?g|png)$/;
-  // Skipped here — a service worker answering these breaks the browser's own preload/stylesheet-swap correlation.
-  const PRELOAD_SWAPPED_ASSET = /\/pagefind\/pagefind-component-ui\.css$/;
 
   return `// Auto-generated for build ${data.buildId} — do not edit by hand.
 const CACHE_NAME = ${JSON.stringify(CACHE_NAME)};
 const HASHED_ASSET = ${HASHED_ASSET.toString()};
-const PRELOAD_SWAPPED_ASSET = ${PRELOAD_SWAPPED_ASSET.toString()};
 
 self.addEventListener("install", () => {
   self.skipWaiting();
@@ -35,7 +32,6 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
-  if (PRELOAD_SWAPPED_ASSET.test(url.pathname)) return;
 
   event.respondWith(handleFetch(request));
 });

@@ -33,10 +33,6 @@
   <link rel="stylesheet" href="/styles/site.css">
   <!-- No-JS fallback: undoes the pre-collapsed nav state above. -->
   <noscript><style>#site-nav [hidden] { display: block !important; }</style></noscript>
-  <!-- Non-blocking load: preload, then swap to a real stylesheet on load. -->
-  <link rel="preload" href="/pagefind/pagefind-component-ui.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/pagefind/pagefind-component-ui.css"></noscript>
-  <script src="/pagefind/pagefind-component-ui.js" type="module"></script>
 </head>
 <body>
   <pagefind-config bundle-path="{{ pagefindBundlePath }}" base-url="{{ pagefindBaseUrl }}"></pagefind-config>
@@ -127,6 +123,8 @@
   <script src="/scripts/page-toc.js" defer></script>
   <script src="/scripts/ai-actions.js" defer></script>
   <script src="/scripts/sw-update-banner.js" defer></script>
+  <link rel="stylesheet" href="/pagefind/pagefind-component-ui.css">
+  <script src="/pagefind/pagefind-component-ui.js" type="module"></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", function () {
