@@ -1,7 +1,7 @@
 /* Resolved by postcss-normalize (postcss.config.js) into just the parts of
    sanitize.css our own browserslist target (package.json) actually needs —
    not committed as literal CSS here, this @import is the trigger. */
-@import "sanitize.css";
+@import url("sanitize.css");
 
 :root {
   color-scheme: light dark;
