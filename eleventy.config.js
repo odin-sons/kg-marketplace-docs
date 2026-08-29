@@ -221,11 +221,14 @@ export default function (eleventyConfig) {
   // markdown-generated tag.
   //
   // Also emits matching <link rel="preload"> hints into <head> — even with
-  // fetchpriority="high", the browser's preload scanner only discovers this
-  // image once the parser reaches it in <body>; a <head> hint starts the
-  // fetch as early as any other render-blocking resource instead. One
-  // preload per <source> (mirroring every format eleventy-img generated),
-  // matched by `type` so the browser only ever fetches the one it actually
+  // fetchpriority="high" on the <img> itself, the browser's preload scanner
+  // only discovers this image once the parser reaches it in <body>; a
+  // <head> hint starts the fetch as early as any other render-blocking
+  // resource instead. Each preload link repeats fetchpriority="high" too —
+  // Lighthouse's lcp-discovery-insight specifically checks for the hint on
+  // the preload request itself, not just the eventual <img>. One preload
+  // per <source> (mirroring every format eleventy-img generated), matched
+  // by `type` so the browser only ever fetches the one it actually
   // supports — the same negotiation <picture> itself does, so nothing gets
   // fetched twice.
   eleventyConfig.addTransform("prioritize-first-in-content-image", function (content) {
@@ -252,7 +255,7 @@ export default function (eleventyConfig) {
         const srcset = getAttr(source, "srcset");
         const sizes = getAttr(source, "sizes");
         if (!type || !srcset) return null;
-        return `<link rel="preload" as="image" type="${type}" imagesrcset="${srcset}"${sizes ? ` imagesizes="${sizes}"` : ""}>`;
+        return `<link rel="preload" as="image" type="${type}" imagesrcset="${srcset}"${sizes ? ` imagesizes="${sizes}"` : ""} fetchpriority="high">`;
       })
       .filter(Boolean)
       .join("\n  ");
