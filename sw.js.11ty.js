@@ -73,7 +73,10 @@ async function handleFetch(request) {
     // a content-hashed asset) kick off a background revalidation — don't
     // await it, the cached response has already been returned below.
     if (!HASHED_ASSET.test(new URL(request.url).pathname)) {
-      revalidate(request, cached, cache);
+      // Cloned here, before either copy is touched — cached is also handed to the browser
+      // below via the return, and cloning after that race loses sometimes ("Response body
+      // is already used"), confirmed live in production.
+      revalidate(request, cached.clone(), cache);
     }
     return cached;
   }
@@ -95,7 +98,7 @@ async function revalidate(request, cachedResponse, cache) {
   }
   if (!fresh.ok) return;
 
-  const [freshText, cachedText] = await Promise.all([fresh.clone().text(), cachedResponse.clone().text()]);
+  const [freshText, cachedText] = await Promise.all([fresh.clone().text(), cachedResponse.text()]);
   if (freshText === cachedText) return;
 
   await cache.put(request, fresh);
