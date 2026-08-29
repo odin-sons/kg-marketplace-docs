@@ -396,6 +396,31 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addGlobalData("editBranch", editBranch);
 
+  // Sidebar nav sections default collapsed except whichever one contains
+  // the page currently open — computed here (build time, page.url is
+  // already known) rather than left for client JS to decide after the
+  // fact. The old approach (scripts/nav-collapse.js hiding every
+  // non-active section once it ran) painted the full expanded tree first
+  // and collapsed it out from under the reader a moment later — a real,
+  // measured layout shift, confirmed live via Chrome/Edge's own
+  // layout-shift-culprits diagnostic pointing at .site-nav__group.
+  // base.njk renders the resulting `active` flags straight into the
+  // initial HTML (hidden attribute + aria-expanded), so there's nothing
+  // left to visibly change after paint; nav-collapse.js now only wires up
+  // the click-to-toggle interaction on top of this precomputed state.
+  eleventyConfig.addGlobalData("eleventyComputed.navWithState", () => {
+    return (data) => {
+      const isCurrent = (href) => href === data.page.url;
+      return (data.nav || []).map((group) => {
+        const items = group.items.map((item) => {
+          const childActive = (item.children || []).some((child) => isCurrent(child.href));
+          return { ...item, active: isCurrent(item.href) || childActive };
+        });
+        return { ...group, items, active: items.some((item) => item.active) };
+      });
+    };
+  });
+
   // Fed to <meta name="description"> in base.njk — one fixed sitewide value
   // rather than per-page, since this is a single-purpose docs site with no
   // distinct value proposition to state per page.
