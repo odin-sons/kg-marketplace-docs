@@ -1,0 +1,40 @@
+name: Lint styles
+
+# Separate from deploy.yml on purpose (same reasoning as
+# deploy-archived-version.yml has for its own separation): this only ever
+# needs to run against pull requests, never a push to main, and must never
+# risk the deploy pipeline. Path-filtered so an unrelated doc-only PR
+# doesn't spend a CI run on this for nothing.
+on:
+  pull_request:
+    paths:
+      - "styles/**"
+      - "postcss.config.js"
+      - "stylelint.config.js"
+
+jobs:
+  stylelint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Non-blocking by design (fail_level: none — always exits 0): the
+      # point is the PR comment, not a merge gate, matching the same
+      # warnings-only treatment stylelint gets in the local dev-server build
+      # (see postcss.config.js). filter_mode "added" only comments on lines
+      # the PR itself touches, so this doesn't flood a PR with pre-existing
+      # warnings the PR never introduced.
+      - uses: reviewdog/action-stylelint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          fail_level: none
+          filter_mode: added
+          stylelint_input: "styles/**/*.css"
