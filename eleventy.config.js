@@ -216,21 +216,53 @@ export default function (eleventyConfig) {
   // any one page): the nav's own logo lives outside <main>, so it's excluded
   // structurally rather than by name/path, and every image after the first
   // keeps the plugin's default lazy behavior. Registered after the plugin
-  // above so it runs on the already-optimized <img loading="lazy" ...>
-  // markup (transforms execute in registration order), not the raw
+  // above so it runs on the already-optimized <picture>/<img> markup
+  // (transforms execute in registration order), not the raw
   // markdown-generated tag.
-  eleventyConfig.addTransform("eager-load-first-in-content-image", function (content) {
+  //
+  // Also emits matching <link rel="preload"> hints into <head> — even with
+  // fetchpriority="high", the browser's preload scanner only discovers this
+  // image once the parser reaches it in <body>; a <head> hint starts the
+  // fetch as early as any other render-blocking resource instead. One
+  // preload per <source> (mirroring every format eleventy-img generated),
+  // matched by `type` so the browser only ever fetches the one it actually
+  // supports — the same negotiation <picture> itself does, so nothing gets
+  // fetched twice.
+  eleventyConfig.addTransform("prioritize-first-in-content-image", function (content) {
     const main = content.match(/<main\b[^>]*>[\s\S]*?<\/main>/);
     if (!main) return content;
 
+    const picture = main[0].match(/<picture\b[^>]*>[\s\S]*?<\/picture>/);
+    if (!picture) return content;
+
     let firstImageSeen = false;
-    const updatedMain = main[0].replace(/<img\b[^>]*>/, (tag) => {
+    const updatedPicture = picture[0].replace(/<img\b[^>]*>/, (tag) => {
       firstImageSeen = true;
       return tag.replace('loading="lazy"', 'loading="eager" fetchpriority="high"');
     });
     if (!firstImageSeen) return content;
 
-    return content.slice(0, main.index) + updatedMain + content.slice(main.index + main[0].length);
+    const getAttr = (tag, name) => {
+      const match = tag.match(new RegExp(`\\b${name}="([^"]*)"`));
+      return match ? match[1] : null;
+    };
+    const preloadLinks = (picture[0].match(/<source\b[^>]*>/g) || [])
+      .map((source) => {
+        const type = getAttr(source, "type");
+        const srcset = getAttr(source, "srcset");
+        const sizes = getAttr(source, "sizes");
+        if (!type || !srcset) return null;
+        return `<link rel="preload" as="image" type="${type}" imagesrcset="${srcset}"${sizes ? ` imagesizes="${sizes}"` : ""}>`;
+      })
+      .filter(Boolean)
+      .join("\n  ");
+
+    const updatedMain = main[0].replace(picture[0], updatedPicture);
+    let updatedContent = content.slice(0, main.index) + updatedMain + content.slice(main.index + main[0].length);
+    if (preloadLinks) {
+      updatedContent = updatedContent.replace("<head>", `<head>\n  ${preloadLinks}`);
+    }
+    return updatedContent;
   });
 
   eleventyConfig.on("eleventy.after", () => {
