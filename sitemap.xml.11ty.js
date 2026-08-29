@@ -1,3 +1,5 @@
+import { LOCAL_DEV_PORT } from "./eleventy.config.js";
+
 // XML sitemap (sitemaps.org protocol) for search/AI crawlers. Built from the
 // same _data/nav.js tree as the sidebar and llms.txt, so a renamed or
 // removed page can't leave a stale entry behind.
@@ -10,14 +12,15 @@
 // verified in Search Console) — a GitHub Pages build whose sitemap only
 // listed the Cloudflare domain's URLs would be invalid under that rule.
 // Required for a real build, defaulted for local --serve/--watch — see
-// isLocalDevServer's comment in eleventy.config.js for why (same reasoning,
-// same env var, applied here too since this file is its own separate
-// Eleventy entry point with its own top-level env checks).
+// isLocalDevServer's and LOCAL_DEV_PORT's comments in eleventy.config.js
+// for why (same reasoning, same env var and port, applied here too since
+// this file is its own separate Eleventy entry point with its own
+// top-level env checks).
 const isLocalDevServer = process.env.ELEVENTY_RUN_MODE === "serve" || process.env.ELEVENTY_RUN_MODE === "watch";
 if (!process.env.ELEVENTY_SITE_ORIGIN && !isLocalDevServer) {
   throw new Error("ELEVENTY_SITE_ORIGIN must be set — see deploy.yml");
 }
-const siteOrigin = process.env.ELEVENTY_SITE_ORIGIN || "http://localhost:8080";
+const siteOrigin = process.env.ELEVENTY_SITE_ORIGIN || `http://localhost:${LOCAL_DEV_PORT}`;
 const pathPrefix = (process.env.ELEVENTY_PATH_PREFIX || "/").replace(/\/$/, "");
 
 export const data = {
