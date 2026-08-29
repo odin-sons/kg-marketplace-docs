@@ -9,12 +9,15 @@
 // listing URLs on the same host that serves it (or one you've separately
 // verified in Search Console) — a GitHub Pages build whose sitemap only
 // listed the Cloudflare domain's URLs would be invalid under that rule.
-// Required, not defaulted — see CANONICAL_ORIGIN's comment in
-// eleventy.config.js for why.
-if (!process.env.ELEVENTY_SITE_ORIGIN) {
+// Required for a real build, defaulted for local --serve/--watch — see
+// isLocalDevServer's comment in eleventy.config.js for why (same reasoning,
+// same env var, applied here too since this file is its own separate
+// Eleventy entry point with its own top-level env checks).
+const isLocalDevServer = process.env.ELEVENTY_RUN_MODE === "serve" || process.env.ELEVENTY_RUN_MODE === "watch";
+if (!process.env.ELEVENTY_SITE_ORIGIN && !isLocalDevServer) {
   throw new Error("ELEVENTY_SITE_ORIGIN must be set — see deploy.yml");
 }
-const siteOrigin = process.env.ELEVENTY_SITE_ORIGIN;
+const siteOrigin = process.env.ELEVENTY_SITE_ORIGIN || "http://localhost:8080";
 const pathPrefix = (process.env.ELEVENTY_PATH_PREFIX || "/").replace(/\/$/, "");
 
 export const data = {
