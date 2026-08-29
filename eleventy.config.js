@@ -48,10 +48,20 @@ const isArchivedVersion = process.env.ELEVENTY_ARCHIVED_VERSION === "true";
 // rather than defaulted so the actual domain lives in exactly one place
 // (deploy.yml/deploy-archived-version.yml's own env blocks), not scattered
 // across every file that needs it.
-if (!process.env.ELEVENTY_CANONICAL_ORIGIN) {
+// Required for a real build (CI always sets it — deploy.yml/
+// deploy-archived-version.yml), so a misconfigured deploy fails loudly
+// instead of silently shipping the wrong domain. Defaulted only for local
+// `--serve`/`--watch` (ELEVENTY_RUN_MODE, set by Eleventy itself before this
+// file is even imported — confirmed empirically, not assumed) — CONTRIBUTING.md
+// promises `npm start` just works with zero setup, and canonical URLs are
+// meaningless for a local preview anyway. 8080 matches Eleventy's own
+// --serve default port, i.e. what CONTRIBUTING.md already tells a
+// contributor to expect.
+const isLocalDevServer = process.env.ELEVENTY_RUN_MODE === "serve" || process.env.ELEVENTY_RUN_MODE === "watch";
+if (!process.env.ELEVENTY_CANONICAL_ORIGIN && !isLocalDevServer) {
   throw new Error("ELEVENTY_CANONICAL_ORIGIN must be set — see deploy.yml");
 }
-const CANONICAL_ORIGIN = process.env.ELEVENTY_CANONICAL_ORIGIN;
+const CANONICAL_ORIGIN = process.env.ELEVENTY_CANONICAL_ORIGIN || "http://localhost:8080";
 
 // Providers with a documented or hand-confirmed, currently-working "open
 // with prefilled prompt" URL — this class of URL trick tends to get pulled
