@@ -10,6 +10,27 @@ import postcssConfig from "./postcss.config.js";
 
 const SIDEBAR_TOGGLE_ICON = await loadIcon("chevron-left.svg");
 
+// The port Eleventy's dev server (`--serve`/`--watch`) listens on — set
+// explicitly via eleventyConfig.setServerOptions below rather than left to
+// eleventy-dev-server's own default, specifically so this one value can be
+// reused for the canonical/sitemap/robots fallback below and in
+// sitemap.xml.11ty.js/robots.txt.11ty.js (imported from here, same pattern
+// as MARKDOWN_CONTENT_DIRS), instead of three separately hardcoded
+// literals that could drift out of sync.
+//
+// Eleventy does not expose the *actually* bound port back to the config
+// file — checked directly against eleventy-dev-server's own source, not
+// assumed: setServerOptions is write-only (no getter), the CLI's --port
+// flag isn't surfaced to us in any env var, and eleventy-dev-server's own
+// portReassignmentRetryCount silently retries port+1 up to 10 times if
+// this one's already taken, with no way for us to observe the outcome
+// from here. So on a port conflict, or someone passing --port themselves,
+// these three URLs can still end up pointing at the wrong port. Harmless
+// either way: none of the three is functional for a local preview (no
+// crawler visits localhost, nobody submits a local sitemap) — worst case
+// a clicked canonical link fails to connect, not a broken build.
+export const LOCAL_DEV_PORT = 8080;
+
 // "/" for Cloudflare Pages (served at the canonical domain's root) and local
 // dev; "/kg-marketplace-docs/" for the GitHub Pages mirror, which — as a
 // project page rather than a user/org page — is served under a subpath.
@@ -54,14 +75,13 @@ const isArchivedVersion = process.env.ELEVENTY_ARCHIVED_VERSION === "true";
 // `--serve`/`--watch` (ELEVENTY_RUN_MODE, set by Eleventy itself before this
 // file is even imported — confirmed empirically, not assumed) — CONTRIBUTING.md
 // promises `npm start` just works with zero setup, and canonical URLs are
-// meaningless for a local preview anyway. 8080 matches Eleventy's own
-// --serve default port, i.e. what CONTRIBUTING.md already tells a
-// contributor to expect.
+// meaningless for a local preview anyway. See LOCAL_DEV_PORT above for the
+// caveat on this not always matching the dev server's actual port.
 const isLocalDevServer = process.env.ELEVENTY_RUN_MODE === "serve" || process.env.ELEVENTY_RUN_MODE === "watch";
 if (!process.env.ELEVENTY_CANONICAL_ORIGIN && !isLocalDevServer) {
   throw new Error("ELEVENTY_CANONICAL_ORIGIN must be set — see deploy.yml");
 }
-const CANONICAL_ORIGIN = process.env.ELEVENTY_CANONICAL_ORIGIN || "http://localhost:8080";
+const CANONICAL_ORIGIN = process.env.ELEVENTY_CANONICAL_ORIGIN || `http://localhost:${LOCAL_DEV_PORT}`;
 
 // Providers with a documented or hand-confirmed, currently-working "open
 // with prefilled prompt" URL — this class of URL trick tends to get pulled
@@ -145,6 +165,10 @@ function markdownPassthroughMap() {
 }
 
 export default function (eleventyConfig) {
+  // See LOCAL_DEV_PORT above for why this is pinned explicitly rather than
+  // left to eleventy-dev-server's own default.
+  eleventyConfig.setServerOptions({ port: LOCAL_DEV_PORT });
+
   // Rewrites every root-relative href/src/srcset in the rendered HTML output
   // (nav links, the stylesheet, script tags, favicons, eleventy-img output,
   // manifest link, etc.) to carry pathPrefix — a no-op when pathPrefix is
