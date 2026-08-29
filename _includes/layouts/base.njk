@@ -31,6 +31,9 @@
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0c0c0c">
   <link rel="stylesheet" href="/styles/site.css">
+  <!-- media="print" swap keeps this rel="stylesheet" from byte one — no preload/swap request-correlation for the SW to break. -->
+  <link rel="stylesheet" href="/styles/deferred.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="/styles/deferred.css"></noscript>
   <!-- No-JS fallback: undoes the pre-collapsed nav state above. -->
   <noscript><style>#site-nav [hidden] { display: block !important; }</style></noscript>
 </head>

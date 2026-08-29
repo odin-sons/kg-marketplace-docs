@@ -53,12 +53,15 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("_headers");
   eleventyConfig.addPassthroughCopy("reference/translations.English.yml");
 
+  // Both are real entry points (not one @import-ing the other) — site.css is
+  // the blocking, above-the-fold stylesheet; deferred.css (loaded via a
+  // media="print" swap in base.njk) is everything else.
+  const CSS_ENTRY_POINTS = ["./styles/site.css", "./styles/deferred.css"];
   eleventyConfig.addTemplateFormats("css");
   eleventyConfig.addExtension("css", {
     outputFileExtension: "css",
     compile: async (inputContent, inputPath) => {
-      // Only the entry point — partials arrive via @import.
-      if (inputPath !== "./styles/site.css") return;
+      if (!CSS_ENTRY_POINTS.includes(inputPath)) return;
 
       return async () => {
         const result = await postcss(postcssConfig.plugins).process(inputContent, { from: inputPath });
