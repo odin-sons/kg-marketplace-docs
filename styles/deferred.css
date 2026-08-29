@@ -11,7 +11,7 @@ html:root {
   --pf-outline-focus: var(--link);
   --pf-skeleton: var(--border);
   --pf-skeleton-shine: var(--bg-nav);
-  --pf-font: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --pf-font: -apple-system, "Segoe UI", roboto, helvetica, arial, sans-serif;
 }
 
 .doc img {
@@ -21,7 +21,7 @@ html:root {
 
 .doc img:hover,
 .doc img:focus-visible {
-  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0 4px 20px rgb(0 0 0 / 25%));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -78,7 +78,7 @@ body.lightbox-open {
   .image-rail img:hover,
   .image-rail img:focus-visible {
     box-shadow: none;
-    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0 4px 20px rgb(0 0 0 / 25%));
   }
 }
 
@@ -95,7 +95,7 @@ body.lightbox-open {
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 30%);
 }
 
 .suggest-correction:hover {
@@ -132,7 +132,7 @@ body.lightbox-open {
 .page-toc:focus-within .page-toc__list {
   background: var(--bg-nav);
   border-color: var(--border);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 25%);
 }
 
 .page-toc__link {
@@ -228,7 +228,7 @@ body.lightbox-open {
 .lightbox__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(10, 11, 13, 0.82);
+  background: rgb(10 11 13 / 82%);
 }
 
 .lightbox__stage {
@@ -245,7 +245,7 @@ body.lightbox-open {
   width: auto;
   height: auto;
   border-radius: 6px;
-  filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 20px 60px rgb(0 0 0 / 50%));
   display: block;
 }
 
@@ -257,7 +257,7 @@ body.lightbox-open {
   height: 2.75rem;
   border-radius: 50%;
   border: none;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgb(0 0 0 / 60%);
   color: #fff;
   font-size: 1.6rem;
   line-height: 1;
@@ -265,7 +265,7 @@ body.lightbox-open {
 }
 
 .lightbox__close:hover {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgb(0 0 0 / 80%);
 }
 
 table {
@@ -295,6 +295,7 @@ th {
   0%, 15% {
     background: var(--highlight-flash);
   }
+
   100% {
     background: transparent;
   }
@@ -335,7 +336,7 @@ blockquote {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg-nav);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 25%);
   font-size: 0.85rem;
 }
 
@@ -401,7 +402,7 @@ blockquote {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg-nav);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 25%);
   font-size: 0.9rem;
 }
 

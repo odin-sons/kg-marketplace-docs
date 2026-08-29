@@ -2,7 +2,8 @@
 
 :root {
   color-scheme: light dark;
-  --bg: #ffffff;
+
+  --bg: #fff;
   --bg-nav: #f6f7f9;
   --text: #1c1e21;
   --text-muted: #5b6270;
@@ -10,7 +11,7 @@
   --link: #1a5fb4;
   --link-visited: #6b3fa0;
   --code-bg: #f0f1f3;
-  --highlight-flash: rgba(26, 95, 180, 0.18);
+  --highlight-flash: rgb(26 95 180 / 18%);
   --nav-width: 280px;
   --max-content-width: 860px;
   --rail-gap: 30px;
@@ -24,6 +25,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
+
     --bg: #15171a;
     --bg-nav: #1b1e22;
     --text: #e7e9ec;
@@ -32,12 +34,13 @@
     --link: #6fa8f5;
     --link-visited: #b294e0;
     --code-bg: #202327;
-    --highlight-flash: rgba(111, 168, 245, 0.22);
+    --highlight-flash: rgb(111 168 245 / 22%);
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
+
   --bg: #15171a;
   --bg-nav: #1b1e22;
   --text: #e7e9ec;
@@ -45,7 +48,7 @@
   --border: #2c2f34;
   --link: #6fa8f5;
   --link-visited: #b294e0;
-  --highlight-flash: rgba(111, 168, 245, 0.22);
+  --highlight-flash: rgb(111 168 245 / 22%);
   --code-bg: #202327;
 }
 
@@ -103,7 +106,7 @@ img {
   width: 1px;
   height: 1px;
   overflow: hidden;
-  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
 }
 
 .nav-toggle {
@@ -340,6 +343,17 @@ pagefind-modal-trigger:not(:defined) {
   padding: 0;
 }
 
+.site-nav__item--has-children {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.site-nav__item--has-children > a {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .site-nav__group li a {
   display: block;
   padding: 0.6rem 0.85rem;
@@ -379,17 +393,6 @@ pagefind-modal-trigger:not(:defined) {
 .site-nav__group li a[aria-current="page"] {
   background: var(--link);
   color: var(--bg);
-}
-
-.site-nav__item--has-children {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.site-nav__item--has-children > a {
-  flex: 1 1 auto;
-  min-width: 0;
 }
 
 .site-nav__toggle {
@@ -438,13 +441,13 @@ pagefind-modal-trigger:not(:defined) {
   border-left: 1px solid var(--border);
 }
 
-.site-nav__children li a {
+.site-nav__group .site-nav__children li a {
   padding: 0.45rem 0.7rem;
   font-size: 0.85rem;
   color: var(--text-muted);
 }
 
-.site-nav__children li a:hover {
+.site-nav__group .site-nav__children li a:hover {
   color: inherit;
 }
 
@@ -457,6 +460,7 @@ pagefind-modal-trigger:not(:defined) {
 .ai-actions {
   position: relative;
   float: right;
+
   /* Nudge down past the h1 line box's leading. */
   margin: 0.5lh 0 1rem 1rem;
 }
