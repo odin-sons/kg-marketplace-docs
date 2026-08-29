@@ -244,17 +244,22 @@ export default function (eleventyConfig) {
   // (transforms execute in registration order), not the raw
   // markdown-generated tag.
   //
-  // Also emits matching <link rel="preload"> hints into <head> — even with
+  // Also emits a matching <link rel="preload"> hint into <head> — even with
   // fetchpriority="high" on the <img> itself, the browser's preload scanner
   // only discovers this image once the parser reaches it in <body>; a
   // <head> hint starts the fetch as early as any other render-blocking
-  // resource instead. Each preload link repeats fetchpriority="high" too —
+  // resource instead. Repeats fetchpriority="high" on the link too —
   // Lighthouse's lcp-discovery-insight specifically checks for the hint on
-  // the preload request itself, not just the eventual <img>. One preload
-  // per <source> (mirroring every format eleventy-img generated), matched
-  // by `type` so the browser only ever fetches the one it actually
-  // supports — the same negotiation <picture> itself does, so nothing gets
-  // fetched twice.
+  // the preload request itself, not just the eventual <img>.
+  //
+  // Only the *first* <source> (avif — eleventy-img's `formats` option lists
+  // it first) gets a preload, not one per format: <picture> always tries
+  // sources in document order and picks the first supported type, and
+  // avif support is broad enough now (this project's own browserslist:
+  // "baseline widely available") that it wins on virtually every visitor.
+  // Preloading every format used to mean the loser was fetched for
+  // nothing — confirmed live in-browser as real "preloaded but not used"
+  // console warnings, not just a theoretical waste.
   eleventyConfig.addTransform("prioritize-first-in-content-image", function (content) {
     const main = content.match(/<main\b[^>]*>[\s\S]*?<\/main>/);
     if (!main) return content;
@@ -273,21 +278,20 @@ export default function (eleventyConfig) {
       const match = tag.match(new RegExp(`\\b${name}="([^"]*)"`));
       return match ? match[1] : null;
     };
-    const preloadLinks = (picture[0].match(/<source\b[^>]*>/g) || [])
-      .map((source) => {
-        const type = getAttr(source, "type");
-        const srcset = getAttr(source, "srcset");
-        const sizes = getAttr(source, "sizes");
-        if (!type || !srcset) return null;
-        return `<link rel="preload" as="image" type="${type}" imagesrcset="${srcset}"${sizes ? ` imagesizes="${sizes}"` : ""} fetchpriority="high">`;
-      })
-      .filter(Boolean)
-      .join("\n  ");
+    const firstSource = picture[0].match(/<source\b[^>]*>/);
+    const preloadLink = (() => {
+      if (!firstSource) return null;
+      const type = getAttr(firstSource[0], "type");
+      const srcset = getAttr(firstSource[0], "srcset");
+      const sizes = getAttr(firstSource[0], "sizes");
+      if (!type || !srcset) return null;
+      return `<link rel="preload" as="image" type="${type}" imagesrcset="${srcset}"${sizes ? ` imagesizes="${sizes}"` : ""} fetchpriority="high">`;
+    })();
 
     const updatedMain = main[0].replace(picture[0], updatedPicture);
     let updatedContent = content.slice(0, main.index) + updatedMain + content.slice(main.index + main[0].length);
-    if (preloadLinks) {
-      updatedContent = updatedContent.replace("<head>", `<head>\n  ${preloadLinks}`);
+    if (preloadLink) {
+      updatedContent = updatedContent.replace("<head>", `<head>\n  ${preloadLink}`);
     }
     return updatedContent;
   });
@@ -403,9 +407,9 @@ export default function (eleventyConfig) {
   // Fed to <link rel="alternate" type="text/markdown"> in base.njk — the
   // root-relative path to this page's raw-markdown passthrough copy (see
   // above), left undefined for any page outside MARKDOWN_CONTENT_DIRS (e.g.
-  // .github/PULL_REQUEST_TEMPLATE, which Eleventy also happens to render as
-  // a page but which never gets an .md copy), so the template can just skip
-  // the tag rather than link to a 404.
+  // the root README, which gets its own /index.md instead — handled above —
+  // or any future top-level page that never gets an .md copy), so the
+  // template can just skip the tag rather than link to a 404.
   eleventyConfig.addGlobalData("eleventyComputed.markdownUrl", () => {
     return (data) => {
       const inputPath = data.page?.inputPath ?? "";
