@@ -3,8 +3,10 @@ import path from "node:path";
 import { InputPathToUrlTransformPlugin, IdAttributePlugin, HtmlBasePlugin } from "@11ty/eleventy";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import { slug as githubSlug } from "github-slugger";
+import postcss from "postcss";
 import { AI_PROVIDER_ICONS, COPY_ICON, VIEW_MARKDOWN_ICON } from "./ai-provider-icons.js";
 import { loadIcon } from "./svg-icons.js";
+import postcssConfig from "./postcss.config.js";
 
 const SIDEBAR_TOGGLE_ICON = await loadIcon("chevron-left.svg");
 
@@ -140,7 +142,6 @@ export default function (eleventyConfig) {
   // Pages build.
   eleventyConfig.addPlugin(HtmlBasePlugin);
 
-  eleventyConfig.addPassthroughCopy("styles");
   eleventyConfig.addPassthroughCopy("scripts");
   eleventyConfig.addPassthroughCopy("icons");
   eleventyConfig.addPassthroughCopy("favicon.ico");
@@ -148,6 +149,29 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("manifest.json");
   eleventyConfig.addPassthroughCopy("_headers");
   eleventyConfig.addPassthroughCopy("reference/translations.English.yml");
+
+  // styles/site.css is no longer a passthrough copy — it goes through
+  // PostCSS instead (see postcss.config.js for the actual plugin list:
+  // sanitize.css via postcss-normalize, autoprefixer, csso minification,
+  // plus stylelint-as-warnings in dev). addExtension keeps the output at
+  // the same relative path (styles/site.css) a passthrough copy would have
+  // used, so nothing elsewhere (the <link> in base.njk, HtmlBasePlugin's
+  // pathPrefix rewrite) needs to change.
+  eleventyConfig.addTemplateFormats("css");
+  eleventyConfig.addExtension("css", {
+    outputFileExtension: "css",
+    compile: async (inputContent, inputPath) => {
+      // Only the one real entry point — styles/site.css's own @import
+      // (see that file) is what pulls in sanitize.css, not a second source
+      // file Eleventy would otherwise also try to compile+emit on its own.
+      if (inputPath !== "./styles/site.css") return;
+
+      return async () => {
+        const result = await postcss(postcssConfig.plugins).process(inputContent, { from: inputPath });
+        return result.css;
+      };
+    },
+  });
 
   // Raw markdown copy for every doc page (e.g. /configs/quests/index.md next
   // to that page's own index.html), untouched — same file an agent (or
