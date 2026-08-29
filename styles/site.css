@@ -1,6 +1,3 @@
-/* Resolved by postcss-normalize (postcss.config.js) into just the parts of
-   sanitize.css our own browserslist target (package.json) actually needs —
-   not committed as literal CSS here, this @import is the trigger. */
 @import url("sanitize.css");
 
 :root {
@@ -23,15 +20,7 @@
   color-scheme: light;
 }
 
-/* Three states: system default (no attribute, follows prefers-color-scheme),
-   or an explicit choice saved by scripts/theme-switcher.js and applied by
-   the blocking inline script in base.njk's <head> (before first paint, so
-   there's no flash of the wrong theme) via `data-theme="light"/"dark"` on
-   <html>. The media-query block is guarded with :not([data-theme="light"])
-   so an explicit light choice isn't overridden by a dark system preference;
-   the explicit [data-theme="dark"] block below covers the opposite case
-   (dark chosen on a light-preferring system) since a plain :root rule alone
-   can't out-rank a matched @media block on specificity. */
+/* :not(...) here + a separate [data-theme="dark"] block below — a plain :root can't out-rank a matched @media block. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
@@ -60,14 +49,7 @@
   --code-bg: #202327;
 }
 
-/* Pagefind's own CSS ships a `:root { --pf-background: #fff; ... }` block of
-   its own (plus a parallel `[data-pf-theme="dark"]` block we don't use) —
-   equal specificity to a plain `:root` rule, and it loads after this
-   stylesheet, so it would otherwise win the cascade and pin the search UI to
-   its light defaults regardless of our theme. The extra `html` bumps this
-   past that regardless of link order. Referencing our own vars (rather than
-   repeating literal colors per theme block) is enough on its own — var()
-   re-resolves whenever the underlying custom property does. */
+/* Extra specificity to beat pagefind's own :root defaults regardless of link order. */
 html:root {
   --pf-text: var(--text);
   --pf-text-secondary: var(--text-muted);
@@ -146,32 +128,7 @@ body.lightbox-open {
   overflow: hidden;
 }
 
-/* Above 1570px, scripts/image-rail.js moves every standalone image (never
-   a table-paired side-by-side screenshot — `.doc > p:has(> picture:only-child)`
-   excludes those, they stay put) out of the text into `.image-rail`, a
-   column beside it. Below that width the script leaves images where the
-   markdown puts them, full block-level, no special positioning.
-
-   The images are real `position: sticky` — not JS-tracked `top` values —
-   for smooth, compositor-driven scrolling with zero per-frame script work.
-   A sticky element's stuck range is bounded by its own containing block
-   (its immediate parent), not "the next sibling" in some shared ancestor,
-   so each image gets wrapped (by the script) in its own `.image-rail__item`,
-   sized via `min-height` to exactly the vertical span of page it belongs
-   to — that per-item boundary is what releases one image and activates the
-   next as scroll crosses each wrapper's edge, instead of every image
-   staying stuck at once under one shared parent.
-
-   .image-rail's own left edge is CSS-anchored to .doc's right edge (anchor
-   positioning, Baseline 2026) rather than computed via JS — .doc's actual
-   position shifts with the sidebar-collapse state (sidebar-collapse.js),
-   and this tracks it with zero script involvement either way. Its width
-   fills whatever's left up to the viewport's own edge, capped at 600px, via
-   the standard "left + right both set, width auto, max-width caps it"
-   over-constrained resolution — browser-computed, not measured. */
 @media (min-width: 1570px) {
-  /* Fallback for the ~9% of browsers without anchor positioning yet —
-     fixed width, matches this project's original rail sizing. */
   .doc {
     position: relative;
   }
@@ -243,15 +200,6 @@ body.lightbox-open {
   display: none;
 }
 
-/* scripts/page-toc.js builds this from the current page's own h2/h3s (every
-   heading already has an id from IdAttributePlugin) — a thin tick per
-   heading, right edge, vertically centered on the viewport regardless of
-   scroll position. Collapsed, it's just the ticks; hovering (or focusing,
-   for keyboard users) expands every label into a readable panel at once —
-   deliberately floating on top of whatever's underneath, images included,
-   rather than trying to dodge the image rail that lives in this same
-   right-hand area on wide screens. Whichever section is actually in view
-   gets a brighter, wider tick and a bolder label, via .is-active. */
 .page-toc {
   position: fixed;
   top: 50%;
@@ -260,12 +208,6 @@ body.lightbox-open {
   z-index: 45;
 }
 
-/* One shared panel background for the whole list, like a normal dropdown
-   menu — not a separate pill behind each row. It's transparent/borderless
-   collapsed (so it doesn't outline the bare ticks) and only becomes a real
-   card on hover/focus-within, sized to fit automatically since the list's
-   own box already shrinks to its widest row (the shrink-to-fit width from
-   align-items: flex-end below). */
 .page-toc__list {
   display: flex;
   flex-direction: column;
@@ -287,16 +229,6 @@ body.lightbox-open {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
-/* A real flex row, not a stack of independently absolutely-positioned
-   labels — that earlier approach pinned each label to the vertical center
-   of its own 2px-tall tick, and since the label's actual text is much
-   taller than the gap between ticks, neighboring labels overlapped each
-   other as soon as more than a couple were open at once. Growing each
-   row's own width (and letting its height follow the label's line-height)
-   keeps every row inside normal document flow, so the column naturally
-   pushes later rows down as earlier ones grow — the browser's ordinary
-   no-overlap guarantee for block/flex layout, instead of trying to
-   recreate it by hand with fixed coordinates. */
 .page-toc__link {
   display: flex;
   align-items: center;
@@ -455,12 +387,6 @@ th {
   background: var(--bg-nav);
 }
 
-/* scripts/anchor-highlight.js adds this to whatever #id was jumped to (a
-   heading, or — for a single row inside a much bigger table, like a
-   specific setting in Server config — the <tr> around a hand-placed empty
-   <a id="..."> in that row's first cell) after scrolling it into view, so
-   the destination is obvious even when the URL bar's own jump would have
-   been easy to miss. */
 .anchor-highlight {
   animation: anchor-highlight-flash 2.2s ease-out;
 }
@@ -513,10 +439,6 @@ blockquote {
   transition: transform 0.2s ease;
 }
 
-/* Desktop-only sidebar collapse (mobile already has its own hamburger
-   drawer below). Edge tab at the sidebar's right border, flips sides and
-   rotates when collapsed; state lives in data-sidebar (set on <html> by
-   the blocking script in base.njk, toggled by sidebar-collapse.js). */
 .sidebar-collapse-toggle {
   display: none;
 }
@@ -564,8 +486,6 @@ blockquote {
     transform: rotate(180deg);
   }
 
-  /* max-width already caps .site-main (below) — overriding its fixed
-     margin-left to auto is what re-centers the column in the freed space. */
   :root[data-sidebar="collapsed"] .site-main {
     margin-inline: auto;
   }
@@ -673,11 +593,6 @@ blockquote {
   color: var(--text-muted);
 }
 
-/* The group title has no link of its own (unlike an item row), so the
-   whole row becomes the toggle button — JS moves the title-main/title-sub
-   spans inside it. min-height 2.75rem (44px) keeps even a single-line,
-   no-subtitle group (Tooling, Reference, ...) at a full touch-friendly
-   target, matching .site-nav__toggle's own minimum. */
 .site-nav__group-toggle {
   display: flex;
   align-items: center;
@@ -787,10 +702,6 @@ blockquote {
 }
 
 .site-nav__toggle {
-  /* 44x44 CSS px meets the WCAG 2.5.5 / mobile-platform recommended minimum
-     touch target size — negative margin pulls the extra hit-area back in
-     visually so it doesn't blow out the row height, without shrinking the
-     actual clickable box itself. */
   flex: 0 0 auto;
   display: flex;
   align-items: center;
@@ -859,20 +770,10 @@ blockquote {
   font-size: 0.9rem;
 }
 
-/* A collapsed-by-default disclosure (button + hidden panel, same
-   aria-expanded/aria-controls/hidden pattern as nav-collapse.js) rather than
-   an always-visible row of 7 links — screen readers hit one button, not a
-   wall of AI-provider links, on every single page before reaching the
-   actual content; sighted readers who just want to read see one small
-   control, not a bar of chrome. Floated right at the very top of .doc (see
-   doc.njk — this is the first thing inside <article>, right before the
-   rendered content's own <h1>) so the page's own title flows in beside it,
-   Vercel/Mintlify-style, without needing to know where that heading is. */
 .ai-actions {
   position: relative;
   float: right;
-  /* A float aligns to the top of the h1's line box, not its glyphs —
-     nudges the button down past that leading. */
+  /* Nudge down past the h1 line box's leading. */
   margin: 0.5lh 0 1rem 1rem;
 }
 
@@ -938,9 +839,6 @@ blockquote {
   cursor: pointer;
 }
 
-/* Muted/monochrome regardless of the link text's own color (var(--link)) —
-   the icon is a quiet visual identifier for telling the provider links
-   apart at a glance, not something meant to draw the eye on its own. */
 .ai-actions__icon {
   display: inline-flex;
   color: var(--text-muted);
@@ -948,8 +846,7 @@ blockquote {
   line-height: 1;
 }
 
-/* The build strips width/height from every icon (ai-provider-icons.js,
-   removeDimensions) so this is the only place size is set. */
+/* Only place icon size is set — width/height are stripped from the SVGs at build time. */
 .ai-actions__icon svg {
   width: 1em;
   height: 1em;
@@ -995,9 +892,6 @@ blockquote {
   }
 }
 
-/* Shown by scripts/sw-update-banner.js once a background revalidation
-   (sw.js.11ty.js) finds the page currently open no longer matches what's
-   on the server. */
 .sw-update-banner {
   position: fixed;
   z-index: 40;

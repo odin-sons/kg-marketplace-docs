@@ -10,10 +10,7 @@
   <link rel="describedby" href="/llms.txt">
   {% if markdownUrl %}<link rel="alternate" type="text/markdown" href="{{ markdownUrl }}">{% endif %}
   <script>
-    // Must run inline, synchronously, before the stylesheet below paints
-    // anything — an external file would add a network round trip on the
-    // critical path and still risk a flash of the wrong state before it
-    // loads.
+    // Inline and synchronous — runs before CSS paints, to avoid a flash of the wrong theme.
     (function () {
       try {
         var theme = localStorage.getItem("theme");
@@ -34,26 +31,9 @@
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#0c0c0c">
   <link rel="stylesheet" href="/styles/site.css">
-  <!-- Nav sections render pre-collapsed (see navWithState in
-       eleventy.config.js) on the assumption a click handler
-       (scripts/nav-collapse.js) will be along to expand them — for the
-       rare visitor without JS, that click handler never attaches, so
-       this forces every collapsed section back open instead of leaving
-       it permanently stuck hidden. -->
+  <!-- No-JS fallback: undoes the pre-collapsed nav state above. -->
   <noscript><style>#site-nav [hidden] { display: block !important; }</style></noscript>
-  <!-- Only exist once `npm run search-index` (pagefind) has run against this
-       build's output — a 404 here just leaves search inert, nothing else
-       breaks. bundle-path/base-url below are custom attributes on a custom
-       element, so unlike href/src above, HtmlBasePlugin never touches them —
-       pagefindBundlePath/pagefindBaseUrl carry the pathPrefix already baked
-       in (see eleventy.config.js). -->
-  <!-- Non-blocking: this only styles <pagefind-modal>'s contents, which stay
-       hidden until search is opened, so there's nothing on-screen for it to
-       flash unstyled — unlike site.css above, which stays a normal blocking
-       stylesheet since it covers the nav/layout visible immediately.
-       preload+onload-swap is the standard dependency-free pattern; the
-       noscript fallback covers the (rare) no-JS case, where the onload swap
-       never fires. -->
+  <!-- Non-blocking load: preload, then swap to a real stylesheet on load. -->
   <link rel="preload" href="/pagefind/pagefind-component-ui.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="/pagefind/pagefind-component-ui.css"></noscript>
   <script src="/pagefind/pagefind-component-ui.js" type="module"></script>
@@ -135,14 +115,6 @@
     {{ content | safe }}
   </main>
 
-  <!-- defer, not just placement at the end of body: these already run after
-       the DOM is parsed either way, but `defer` also lets the browser fetch
-       all of them in parallel starting as soon as the parser sees them,
-       instead of the sequential fetch-then-execute-then-next-fetch chain a
-       plain synchronous <script> does at this point — Lighthouse flagged
-       exactly that chain as render-blocking. Execution order is preserved
-       (defer scripts run in document order), so nothing here changes when
-       any of these actually runs relative to the others. -->
   <script src="/scripts/nav-toggle.js" defer></script>
   <script src="/scripts/sidebar-collapse.js" defer></script>
   <script src="/scripts/nav-collapse.js" defer></script>
@@ -156,10 +128,6 @@
   <script src="/scripts/ai-actions.js" defer></script>
   <script src="/scripts/sw-update-banner.js" defer></script>
   <script>
-    // Registers after load, not blocking the page, and only once
-    // everything else has settled — swPath already carries this build's
-    // own pathPrefix (see eleventy.config.js; HtmlBasePlugin only rewrites
-    // href/src attributes, not JS string content, so it can't do this one).
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", function () {
         navigator.serviceWorker.register("{{ swPath }}");

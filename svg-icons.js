@@ -1,5 +1,3 @@
-// SVGO-optimized inline SVG loader, cached via AssetCache. Shared by
-// ai-provider-icons.js and eleventy.config.js's sidebar-toggle icon.
 import fs from "node:fs";
 import path from "node:path";
 import { optimize } from "svgo";

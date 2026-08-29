@@ -10,11 +10,6 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  # The one place this domain is written down for this whole file — every
-  # job/step below references it rather than repeating the literal, and
-  # eleventy.config.js/robots.txt.11ty.js/sitemap.xml.11ty.js take it (or
-  # ELEVENTY_SITE_ORIGIN) as a required env var rather than a hardcoded
-  # fallback, so changing it here is the only edit a domain change needs.
   CANONICAL_DOMAIN: https://kg-marketplace.pages.dev
 
 jobs:
@@ -29,46 +24,23 @@ jobs:
       - uses: actions/cache@v6
         with:
           path: .cache
-          # Covers both eleventy-img's screenshot cache (.cache/@11ty/img)
-          # and the SVGO icon cache (.cache/svgo) — one key over both source
-          # sets, with restore-keys falling back to the latest cache blob on
-          # any miss so an unrelated change doesn't cold-start the other.
           key: build-${{ hashFiles('images/**', 'icons-src/**') }}
           restore-keys: build-
       - run: npm ci
-      # Cloudflare Pages serves at the canonical domain's root — default
-      # pathPrefix ("/"), no override needed. ELEVENTY_SITE_ORIGIN and
-      # ELEVENTY_CANONICAL_ORIGIN happen to be the same value on this pass;
-      # see the GitHub Pages pass below for why they're not always equal.
       - run: npm run build
         env:
           ELEVENTY_SITE_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
           ELEVENTY_CANONICAL_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
-          # sw.js.11ty.js bakes this into its own cache name — new commit,
-          # new SHA, new service-worker bytes, which is the actual signal
-          # browsers use to install an update and drop old caches.
           ELEVENTY_BUILD_ID: ${{ github.sha }}
       - run: npx pagefind --site _site
       - uses: actions/upload-artifact@v7
         with:
           name: site
           path: _site
-      # GitHub Pages serves this repo as a project page under /kg-marketplace-docs/,
-      # not at its domain's root — same source, same commit, rebuilt with a
-      # pathPrefix so every href/src in the output resolves under that subpath.
-      # (See eleventy.config.js / styles/site.css comments for why this can't
-      # just be one shared build.) The image cache above already has every
-      # image from the first build, so this second pass only re-renders the
-      # HTML/CSS/JS — a few seconds, not a second full image-optimization pass.
       - run: npm run build
         env:
           ELEVENTY_PATH_PREFIX: /kg-marketplace-docs/
           ELEVENTY_OUTPUT_DIR: _site-ghpages
-          # sitemap.xml/robots.txt need *this build's own* domain in their
-          # absolute URLs (see sitemap.xml.11ty.js) — GitHub Pages, unlike
-          # the Cloudflare pass above. canonicalUrl stays CANONICAL_DOMAIN
-          # regardless of pass — canonical's whole job is naming the one
-          # preferred URL among mirrors, so it can't vary per build.
           ELEVENTY_SITE_ORIGIN: https://odin-sons.github.io
           ELEVENTY_CANONICAL_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
           ELEVENTY_BUILD_ID: ${{ github.sha }}
@@ -102,11 +74,6 @@ jobs:
   deploy-cloudflare-pages:
     needs: build
     runs-on: ubuntu-latest
-    # Gives this job the same clickable "View deployment" URL in the Actions
-    # UI that deploy-github-pages gets from its own environment block above.
-    # wrangler-action's own `deployment-url` output is the per-deploy alias
-    # (something like https://<hash>.kg-marketplace.pages.dev), not this
-    # project's stable domain, so the URL is hardcoded here instead.
     environment:
       name: cloudflare-pages
       url: https://kg-marketplace.pages.dev

@@ -19,9 +19,6 @@
     else close();
   });
 
-  // Standard disclosure-widget behavior: dismiss on an outside click or
-  // Escape, returning focus to the trigger for Escape specifically so a
-  // keyboard user doesn't lose their place.
   document.addEventListener("click", function (event) {
     if (!menu.hidden && !menu.contains(event.target) && event.target !== trigger) close();
   });
@@ -33,10 +30,6 @@
     }
   });
 
-  // Flashes a button's label to `text` for 2s, then restores whatever it
-  // said before this call — shared by both copy buttons below so a second
-  // click (or a click on the other button) while the flash is still showing
-  // doesn't leave it stuck.
   function flashLabel(button, text) {
     if (!button.dataset.defaultLabel) button.dataset.defaultLabel = button.textContent;
     clearTimeout(button._resetTimer);

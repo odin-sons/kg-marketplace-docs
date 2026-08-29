@@ -1,9 +1,3 @@
-// Listens for the "content changed underneath you" message sw.js.11ty.js
-// sends when a background revalidation finds this exact page (or another
-// resource it's currently using) differs from what was served from cache —
-// see that file for the caching/revalidation logic itself. Pure messaging/
-// DOM here, no URL construction, so unlike the registration call in
-// base.njk this doesn't need pathPrefix baked in — a plain passthrough file.
 (function () {
   if (!("serviceWorker" in navigator)) return;
 

@@ -1,10 +1,3 @@
-// The whole documentation corpus in one file — the llms-full.txt half of
-// the llms.txt convention (llms.txt itself is a compact index of links;
-// this is every one of those pages' actual content, concatenated, for
-// pasting straight into an AI assistant's context in one shot). Reuses
-// MARKDOWN_CONTENT_DIRS from eleventy.config.js — the same source files the
-// per-page raw-markdown copies (markdownPassthroughMap) come from — rather
-// than a second hand-maintained file list.
 import fs from "node:fs";
 import { MARKDOWN_CONTENT_DIRS } from "./eleventy.config.js";
 

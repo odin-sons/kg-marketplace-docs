@@ -56,8 +56,6 @@
   document.addEventListener("mouseup", handleSelectionEnd);
   document.addEventListener("touchend", handleSelectionEnd);
   document.addEventListener("keyup", function (event) {
-    // Covers keyboard selection (Shift+Arrow, Ctrl/Cmd+A) — mouseup/touchend
-    // alone would miss a selection made entirely from the keyboard.
     if (event.shiftKey || event.key === "a") handleSelectionEnd();
   });
   window.addEventListener("scroll", hideButton, { passive: true });

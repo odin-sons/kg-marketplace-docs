@@ -2,10 +2,6 @@
   var CONTENT_SELECTOR = ".doc img";
   var FLIP_DURATION = 320;
   var FLIP_EASING = "cubic-bezier(0.2, 0, 0.2, 1)";
-  // Belt-and-suspenders cap on anything that's supposed to resolve on its
-  // own (an image load, a Web Animations API finish) — a backgrounded tab
-  // can throttle or altogether skip paint-tied work, and this is a modal
-  // dialog: it must never be able to get permanently stuck open or closed.
   var SAFETY_TIMEOUT = 1500;
 
   var images = document.querySelectorAll(CONTENT_SELECTOR);
@@ -28,7 +24,6 @@
     });
   }
 
-  // --- Build the overlay once, reused for every image ---
   var lightbox = document.createElement("div");
   lightbox.className = "lightbox";
   lightbox.setAttribute("role", "dialog");
@@ -74,11 +69,6 @@
     });
   }
 
-  // Resolves once `img` has pixel data to lay out and measure. Deliberately
-  // uses only the load/error events (not `decode()`, which can stall
-  // indefinitely on a backgrounded/non-rendering tab) — `getBoundingClientRect`
-  // forces a synchronous layout on its own once the data has arrived, so no
-  // extra rAF wait is needed either.
   function whenReady(img) {
     if (img.complete && img.naturalWidth) return Promise.resolve();
     return withTimeout(

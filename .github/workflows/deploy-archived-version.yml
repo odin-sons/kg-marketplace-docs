@@ -1,27 +1,14 @@
 name: Deploy archived docs version
 
-# Separate from deploy.yml on purpose: this targets a completely different
-# audience (a frozen past mod version, Cloudflare-only, single build pass,
-# no GitHub Pages mirror — see _data/versions.js for why) and touching it
-# should never risk the main deploy pipeline.
 on:
   push:
     branches: ["version/**"]
 
 concurrency:
-  # Scoped per branch, not shared with deploy.yml's "pages" group — deploying
-  # version/9.8.8 and version/9.8.9 (or the current main build) are
-  # independent targets and shouldn't queue behind each other. Two quick
-  # pushes to the *same* version branch should still cancel-and-replace
-  # rather than deploy out of order.
   group: pages-archive-${{ github.ref_name }}
   cancel-in-progress: true
 
 env:
-  # Same value, same reasoning as deploy.yml's own copy of this — see there.
-  # Two separate literals (one per workflow file) rather than one shared
-  # source, since GitHub Actions has no cross-workflow env/include mechanism
-  # short of a repository Variable, which wasn't introduced for this.
   CANONICAL_DOMAIN: https://kg-marketplace.pages.dev
 
 jobs:
@@ -42,27 +29,12 @@ jobs:
           key: build-${{ hashFiles('images/**', 'icons-src/**') }}
           restore-keys: build-
       - run: npm ci
-      # No ELEVENTY_PATH_PREFIX — archived versions are Cloudflare-only,
-      # served at their own alias's root, same as the regular Cloudflare
-      # build (default pathPrefix "/"). ELEVENTY_SITE_ORIGIN/
-      # ELEVENTY_CANONICAL_ORIGIN are still required env vars even though
-      # ELEVENTY_ARCHIVED_VERSION means canonicalUrl ends up unused (see
-      # eleventy.config.js) — the build fails fast without them regardless,
-      # so simplest to always pass them. ELEVENTY_ARCHIVED_VERSION itself
-      # flips canonical/robots off — see eleventy.config.js and
-      # robots.txt.11ty.js — so this snapshot doesn't compete with the
-      # current docs in search results.
       - run: npm run build
         env:
           ELEVENTY_ARCHIVED_VERSION: "true"
           ELEVENTY_SITE_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
           ELEVENTY_CANONICAL_ORIGIN: ${{ env.CANONICAL_DOMAIN }}
-          # So "Edit this page on GitHub" opens this version's own branch,
-          # not main's (different) current copy of the same file — see
-          # eleventy.config.js's editBranch.
           ELEVENTY_GIT_BRANCH: ${{ github.ref_name }}
-          # Same reasoning as deploy.yml's copy — see sw.js.11ty.js. Archived
-          # builds get their own working, distinct service worker too.
           ELEVENTY_BUILD_ID: ${{ github.sha }}
       - run: npx pagefind --site _site
       - uses: cloudflare/wrangler-action@v4
@@ -70,8 +42,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # --branch controls the alias URL (dots/slashes in the branch name
-          # become hyphens, e.g. version/9.8.8 -> version-9-8-8.kg-marketplace.pages.dev)
-          # — no native git integration needed for this to work, confirmed
-          # against Cloudflare's own docs on branch alias generation.
           command: pages deploy _site --project-name=kg-marketplace --branch=${{ github.ref_name }}

@@ -1,17 +1,3 @@
-// XML sitemap (sitemaps.org protocol) for search/AI crawlers. Built from the
-// same _data/nav.js tree as the sidebar and llms.txt, so a renamed or
-// removed page can't leave a stale entry behind.
-//
-// <loc> always uses *this build's own* domain (ELEVENTY_SITE_ORIGIN, set
-// per pathPrefix pass in .github/workflows/deploy.yml exactly like
-// ELEVENTY_PATH_PREFIX already is) rather than one hardcoded canonical
-// host: Google's own cross-domain sitemap rules only accept a sitemap
-// listing URLs on the same host that serves it (or one you've separately
-// verified in Search Console) — a GitHub Pages build whose sitemap only
-// listed the Cloudflare domain's URLs would be invalid under that rule.
-// Required, full stop — package.json's start/serve scripts pass it
-// explicitly for local dev, same reasoning as CANONICAL_ORIGIN in
-// eleventy.config.js.
 if (!process.env.ELEVENTY_SITE_ORIGIN) {
   throw new Error("ELEVENTY_SITE_ORIGIN must be set — see package.json's start/serve scripts (local) or deploy.yml (CI)");
 }
@@ -26,8 +12,6 @@ export const data = {
 };
 
 export default function (data) {
-  // The homepage isn't in nav.js — base.njk renders it as a standalone
-  // "Introduction" link ahead of the array — so it's seeded in by hand.
   const paths = new Set(["/"]);
 
   for (const group of data.nav) {
@@ -37,9 +21,6 @@ export default function (data) {
 
       for (const child of item.children ?? []) {
         const childPath = child.href.split("#")[0];
-        // Anchor-only children (e.g. Mail/Feedback under Server config)
-        // point at a spot on the parent's own page, not a distinct URL —
-        // listing it again would duplicate the parent's <loc> entry.
         if (childPath !== itemPath) paths.add(childPath);
       }
     }

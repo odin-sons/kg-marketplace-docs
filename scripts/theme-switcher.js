@@ -2,9 +2,6 @@
   var select = document.getElementById("theme-switcher");
   if (!select) return;
 
-  // The <html> element's own data-theme (if any) was already set by the
-  // blocking inline script in <head>, before this file even loaded — this
-  // just points the dropdown at whatever that ended up being.
   var stored = null;
   try {
     stored = localStorage.getItem("theme");
