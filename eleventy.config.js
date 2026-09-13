@@ -46,6 +46,9 @@ export default function (eleventyConfig) {
   eleventyConfig.addPlugin(HtmlBasePlugin);
 
   eleventyConfig.addPassthroughCopy("scripts");
+  eleventyConfig.addPassthroughCopy({
+    "node_modules/kg-marketplace-syntax/syntaxes/kg-marketplace.tmLanguage.json": "scripts/syntax-highlight/kg-marketplace-grammar.json",
+  });
   eleventyConfig.addPassthroughCopy("icons");
   eleventyConfig.addPassthroughCopy("favicon.ico");
   eleventyConfig.addPassthroughCopy("apple-touch-icon.png");

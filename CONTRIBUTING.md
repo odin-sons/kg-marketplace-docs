@@ -43,6 +43,7 @@ The built site is written to a `_site/` folder, which is not committed — it's 
 
 - Don't add anything to the top of a `.md` file that looks like `---\nkey: value\n---` (front matter) — these files are read as plain Markdown elsewhere too, and must stay that way.
 - `eleventy.config.js`, `_includes/`, `_data/`, `styles/`, and `scripts/` are the site's templating/build config. If you need a new page to show up in the sidebar, add it to `_data/nav.js`. Site-only images (like the logo) live in `images/`.
+- Vendoring code from another project into `scripts/` or `styles/`? Add its license to [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) instead of dropping a `LICENSE` file next to it.
 
 ## How publishing works
 

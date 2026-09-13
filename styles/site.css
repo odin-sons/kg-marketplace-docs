@@ -15,6 +15,14 @@
   --nav-width: 280px;
   --max-content-width: 860px;
   --rail-gap: 30px;
+  --syntax-keyword: #b3323f;
+  --syntax-string: #1a7f37;
+  --syntax-constant: var(--link);
+  --syntax-variable: #953800;
+  --syntax-tag: #0b7285;
+  --syntax-class: #7b3fe4;
+  --syntax-support: var(--link-visited);
+  --syntax-punctuation: var(--text-muted);
 }
 
 :root[data-theme="light"] {
@@ -35,6 +43,14 @@
     --link-visited: #b294e0;
     --code-bg: #202327;
     --highlight-flash: rgb(111 168 245 / 22%);
+    --syntax-keyword: #e5636f;
+    --syntax-string: #4fd88a;
+    --syntax-constant: var(--link);
+    --syntax-variable: #e2984f;
+    --syntax-tag: #4fd1c5;
+    --syntax-class: #b98cf2;
+    --syntax-support: var(--link-visited);
+    --syntax-punctuation: var(--text-muted);
   }
 }
 
@@ -50,6 +66,14 @@
   --link-visited: #b294e0;
   --highlight-flash: rgb(111 168 245 / 22%);
   --code-bg: #202327;
+  --syntax-keyword: #e5636f;
+  --syntax-string: #4fd88a;
+  --syntax-constant: var(--link);
+  --syntax-variable: #e2984f;
+  --syntax-tag: #4fd1c5;
+  --syntax-class: #b98cf2;
+  --syntax-support: var(--link-visited);
+  --syntax-punctuation: var(--text-muted);
 }
 
 * {

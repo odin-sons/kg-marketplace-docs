@@ -417,3 +417,40 @@ blockquote {
   font-weight: 600;
   cursor: pointer;
 }
+
+/* categories registered by scripts/syntax-highlight/highlight.js (MicroLighter, forked) */
+::highlight(section),
+::highlight(keyword),
+::highlight(storage) {
+  color: var(--syntax-keyword);
+}
+
+::highlight(string) {
+  color: var(--syntax-string);
+}
+
+::highlight(numeric),
+::highlight(constant) {
+  color: var(--syntax-constant);
+}
+
+::highlight(variable) {
+  color: var(--syntax-variable);
+}
+
+::highlight(tag),
+::highlight(attribute-name) {
+  color: var(--syntax-tag);
+}
+
+::highlight(class) {
+  color: var(--syntax-class);
+}
+
+::highlight(support) {
+  color: var(--syntax-support);
+}
+
+::highlight(punctuation) {
+  color: var(--syntax-punctuation);
+}

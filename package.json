@@ -22,6 +22,7 @@
     "autoprefixer": "^10.5.4",
     "cross-env": "^10.1.0",
     "github-slugger": "^2.0.0",
+    "kg-marketplace-syntax": "github:odin-sons/kg-marketplace-syntax#kg-marketplace-syntax-v0.1.0",
     "pagefind": "^1.5.2",
     "postcss": "^8.5.26",
     "postcss-csso": "^6.0.1",
