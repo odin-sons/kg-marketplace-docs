@@ -1,11 +1,14 @@
 # Changelog
 
-The mod's own version history, 70 versions from 8.4.0 through 9.9.3.
+The mod's own version history, 71 versions from 8.4.0 through 9.9.4.
 
-This documentation covers **9.9.3**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
+This documentation covers **9.9.4**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
 
 ---
 
+
+## [9.9.4]
+- Fixed Jere's UpgradeWorld's `world_clean` command clearing NPCs
 
 ## [9.9.3]
 - Fixed faction system bugs
