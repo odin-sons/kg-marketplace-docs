@@ -37,6 +37,10 @@ This turns on remote access to the marketplace and mail, plus the `general_store
 | `CanTakeMailAttachments` | Allow claiming mail attachments remotely, separate from just reading mail. |
 | `TraderProfiles`, `TeleporterProfiles`, `GamblerProfiles`, `BufferProfiles`, `BankerProfiles`, `QuestProfiles`, `InfoProfiles`, `TransmogrificationProfiles`, `Dialogues` | Comma-separated lists of which profiles from each module are remotely accessible. Leave a list empty to keep that module fully local (near-NPC only). |
 
+## Spawning an NPC remotely
+
+There's no `SpawnedNPCsProfiles` setting to fill in above — as long as `Enabled` is `true`, every [Spawned NPC](spawned-npcs.md) profile on the server shows up in its own tab here automatically, filtered by that profile's own `Condition` field rather than an admin allowlist.
+
 ## Related
 
-- [Traders](traders.md), [Teleporters](teleporters.md), [Gamblers](gamblers.md), [Buffer Profiles](buffer-profiles.md), [Bankers](bankers.md), [Quest Profiles](quest-profiles.md), [Server Info](server-infos.md), [Transmogrification](transmogrification.md), [Dialogues](dialogues.md).
+- [Traders](traders.md), [Teleporters](teleporters.md), [Gamblers](gamblers.md), [Buffer Profiles](buffer-profiles.md), [Bankers](bankers.md), [Quest Profiles](quest-profiles.md), [Server Info](server-infos.md), [Transmogrification](transmogrification.md), [Dialogues](dialogues.md), [Spawned NPCs](spawned-npcs.md).

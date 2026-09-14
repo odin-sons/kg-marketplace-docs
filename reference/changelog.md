@@ -1,18 +1,31 @@
 # Changelog
 
-The mod's own version history, 67 versions from 8.4.0 through 9.8.9.
+The mod's own version history, 71 versions from 8.4.0 through 9.9.4.
 
-This documentation covers **9.8.9**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
+This documentation covers **9.9.4**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
 
 ---
 
 
-## [9.8.9]
+## [9.9.4]
+- Fixed Jere's UpgradeWorld's `world_clean` command clearing NPCs
 
-**Bug fixes:**
-- `KillAndCollect`'s level field now matches `Kill`'s — see [Migrations](migrations.md).
-- `PlayerHasOneOfCustomDataKeys` fixed for bool/int/string — see [Known gaps](known-gaps.md).
-- `GiveBuff` duration cap changed from `1`s to `0` — see [Known gaps](known-gaps.md).
+## [9.9.3]
+- Fixed faction system bugs
+
+## [9.9.2]
+- **Breaking change:** `IsVIP` and all related VIP functionality removed — see [Migrations](migrations.md#updating-to-992-the-vip-system-is-gone).
+- Added a visibility condition for NPCs, settable in the main NPC UI — see [NPC system](../npc/npc-system.md#core-identity-settings).
+- Added a new system, [Spawned NPCs](../configs/spawned-npcs.md), so players can spawn NPCs for themselves through [Distanced UI](../configs/distanced-ui.md)
+
+## [9.9.0]
+- Bugfixes
+- Fixed quests/dialogues OR condition not working properly
+- Small UI/UX changes for trader and banker
+
+## [9.8.9]
+- Bugfixes
+- Some dialogue commands logic fixes
 
 ## [9.8.8]
 - Fixed Saved NPCs model not showing up when building presets with hammer

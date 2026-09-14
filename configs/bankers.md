@@ -31,7 +31,9 @@ A Banker profile can also be reached remotely, without a Banker NPC in range at 
 
 ## Interest
 
-Interest on deposits is not set here — it is a server-wide setting. See [Server config](../setup/server-config.md) for `BankerIncomeTime`, `BankerIncomeMultiplier`, `BankerVIPIncomeMultiplier`, and `BankerInterestItems`.
+Interest on deposits is not set here — it is a server-wide setting. See [Server config](../setup/server-config.md) for `BankerIncomeTime`, `BankerIncomeMultiplier`, and `BankerInterestItems`.
+
+Looking for a separate, higher interest rate for a privileged player tier? That setting was removed in 9.9.2 — see [Migrations](../reference/migrations.md#updating-to-992-the-vip-system-is-gone).
 
 ## Related
 
