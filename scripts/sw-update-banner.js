@@ -1,9 +1,11 @@
 (function () {
   if (!("serviceWorker" in navigator)) return;
 
-  navigator.serviceWorker.addEventListener("message", function (event) {
-    if (event.data && event.data.type === "kg-docs-content-updated") showBanner();
-  });
+  // The actual message listener lives in base.njk's inline head script, which runs before
+  // this (deferred) script can — it calls window.__kgShowSwUpdateBanner directly once this
+  // has loaded, or sets __kgSwUpdatePending if the message arrived first.
+  window.__kgShowSwUpdateBanner = showBanner;
+  if (window.__kgSwUpdatePending) showBanner();
 
   function showBanner() {
     if (document.querySelector(".sw-update-banner")) return;

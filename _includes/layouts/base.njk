@@ -23,6 +23,20 @@
       } catch (e) {}
     })();
   </script>
+  <script>
+    // Inline and synchronous, not in sw-update-banner.js (which loads with `defer`) — the
+    // service worker can post its "content changed" message before a deferred script has
+    // finished loading and attached a listener, and a message with no listener yet attached
+    // is simply lost. Buffer it here instead; sw-update-banner.js picks it up once it loads.
+    (function () {
+      if (!("serviceWorker" in navigator)) return;
+      navigator.serviceWorker.addEventListener("message", function (event) {
+        if (!event.data || event.data.type !== "kg-docs-content-updated") return;
+        if (window.__kgShowSwUpdateBanner) window.__kgShowSwUpdateBanner();
+        else window.__kgSwUpdatePending = true;
+      });
+    })();
+  </script>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" type="image/png" href="/icons/icon-16.png" sizes="16x16">
   <link rel="icon" type="image/png" href="/icons/icon-32.png" sizes="32x32">
