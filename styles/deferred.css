@@ -418,39 +418,79 @@ blockquote {
   cursor: pointer;
 }
 
-/* categories registered by scripts/syntax-highlight/highlight.js (MicroLighter, forked) */
+/*
+ * Categories registered by scripts/syntax-highlight/highlight.js (MicroLighter, forked).
+ * Grouped to match the categories MicroLighter's own bundled grammars use (see its
+ * published themes), not just the ones our own cfg grammar happens to produce — so a
+ * bundled grammar (yaml, ini, ...) lights up sensibly without a per-language CSS pass.
+ */
+::highlight(comment),
+::highlight(quote) {
+  color: var(--syntax-comment);
+  font-style: italic;
+}
+
 ::highlight(section),
 ::highlight(keyword),
-::highlight(storage) {
+::highlight(storage),
+::highlight(at-rule),
+::highlight(doctype),
+::highlight(important) {
   color: var(--syntax-keyword);
 }
 
-::highlight(string) {
+::highlight(operator),
+::highlight(punctuation) {
+  color: var(--syntax-punctuation);
+}
+
+::highlight(string),
+::highlight(regexp),
+::highlight(attribute-value),
+::highlight(link),
+::highlight(raw) {
   color: var(--syntax-string);
 }
 
 ::highlight(numeric),
-::highlight(constant) {
+::highlight(boolean),
+::highlight(constant),
+::highlight(symbol),
+::highlight(character-entity),
+::highlight(anchor),
+::highlight(entity),
+::highlight(property),
+::highlight(key) {
   color: var(--syntax-constant);
 }
 
-::highlight(variable) {
-  color: var(--syntax-variable);
-}
-
-::highlight(tag),
-::highlight(attribute-name) {
-  color: var(--syntax-tag);
-}
-
+::highlight(function),
+::highlight(decorator),
+::highlight(animation),
 ::highlight(class) {
   color: var(--syntax-class);
 }
 
+::highlight(type),
 ::highlight(support) {
   color: var(--syntax-support);
 }
 
-::highlight(punctuation) {
-  color: var(--syntax-punctuation);
+::highlight(variable),
+::highlight(interpolation) {
+  color: var(--syntax-variable);
+}
+
+::highlight(tag),
+::highlight(attribute-name),
+::highlight(selector) {
+  color: var(--syntax-tag);
+}
+
+::highlight(inserted) {
+  color: var(--syntax-string);
+}
+
+::highlight(deleted) {
+  color: var(--syntax-keyword);
 }

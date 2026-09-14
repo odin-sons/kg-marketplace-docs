@@ -4,7 +4,7 @@ Code vendored into this repo from other projects, and the license each one ships
 
 ## MicroLighter
 
-`scripts/syntax-highlight/highlight.js` (forked — see the file's own header comment for what changed) and `scripts/syntax-highlight/grammar-dependencies.js` (unmodified) are vendored from [davatron5000/microlighter](https://github.com/davatron5000/microlighter).
+`scripts/syntax-highlight/highlight.js` (forked — see the file's own header comment for what changed), `scripts/syntax-highlight/grammar-dependencies.js` (unmodified), and `scripts/syntax-highlight/grammars/{yaml,ini}.js` (unmodified, two of the package's own bundled grammars) are vendored from [davatron5000/microlighter](https://github.com/davatron5000/microlighter).
 
 ```
 MIT License

@@ -23,6 +23,7 @@
   --syntax-class: #7b3fe4;
   --syntax-support: var(--link-visited);
   --syntax-punctuation: var(--text-muted);
+  --syntax-comment: var(--text-muted);
 }
 
 :root[data-theme="light"] {
@@ -51,6 +52,7 @@
     --syntax-class: #b98cf2;
     --syntax-support: var(--link-visited);
     --syntax-punctuation: var(--text-muted);
+    --syntax-comment: var(--text-muted);
   }
 }
 
@@ -74,6 +76,7 @@
   --syntax-class: #b98cf2;
   --syntax-support: var(--link-visited);
   --syntax-punctuation: var(--text-muted);
+  --syntax-comment: var(--text-muted);
 }
 
 * {
