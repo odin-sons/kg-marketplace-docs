@@ -35,6 +35,7 @@ Every NPC also has an optional **Dialogue** field, separate from its Type — an
 | Model/Prefab Override | Swaps the NPC's appearance for a different creature/character model — supports the animation-swap trick and randomized pools, see [Prefabs and text markup](../concepts/prefabs-and-assets.md). |
 | Dialogue | A dialogue ID from [Dialogues](../configs/dialogues.md). |
 | Pin Icon | The map pin shown for this NPC, if any. |
+| Visibility Condition | A [condition](../concepts/conditions.md), same syntax as anywhere else it's used. Leave it empty and the NPC is visible to everyone, as before. Set one and the whole NPC — not just a dialogue option — disappears client-side for any player who doesn't currently pass it, re-checked every couple of seconds. In debug mode ([`OverrideDebug`](../setup/server-config.md)), a hidden NPC shows a placeholder marker instead of vanishing outright, so you can still find it while testing. |
 
 ## Appearance settings
 

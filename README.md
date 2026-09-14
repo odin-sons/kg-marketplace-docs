@@ -14,7 +14,7 @@ There is no in-game editor: quests, dialogues, zones, NPCs, and everything else 
 
 ### Core: NPCs, quests, dialogue & factions
 
-- **[NPC system](npc/npc-system.md)** — placeable NPCs: type, appearance, dialogue, map pin, patrol. Placed with the [Marketplace Hammer](npc/marketplace-hammer.md) build tool. Reusable setups: [Saved NPCs](configs/saved-npcs.md). Idle chatter: [Random NPC Speech](configs/random-npc-speech.md).
+- **[NPC system](npc/npc-system.md)** — placeable NPCs: type, appearance, dialogue, map pin, patrol, visibility condition. Placed with the [Marketplace Hammer](npc/marketplace-hammer.md) build tool. Reusable setups: [Saved NPCs](configs/saved-npcs.md). Idle chatter: [Random NPC Speech](configs/random-npc-speech.md). Player-summoned instead of admin-placed: [Spawned NPCs](configs/spawned-npcs.md).
 - **[Quests](configs/quests.md)** — the full quest system, 10 quest types. Assigning quests to an NPC: [Quest Profiles](configs/quest-profiles.md). Scripting what happens on accept/complete/cancel: [Quest Events](configs/quest-events.md). Walkthroughs: [Your first quest](guides/first-quest.md), [Quest chains](guides/quest-chain.md).
 - **[Dialogues](configs/dialogues.md)** — branching NPC conversations, with conditions and scripted actions. Attaching extra data to something a dialogue spawns: [Custom Spawn Data](configs/custom-spawn-data.md). Walkthroughs: [A branching dialogue tree](guides/dialogue-tree.md), [Dialogue patterns](guides/dialogue-patterns.md), [Tracking player state](guides/tracking-player-state.md).
 - **[Factions](configs/factions.md)** — player factions with shared perks, restricted items, and friendly monsters, joined and checked through the same [Dialogues](configs/dialogues.md)/[Quests](configs/quests.md) commands and conditions above.
@@ -40,7 +40,7 @@ Walkthrough: [Setting up a territory](guides/territory-setup.md).
 
 ### Server utilities & extras
 
-- **[Player Tags](configs/player-tags.md)** — name-tag prefixes per player, like `[Admin]` or `[VIP]`.
+- **[Player Tags](configs/player-tags.md)** — name-tag prefixes per player, like `[Admin]` or `[Trusted]`.
 - **[Synced Localizer](configs/synced-localizer.md)** — server-wide text overrides, sent to every player automatically.
 - **[Console commands](setup/console-commands.md)** — admin and debug commands.
 - **[Discord Webhooks](configs/discord-webhooks.md)** — posts marketplace sales, gambler wins, and quest completions to a Discord channel.
@@ -50,7 +50,7 @@ Walkthrough: [Setting up a territory](guides/territory-setup.md).
 - **[Mail](setup/server-config.md#mail)** — send items and messages between players. Works immediately; mailbox recipe and timing live in the server config.
 - **[Feedback](setup/server-config.md#feedback)** — a feedback form that posts to a Discord webhook. Works immediately; the webhook link lives in the server config.
 - **[Chat](setup/client-config.md#kg-chat)** — a replacement chat window. Client-side settings only.
-- **[Distanced UI](configs/distanced-ui.md)** — open shop/quest/mail menus without a nearby NPC.
+- **[Distanced UI](configs/distanced-ui.md)** — open shop/quest/mail menus without a nearby NPC, and spawn a [Spawned NPC](configs/spawned-npcs.md) for yourself.
 - **[Leaderboard Achievements](configs/leaderboard-achievements.md)** — server-wide leaderboards and achievements.
 
 ### How to read a config page

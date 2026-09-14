@@ -28,15 +28,11 @@ This example: interest pays out every 6 hours at 2%, players can list 25 items w
 | `EnableTraderLog` | `false` | Log trader transactions. |
 | `BankerIncomeTime` | `1` | Hours between interest payouts. Set to `0` to turn off interest entirely. |
 | `BankerIncomeMultiplier` | `0` | Interest rate per payout. |
-| `BankerVIPIncomeMultiplier` | `0` | A separate, usually higher, interest rate for VIP players. |
 | `BankerInterestItems` | `All` | Which banked items actually earn interest. |
 | <a id="feedback"></a>`FeedbackWebhookLink` | placeholder | Discord webhook for the Feedback NPC. |
-| `OrConditionSeparator` | `\|\|` | The symbol used for "OR" in [conditions](../concepts/conditions.md) — change this if `\|\|` conflicts with something else you use, though the default works fine for almost everyone. |
 | `ItemMarketLimit` | `15` | Maximum marketplace listing slots per player. |
 | `BlockedPlayers` | — | Player IDs blocked from the marketplace. |
 | `MarketTaxes` | `0` | Sell tax percentage (0-100). |
-| `VIPplayersTaxes` | `0` | Sell tax percentage for VIP players (0-100). |
-| `VIPplayersList` | — | Player IDs treated as VIP — affects taxes and anywhere a dialogue/quest checks `IsVIP`. |
 | `CanTeleportWithOre` | `true` | Whether players can teleport while carrying ore without needing a special override. |
 | `MarketSellBlockedPrefabs` | `Coins, SwordCheat` | Items that cannot be listed on the marketplace. |
 | `GamblerEnableWinNotifications` | `false` | Broadcast a server-wide message whenever someone wins a gamble. |
@@ -55,8 +51,10 @@ This example: interest pays out every 6 hours at 2%, players can list 25 items w
 | `CanLeaveGuild` | `true` | Whether players can voluntarily leave their guild. |
 | `FactionNameplateOffset` | `0, 0` | Pixel offset for the faction tag shown above player nameplates. |
 
+Looking for a setting that used to be here and isn't anymore? A few were removed in 9.9.2 — see [Migrations](../reference/migrations.md#updating-to-992-the-vip-system-is-gone).
+
 ## Related
 
 - [Client config](client-config.md) — the separate, per-player settings file.
 - [Hot reload](hot-reload.md).
-- [Conditions](../concepts/conditions.md) — `OrConditionSeparator`, `IsVIP`.
+- [Conditions](../concepts/conditions.md) — the `||` OR-separator these settings don't control.

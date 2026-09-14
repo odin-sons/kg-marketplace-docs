@@ -80,7 +80,7 @@ QuestFinished, chain_step_1 | HasGuild
 | `HasGuildWithName` / `NotHasGuildWithName` | guild name | Player's guild has a specific name. |
 | `GuildLevelMore` / `GuildLevelLess` | level | Player's guild level compares. |
 | `GuildHasAchievement` / `GuildNotHasAchievement` | achievement ID | Player's guild has earned a specific achievement. |
-| `IsVIP` / `NotIsVIP` | — | Player is on the server's VIP list. |
+| `IsVIP` / `NotIsVIP` | — | No longer functional since 9.9.2 removed the VIP system — `IsVIP` always fails, `NotIsVIP` always passes. See [Known gaps](../reference/known-gaps.md). |
 | `HasPlayerKey` / `NotHasPlayerKey` | key name | Player has a personal flag previously set with the `AddPlayerKey` command — useful for tracking one-time story beats per player. |
 | `NPCModelEquals` / `NotNPCModelEquals` | model name | The NPC in this dialogue currently uses a specific model. |
 | `NPCNameEquals` / `NotNPCNameEquals` | name | The NPC in this dialogue currently has a specific display name. |

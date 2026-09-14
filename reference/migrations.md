@@ -4,6 +4,16 @@ Most updates to this mod are safe to install directly. This page lists the excep
 
 If you are updating across a version not listed here, a plain update is expected to be safe. When in doubt, back up your `Marketplace` folder and save file before updating a live server either way.
 
+## Updating to 9.9.2: the VIP system is gone
+
+The changelog calls this out as a **breaking change**, and checking the diff confirms it's thorough — this isn't just one setting:
+
+- `VIPplayersList`, `VIPplayersTaxes`, and `BankerVIPIncomeMultiplier` are no longer read from [server config](../setup/server-config.md). Leaving them in your `MarketPlace.cfg` is harmless — they're just ignored — but they no longer do anything: every seller pays `MarketTaxes`, and every banked deposit earns `BankerIncomeMultiplier`, with no VIP-tier exception.
+- The `IsVIP` / `NotIsVIP` [conditions](../concepts/conditions.md) still parse without error, but `IsVIP` now always evaluates to false and `NotIsVIP` always evaluates to true — see [Known gaps](known-gaps.md) for the current-version detail. Any dialogue option, quest, or zone flag that used to gate on VIP status needs a different condition now (guild membership, a faction, or a [custom value](../concepts/prefabs-and-assets.md#custom-values) you set yourself).
+- `OrConditionSeparator` is also gone in the same pass, unrelated to VIP specifically — the `||` OR-separator in [conditions](../concepts/conditions.md) is hardcoded now, no longer admin-configurable. This only matters if you had actually changed it away from the default `||`; if you never touched that setting, there's nothing to do.
+
+If your server had a VIP tier set up through this mod (taxes, banker interest, or gated content), re-check all three after updating — none of it silently keeps working.
+
 ## Updating to 9.8.9: re-check any `KillAndCollect` quest's level field
 
 Not an author-flagged warning — found by checking the fix itself. Before 9.8.9, `KillAndCollect`'s level field required one star *less* than the number written (see the now-removed entry on [Known gaps](known-gaps.md) for past versions), so existing quests written to work around that — e.g. writing `3` to mean "2-star minimum" — now require one star *more* than originally intended, since 9.8.9 makes the field mean exactly what's written (matching plain [`Kill`](../configs/quests.md#the-target-line-by-type)).
@@ -22,7 +32,7 @@ In version 9.4.0, the mod changed how it stores player data — moving from indi
 
 If you are updating a server from a version older than 9.4.0, have every player withdraw their marketplace listings, banked items, and mail attachments **before** you install the update — anything left in those systems at the moment of the switch may not carry over.
 
-This mod version documented here (9.8.8) is well past this change; it only matters if you are jumping to a modern version from something very old.
+This mod version documented here (9.9.2) is well past this change; it only matters if you are jumping to a modern version from something very old.
 
 ## Since 9.0.8: Transmogrification's visual-effects field is gone
 
