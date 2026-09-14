@@ -1,18 +1,20 @@
 # Changelog
 
-The mod's own version history, 67 versions from 8.4.0 through 9.8.9.
+The mod's own version history, 68 versions from 8.4.0 through 9.9.0.
 
-This documentation covers **9.8.9**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
+This documentation covers **9.9.0**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
 
 ---
 
 
-## [9.8.9]
+## [9.9.0]
+- Bugfixes
+- Fixed quests/dialogues OR condition not working properly
+- Small UI/UX changes for trader and banker
 
-**Bug fixes:**
-- `KillAndCollect`'s level field now matches `Kill`'s — see [Migrations](migrations.md).
-- `PlayerHasOneOfCustomDataKeys` fixed for bool/int/string — see [Known gaps](known-gaps.md).
-- `GiveBuff` duration cap changed from `1`s to `0` — see [Known gaps](known-gaps.md).
+## [9.8.9]
+- Bugfixes
+- Some dialogue commands logic fixes
 
 ## [9.8.8]
 - Fixed Saved NPCs model not showing up when building presets with hammer
