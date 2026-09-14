@@ -8,7 +8,7 @@ Chooses which [buffs](buffers.md) an Enchanter NPC actually offers for sale. Onc
 
 `Configs/BufferProfiles/buff_shop.cfg`:
 
-```
+```cfg
 [buff_shop]
 haste_buff, strength_buff, warmth_buff
 ```

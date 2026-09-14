@@ -6,7 +6,7 @@ This is where you define quests themselves — what to do, what it gives, how lo
 
 At a glance, a quest database file (`Configs/Quests/starter.cfg`) with a few simple quests:
 
-```
+```cfg
 [greet_elder]
 Talk
 A Warm Welcome
@@ -34,7 +34,7 @@ Item: Coins, 30
 
 ...and a [Quest Profile](quest-profiles.md) (`Configs/QuestProfiles/starter.cfg`) handing all three to one NPC:
 
-```
+```cfg
 [village_elder]
 greet_elder, wolf_pelts, gather_wood
 ```
@@ -49,7 +49,7 @@ And what accepting a quest looks like from the NPC's side and the player's own j
 
 `Configs/Quests/wolf_pelts.cfg`:
 
-```
+```cfg
 [wolf_pelts]
 Kill
 Wolf Culling
@@ -99,7 +99,7 @@ Most quest types show a marker on their target in the world, and can be toggled 
 
 The target line's format depends on the quest type above it. General shape is `item/creature, amount, [level]`, and you can list several targets on one line separated by `|`:
 
-```
+```cfg
 Wolf, 5, 1 | Boar, 3, 1
 ```
 (kill 5 wolves and 3 boars, each at least 1-star, all counting toward the same quest)
@@ -116,7 +116,7 @@ Wolf, 5, 1 | Boar, 3, 1
 
 This type needs more detail per target — creature, kill count, level, then a label for the item you want collected, then any extra fields:
 
-```
+```cfg
 GoblinRaider, 5, 2, ear, none, none, none, none, none
 ```
 
@@ -126,7 +126,7 @@ Kill 5 at-least-2-star Goblin Raiders and collect 5 "ear" trophies (a quest-only
 
 You can combine several reward types on one line with `|`:
 
-```
+```cfg
 Item: Coins, 200 | Item: Ruby, 1 | Skill_EXP: Swords, 100
 ```
 
@@ -142,7 +142,7 @@ Item: Coins, 200 | Item: Ruby, 1 | Skill_EXP: Swords, 100
 
 ## Cooldown and time limit
 
-```
+```cfg
 3600, 600
 ```
 
@@ -152,7 +152,7 @@ First number is the cooldown in seconds before the quest can be taken again afte
 
 The last line uses the [condition language](../concepts/conditions.md) — this is how you build quest chains, level gates, or item-cost quests:
 
-```
+```cfg
 QuestFinished, meet_the_elder | SkillMore, Swords, 5
 ```
 
@@ -162,7 +162,7 @@ Only available once the player has finished `meet_the_elder` **and** has at leas
 
 Add one of these to the header, after `=`, for special behavior:
 
-```
+```cfg
 [final_boss = Autocomplete]
 ```
 
@@ -182,7 +182,7 @@ A quest that is on cooldown still shows in the NPC's list (with a countdown) as 
 
 `Configs/Quests/chain.cfg`:
 
-```
+```cfg
 [wolf_pelts]
 Kill
 Wolf Culling

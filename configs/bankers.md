@@ -10,7 +10,7 @@ Controls which items a Banker NPC will accept for deposit and withdrawal. Once y
 
 `Configs/Bankers/main_bank.cfg`:
 
-```
+```cfg
 [main_bank]
 Coins
 Ruby

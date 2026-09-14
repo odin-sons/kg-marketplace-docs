@@ -8,7 +8,7 @@ Each quest after the first requires `QuestFinished` on the quest before it, in i
 
 `Configs/Quests/chain.cfg`:
 
-```
+```cfg
 [chain_1]
 Talk
 Meet the Elder
@@ -42,7 +42,7 @@ Here, `chain_2` only unlocks after `chain_1` is turned in, and `chain_3` only af
 
 By default, once `chain_1` is available, `chain_2` and `chain_3` show up too — just greyed out with "locked" text, since the player can see what is coming. If you would rather hide a link entirely until it unlocks, tag its header `HiddenOtherQuestCondition`:
 
-```
+```cfg
 [chain_2 = HiddenOtherQuestCondition]
 ```
 
@@ -58,7 +58,7 @@ Use [Quest Events](../configs/quest-events.md) alongside a chain to script what 
 
 `Configs/QuestEvents/chain_2.cfg`:
 
-```
+```cfg
 [chain_2]
 OnCompleteQuest: Spawn, AlphaWolf, 1, 3
 ```

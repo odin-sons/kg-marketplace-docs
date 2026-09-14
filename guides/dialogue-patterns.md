@@ -8,7 +8,7 @@ A handful of small, self-contained patterns for things that come up once you are
 
 `Configs/Dialogues/guard_dialogue.cfg`:
 
-```
+```cfg
 [guard_dialogue]
 Halt! State your business.
 @inrange | Command: PlaySound, guard_alert, 0.5
@@ -22,7 +22,7 @@ Setting a Dialogue on an NPC makes clicking it always open the dialogue instead 
 
 `Configs/Dialogues/shopkeeper_redirect.cfg`:
 
-```
+```cfg
 [shopkeeper_redirect]
 @interaction | Command: OpenUI, Trader, shopkeeper_stock
 ```
@@ -33,7 +33,7 @@ Setting a Dialogue on an NPC makes clicking it always open the dialogue instead 
 
 `Configs/Dialogues/cursed_tome.cfg`:
 
-```
+```cfg
 [cursed_tome]
 @interaction | Command: Damage, 5 | Command: OpenUI, Dialogue, cursed_tome_text
 ```
@@ -44,7 +44,7 @@ Each `RandomCommand` on a reply rolls its own independent chance — this line c
 
 `Configs/Dialogues/mystery_chest.cfg`:
 
-```
+```cfg
 [mystery_chest]
 You found a strange chest. Open it?
 Text: Open it | RandomCommand: 40, GiveItem, Coins, 10 | RandomCommand: 15, GiveItem, Ruby, 1 | RandomCommand: 5, GiveItem, TrophyWolf, 1
@@ -52,7 +52,7 @@ Text: Open it | RandomCommand: 40, GiveItem, Coins, 10 | RandomCommand: 15, Give
 
 If you want exactly one of several outcomes instead — never more, never fewer — send the player to a different node per outcome with `RandomTransition`:
 
-```
+```cfg
 Text: Open it | RandomTransition: chest_coins, chest_ruby, chest_nothing, chest_nothing, chest_nothing
 ```
 
@@ -64,7 +64,7 @@ Listing a node more than once (`chest_nothing` three times here) is how you weig
 
 `Configs/Dialogues/vault_door.cfg`:
 
-```
+```cfg
 [vault_door]
 A locked door blocks your path.
 Text: Enter code | Command: EnterPassword, "Vault Access", 1234, vault_open, vault_denied
@@ -83,7 +83,7 @@ Incorrect code.
 
 `Configs/Dialogues/admin_tools.cfg`:
 
-```
+```cfg
 [admin_tools]
 What would you like me to do?
 Text: Spawn a troll near me | Transition: admin_tools | Command: ConsoleCommand, "spawn Troll 1 2"

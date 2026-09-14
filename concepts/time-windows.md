@@ -19,7 +19,7 @@ Anything **not** inside a folder named this way is simply always active — you 
 
 `Configs/Territories/18-00_23-00/happy_hour.cfg`:
 
-```
+```cfg
 [happy_hour_zone]
 Circle
 0, 0, 40
@@ -34,7 +34,7 @@ This zone exists in the world only between 18:00 and 23:00 server time. Before a
 
 `Configs/Traders/22-00_04-00/night_market.cfg`:
 
-```
+```cfg
 [night_market]
 Coins, 200, RareGem, 1
 ```

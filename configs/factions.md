@@ -49,7 +49,7 @@ The faction key (`forest_clan`, `mountain_clan` above) is what you reference fro
 
 Players join and leave factions through dialogue or quest event commands — `AddFaction`, `RemoveFaction`, `RemoveAllFactions` (see [Commands](../concepts/commands.md)). A common pattern is a dialogue reply that recruits the player:
 
-```
+```cfg
 Text: Join the Forest Clan | Command: AddFaction, forest_clan
 ```
 

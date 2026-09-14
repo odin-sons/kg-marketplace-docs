@@ -8,7 +8,7 @@ Territories are named zones you draw on the map with rules attached — PvP-free
 
 `Configs/Territories/market_square.cfg`:
 
-```
+```cfg
 [market_square@2]
 Circle
 0, 0, 50
@@ -32,7 +32,7 @@ Unlike every other `[Section]` header in this mod, a zone name is **case-sensiti
 
 The appearance line is a mix of a color and a few optional extras — order does not matter, write whichever pieces you need:
 
-```
+```cfg
 255, 0, 0, 0, 255, 0, true, FromCenter, exp: 1.5, heightbounds: 10-40
 ```
 
@@ -52,7 +52,7 @@ A minimal appearance line is just a color: `100, 200, 100`.
 
 Flags control what actually happens inside the zone. List them comma-separated; some need a value after `=`:
 
-```
+```cfg
 NoAttack, PeriodicHeal = 2, ForceBiome = 2, MonstersAddStars = 1
 ```
 
@@ -131,7 +131,7 @@ Territories can be limited to a real-clock time window using a folder naming tri
 
 `Configs/Territories/market_vip_lounge.cfg`:
 
-```
+```cfg
 [market_vip_lounge@5]
 Square
 20, 20, 15

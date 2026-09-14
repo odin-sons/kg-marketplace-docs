@@ -8,7 +8,7 @@ Defines the buffs an Enchanter NPC can sell. This page is the buff **definitions
 
 `Configs/Buffers/haste_buff.cfg`:
 
-```
+```cfg
 [haste_buff]
 Wind Runner's Blessing
 300

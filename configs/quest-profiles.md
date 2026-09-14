@@ -8,7 +8,7 @@ This is how you hand your [Quests](quests.md) to an actual NPC. Once you have wr
 
 `Configs/QuestProfiles/npcs.cfg`:
 
-```
+```cfg
 [village_elder]
 kill_10_wolves, timber_run, intro_talk
 
@@ -20,14 +20,14 @@ An NPC set to profile `village_elder` will offer all three quests listed. An NPC
 
 ## Format
 
-```
+```cfg
 [ProfileName]
 questID1, questID2, questID3
 ```
 
 You can list quest IDs across several lines, or several files, under the same profile name — everything gets combined. For example, `Configs/QuestProfiles/elder-part1.cfg` and `Configs/QuestProfiles/elder-part2.cfg`, shown together here for brevity:
 
-```
+```cfg
 [village_elder]
 kill_10_wolves, timber_run
 

@@ -26,7 +26,7 @@ Bools:
 
 Each shrine's dialogue stamps its own flag on success:
 
-```
+```cfg
 Text: Step onto the fire rune | Command: SetPlayerData, trial_fire_done
 ```
 
@@ -41,7 +41,7 @@ Bools:
 
 The final door checks the player against that combined set — `PlayerHasAllCustomDataKeys` only passes once all three shrine flags are present and `true`, regardless of the order the player visited them in. Quote the failure message so its spaces survive — every field in a `Condition:` gets stripped of spaces otherwise, same as everywhere else in these config files:
 
-```
+```cfg
 Text: Push open the door | Condition: PlayerHasAllCustomDataKeys, all_trials, "You have not completed every trial yet." | Transition: inner_sanctum
 ```
 
@@ -63,7 +63,7 @@ Strings:
 
 `Configs/Dialogues/path_choice.cfg`:
 
-```
+```cfg
 [path_choice]
 Two roads lie before you. Which calls to you?
 Text: The hunter's path | Command: SetPlayerData, path_hunter | Transition: path_confirmed
@@ -72,7 +72,7 @@ Text: The scholar's path | Command: SetPlayerData, path_scholar | Transition: pa
 
 Any dialogue anywhere else in the world can now branch on that remembered choice. `PlayerHasAllCustomDataKeys` always needs its trailing message argument — even if you leave it blank, the comma must be there — and `AlwaysVisible: false` keeps the non-matching greeting from showing up greyed out next to the real one:
 
-```
+```cfg
 Text: A fellow hunter, then | Condition: PlayerHasAllCustomDataKeys, path_hunter, | AlwaysVisible: false | Transition: hunter_greeting
 Text: Ah, a scholar | Condition: PlayerHasAllCustomDataKeys, path_scholar, | AlwaysVisible: false | Transition: scholar_greeting
 ```

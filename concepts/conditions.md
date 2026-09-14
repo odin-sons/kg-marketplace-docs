@@ -6,7 +6,7 @@ Conditions are how you gate something behind a requirement — "only let the pla
 
 A dialogue option gated behind having 10 Wood and 5 Stone. By default it still shows, greyed out with the reason, until the player has both — see [Dialogues](../configs/dialogues.md#when-a-condition-fails) if you want it hidden instead:
 
-```
+```cfg
 Text: Sell your materials | Condition: HasItem, Wood, 10 | Condition: HasItem, Stone, 5 | Transition: sell_confirm
 ```
 
@@ -14,7 +14,7 @@ A quest that only unlocks after finishing an earlier one in the same chain:
 
 `Configs/Quests/intro_quest.cfg`:
 
-```
+```cfg
 [intro_quest]
 ...
 QuestFinished, meet_the_elder
@@ -26,7 +26,7 @@ QuestFinished, meet_the_elder
 
 **Negating a condition** — put `!` in front to flip it:
 
-```
+```cfg
 !HasItem, Wood, 10
 ```
 means "does NOT have 10 Wood". Most conditions also have a ready-made opposite name (`HasItem` / `NotHasItem`) if you prefer that instead of `!`.
@@ -38,7 +38,7 @@ When a field holds more than one condition, two layers of logic apply:
 - `|` between conditions means **AND** — every group must pass.
 - `||` between conditions means **OR** — at least one alternative in that group must pass.
 
-```
+```cfg
 HasItem, Wood, 10 || HasItem, Stone, 10 | GlobalKey, defeated_bonemass
 ```
 
@@ -46,7 +46,7 @@ Reads as: **(**has 10 Wood **or** has 10 Stone**) and** has defeated Bonemass. G
 
 More examples:
 
-```
+```cfg
 # Require two separate things, both must be true
 SkillMore, WoodCutting, 3 | HasItem, AxeFlint, 1
 

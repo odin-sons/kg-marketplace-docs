@@ -12,7 +12,7 @@ The `x1` / `x5` / `x10` / `x100` buttons in the top right of the trade window sc
 
 `Configs/Traders/general_store.cfg`:
 
-```
+```cfg
 [general_store]
 Wood, 10, Coins, 5
 Coins, 50, SwordIron, 1, 2
@@ -28,17 +28,17 @@ Assigning the profile to an NPC's **Profile** field:
 
 Wrap both sides with `=` to trade bundles of items instead of one-to-one — up to 5 items per side, and any item on either side can carry its own `, level` field:
 
-```
+```cfg
 Coins, 100, Ruby, 1 = SwordSilver, 1, 3
 ```
 
 Spend 100 Coins **and** 1 Ruby to receive a level-3 Silver Sword.
 
-```
+```cfg
 GreydwarfEye, 10, Wood, 20 = BowFineWood, 1, 2
 ```
 
-```
+```cfg
 BlackMetal, 1, AxeBlackMetal, 1, 9, Coins, 25 = AxeBlackMetal, 1, 10, Wood, 123
 ```
 
@@ -50,7 +50,7 @@ You can mix plain 4/5-field lines and `=`-bundled lines freely within the same p
 
 `Configs/Traders/mixed_formats.cfg`:
 
-```
+```cfg
 [mixed_formats]
 SwordIron, 1, 9, Ruby, 666 = SwordIron, 1, 10
 BlackMetal, 1, AxeBlackMetal, 1, 9, Coins, 25 = AxeBlackMetal, 1, 10, Wood, 123
@@ -66,7 +66,7 @@ A creature name on the result side gives a tamed pet instead of an item — spaw
 
 `Configs/Traders/pets_trader.cfg`:
 
-```
+```cfg
 [pets_trader]
 Stone, 100, Wolf, 1, 5
 Ruby, 25, Boar, 10, 2
@@ -86,7 +86,7 @@ Add `= true` to a profile header to only show trades for items the player has al
 
 `Configs/Traders/rare_goods.cfg`:
 
-```
+```cfg
 [rare_goods = true]
 Coins, 200, Ruby, 1 = SwordSilver, 1, 3
 ```

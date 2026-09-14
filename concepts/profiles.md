@@ -14,14 +14,14 @@ An NPC does not carry its own private list of items or quests. Instead, when you
 ## Example: one trader profile fed by two files
 
 `Configs/Traders/weapons.cfg`:
-```
+```cfg
 [blacksmith]
 Coins, 50, SwordIron, 1, 2
 Coins, 100, AxeIron, 1, 2
 ```
 
 `Configs/Traders/armor.cfg`:
-```
+```cfg
 [blacksmith]
 Coins, 80, HelmetIron, 1
 Coins, 120, ChestIron, 1

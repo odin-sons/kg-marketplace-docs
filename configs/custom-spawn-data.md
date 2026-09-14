@@ -23,7 +23,7 @@ Strings:
 
 Used from a dialogue reply:
 
-```
+```cfg
 Text: Take the blessed sword | Command: GiveItemWithData, SwordIron, 1, 3, blessed_sword
 ```
 

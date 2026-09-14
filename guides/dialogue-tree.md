@@ -16,7 +16,7 @@ greet ──"Ask about the ritual"──▶ ritual_info
 
 `Configs/Dialogues/greet.cfg`:
 
-```
+```cfg
 [greet]
 The old priestess looks up as you approach.
 Text: Ask about the ritual | Transition: ritual_info
@@ -49,7 +49,7 @@ To play a sound, or run any command, the moment a player opens the conversation 
 
 `Configs/Dialogues/greet.cfg`:
 
-```
+```cfg
 [greet]
 The old priestess looks up as you approach.
 @inrange | Command: PlaySound, ambient_chime, 0.3
@@ -62,7 +62,7 @@ See [Dialogues](../configs/dialogues.md#silent-triggers-no-visible-reply).
 
 Use `RandomTransition` to jump to one node picked at random, or `RandomCommand` to give a command its own independent percent chance of firing:
 
-```
+```cfg
 Text: Search the shrine | RandomCommand: 70, GiveItem, Coins, 5 | RandomCommand: 15, GiveItem, Ruby, 1
 ```
 
@@ -72,7 +72,7 @@ This is a 70% chance of Coins and a *separate* 15% chance of a Ruby — the two 
 
 To extend this example with a second path — say, an intimidation option that skips the candle requirement but costs health:
 
-```
+```cfg
 Text: "Force the ritual" | Command: Damage, 20 | Transition: ritual_start
 ```
 

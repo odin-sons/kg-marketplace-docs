@@ -10,7 +10,7 @@ Defines achievements tracked on the server leaderboard — kills, crafting, buil
 
 `Configs/LeaderboardAchievements/achievements.cfg`:
 
-```
+```cfg
 [wolf_hunter]
 MonstersKilled
 Wolf Hunter

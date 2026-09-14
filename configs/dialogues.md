@@ -10,7 +10,7 @@ Dialogues build branching conversations for an NPC — what it says, what the pl
 
 `Configs/Dialogues/merchant_greet.cfg`:
 
-```
+```cfg
 [merchant_greet]
 Welcome, traveler. What can I do for you?
 Text: Show me your wares | Command: OpenUI, Trader, merchant_stock
@@ -49,13 +49,13 @@ Each reply is built from `Key: Value` pieces, separated by `|`. Use as many as y
 
 `AlwaysVisible` defaults to `true`, and that default surprises people: **a reply whose condition fails is still shown by default** — just greyed out, unclickable, and with the failure reason appended in red. It is not hidden unless you say so explicitly.
 
-```
+```cfg
 Text: I'm ready | Condition: HasItem, RitualCandle, 3 | OverrideError: You need 3 Ritual Candles first. | Transition: ritual_start
 ```
 
 With no `AlwaysVisible` field, this reply always shows — a player without the candles sees it greyed out with "You need 3 Ritual Candles first." next to it. To hide the reply completely until the condition is met instead, add `AlwaysVisible: false`:
 
-```
+```cfg
 Text: I'm ready | Condition: HasItem, RitualCandle, 3 | AlwaysVisible: false | Transition: ritual_start
 ```
 
@@ -77,7 +77,7 @@ Worked examples: [Dialogue patterns](../guides/dialogue-patterns.md#reacting-to-
 
 Each `RandomCommand` on a reply rolls its own independent chance — a line with several `RandomCommand` pieces can give the player none, some, or all of them, not exactly one. If you want exactly one of several outcomes instead — never more, never fewer — send the player to a different node per outcome with `RandomTransition`:
 
-```
+```cfg
 Text: Open it | RandomTransition: chest_coins, chest_ruby, chest_nothing, chest_nothing, chest_nothing
 ```
 

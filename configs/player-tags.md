@@ -8,7 +8,7 @@ Prefixes a player's name in the player list with a custom tag, like `[Admin]` or
 
 `Marketplace/PlayerTags/PlayerTags.cfg`:
 
-```
+```cfg
 76561198000000001: [Admin]
 76561198000000002: [Trusted]
 ```

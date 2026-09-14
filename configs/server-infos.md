@@ -10,7 +10,7 @@ Free-text info/rules/announcement pages shown by an Info NPC. Unlike most other 
 
 `Configs/ServerInfos/rules.cfg`:
 
-```
+```cfg
 [default]
 Welcome to the server! Please read the rules below.
 

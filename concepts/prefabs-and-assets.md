@@ -10,7 +10,7 @@ Any field asking for an item, creature, or object uses the exact same name you w
 
 `Model@AnimationSource` — makes an NPC use one model's appearance but another's movement/animations. Two useful shortcuts:
 
-```
+```cfg
 Player@Morgen        # use the player model, animated like Morgen
 SomePrefab@humanoid   # shorthand for "use the player's animations"
 ```
@@ -21,7 +21,7 @@ Example, on an NPC's model field: `Haldor@humanoid` gives you Haldor's look, mov
 
 Add `@number` after a sound name to set its volume (`1` = normal):
 
-```
+```cfg
 PlaySound, tavern_bell, 0.5
 ```
 
@@ -31,7 +31,7 @@ is equivalent to a fashion sound field written as `tavern_bell@0.5`.
 
 `<image=NAME>` inserts a picture wherever it appears — in a quest name or a [Server Info](../configs/server-infos.md) page. `NAME` is the file name (without extension) of an image you dropped into the images folder — see [Custom assets](../assets/custom-assets.md).
 
-```
+```cfg
 Welcome to the server!
 <image=banner>
 Read the rules below.
@@ -41,7 +41,7 @@ Read the rules below.
 
 Add `<speed=N>` inside a teleport destination's name to make travel take time instead of being instant:
 
-```
+```cfg
 "Mountain Outpost<speed=15>", 800, 150, -400
 ```
 
@@ -57,7 +57,7 @@ A simple per-player number you can set and read yourself, for tracking anything 
 
 Example — a simple reputation counter:
 
-```
+```cfg
 # reward line of a quest
 SetCustomValue: village_rep, 10
 
@@ -78,7 +78,7 @@ A handful of placeholders get replaced automatically wherever greeting/farewell 
 | `%health%` / `%maxhealth%` | Current/max health |
 | `%stamina%` / `%maxstamina%` | Current/max stamina |
 
-```
+```cfg
 GreetText: Welcome back, %playername%! You've survived %day% days so far.
 ```
 

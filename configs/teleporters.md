@@ -10,7 +10,7 @@ Lists fast-travel destinations for a Teleporter NPC. Once you have written a pro
 
 `Configs/Teleporters/hub_main.cfg`:
 
-```
+```cfg
 [hub_main]
 "Trading Post", 100, 30, 200
 "Mountain Outpost<speed=15>", 800, 150, -400, mountain_icon
@@ -24,7 +24,7 @@ Instead of repeating a full list, one profile can simply reuse another's:
 
 `Configs/Teleporters/hub_satellite.cfg`:
 
-```
+```cfg
 [hub_satellite]
 @from: hub_main
 ```

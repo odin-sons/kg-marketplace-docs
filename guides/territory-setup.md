@@ -6,7 +6,7 @@ A worked example: a PvP-free market zone, a guild-only VIP area layered on top o
 
 `Configs/Territories/market.cfg`:
 
-```
+```cfg
 [market_square@1]
 Circle
 0, 0, 60
@@ -21,7 +21,7 @@ A 60-radius circle at the world center, tinted green, with no combat, no monster
 
 `Configs/Territories/market_vip.cfg`:
 
-```
+```cfg
 [market_vip_lounge@5]
 Square
 20, 20, 15
@@ -38,7 +38,7 @@ Put a time-scheduled zone in a specially-named folder — see [Scheduling a conf
 
 `Configs/Territories/18-00_23-00/happy_hour.cfg`:
 
-```
+```cfg
 [happy_hour_bonus@3]
 Circle
 0, 0, 60

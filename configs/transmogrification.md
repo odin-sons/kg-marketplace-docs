@@ -12,7 +12,7 @@ Once you have written a profile here, put its name in a `Transmog`-type NPC's **
 
 `Configs/Transmogrifications/cosmetic_shop.cfg`:
 
-```
+```cfg
 [cosmetic_shop]
 SwordCheat, Coins, 100, false
 CapeLinen, Coins, 50, true
@@ -61,7 +61,7 @@ Because the type check is off, mismatched combinations (a two-handed skin on a o
 
 `Configs/Transmogrifications/testprofile.cfg`:
 
-```
+```cfg
 [testprofile]
 SwordIron, Coins, 10, false
 SwordIronFire, Ruby, 10, false

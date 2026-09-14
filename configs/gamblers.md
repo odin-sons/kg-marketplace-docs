@@ -8,7 +8,7 @@ Sets up a gambling NPC's roll table — spend a required item, receive one rando
 
 `Configs/Gamblers/tavern_dice.cfg`:
 
-```
+```cfg
 [tavern_dice]
 Coins, 20, Coins, 10-40, Wood, 20-50, Ruby, 1
 ```
@@ -19,7 +19,7 @@ Costs 20 Coins per roll. The prize is a random amount of Coins (10-40), a random
 
 The whole line is a flat, comma-separated list of `item, amount` pairs:
 
-```
+```cfg
 costItem, costAmount, prizeItem1, amount1, prizeItem2, amount2, ...
 ```
 
@@ -31,7 +31,7 @@ Add a number to the header to cap how many rolls a player can queue at once:
 
 `Configs/Gamblers/bronze_gamble.cfg`:
 
-```
+```cfg
 [bronze_gamble = 3]
 Coins, 10, Coins, 5-15, Wood, 10-30, ArrowFire, 5, Ruby, 1
 ```

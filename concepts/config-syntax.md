@@ -8,7 +8,7 @@ A config file is plain text, one entry per line. A quick example (a Server Info 
 
 `Configs/ServerInfos/welcome.cfg`:
 
-```
+```cfg
 # This is a comment, ignored by the game
 [welcome]
 Welcome to the server!
@@ -49,7 +49,7 @@ Three punctuation marks recur across almost every config type:
 
 Because spaces are normally stripped, a field that must contain a real space — an NPC's full name, a sentence, a title — needs to be wrapped in `"double quotes"`:
 
-```
+```cfg
 Talk, "John the Smith", 1
 ```
 

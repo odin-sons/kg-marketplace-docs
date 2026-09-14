@@ -6,7 +6,7 @@ Commands are the actions side of scripting — give an item, teleport the player
 
 A dialogue option that gives the player an item, plays a sound, and moves to the next line of conversation:
 
-```
+```cfg
 Text: Take this sword | Command: GiveItem, SwordIron, 1, 2 | Command: PlaySound, sword_clink, 0.8 | Transition: farewell
 ```
 
@@ -14,7 +14,7 @@ A quest event that spawns a mini-boss the moment the quest is accepted, and clea
 
 `Configs/QuestEvents/boss_hunt.cfg`:
 
-```
+```cfg
 [boss_hunt]
 OnAcceptQuest: Spawn, GoblinKing, 1, 3
 OnQuestTimeout: RemoveQuest, boss_hunt
@@ -24,7 +24,7 @@ OnQuestTimeout: RemoveQuest, boss_hunt
 
 `CommandName, argument1, argument2` — same comma-separated shape as conditions. You can chain several commands on one line with `|`, and they run in order:
 
-```
+```cfg
 Command: GiveItem, Coins, 100 | Command: PlaySound, coin_jingle | Command: Heal, 50
 ```
 
@@ -32,7 +32,7 @@ Command: GiveItem, Coins, 100 | Command: PlaySound, coin_jingle | Command: Heal,
 
 `RandomCommand` gives a command a percent chance (0-100) of firing. **Each `RandomCommand` on the same line rolls independently** — this is not a single pick split between alternatives, so more than one can fire, or none at all:
 
-```
+```cfg
 Text: Open the chest | RandomCommand: 40, GiveItem, Coins, 10 | RandomCommand: 15, GiveItem, Ruby, 1
 ```
 

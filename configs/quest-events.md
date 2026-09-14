@@ -10,7 +10,7 @@ Quest Events let you attach [commands](../concepts/commands.md) and [conditions]
 
 `Configs/QuestEvents/boss_hunt.cfg`:
 
-```
+```cfg
 [boss_hunt]
 OnAcceptQuest: GiveItem, SwordIron, 1, 3
 OnAcceptQuest: GiveItem, HealthPotion, 3, 1
@@ -24,7 +24,7 @@ This lends the player a sword and potions when they accept a "boss hunt" quest, 
 
 ## Format
 
-```
+```cfg
 [quest_id]
 EventName: entry1 | entry2 | ...
 ```
@@ -45,7 +45,7 @@ The `[quest_id]` header must match a quest defined in [Quests](quests.md) exactl
 
 Each entry after the event name is either a plain command, or an explicit condition — separate several with `|`:
 
-```
+```cfg
 OnCompleteQuest: HasAchievement, dragonslayer | GiveItem, Coins, 500
 ```
 
@@ -53,7 +53,7 @@ This only gives the bonus 500 Coins if the player already has the `dragonslayer`
 
 You do not need to write `Command:` in front of a plain action — just the action name works:
 
-```
+```cfg
 OnAcceptQuest: Spawn, GoblinKing, 1, 3
 ```
 
@@ -63,7 +63,7 @@ Clean up temporary gear on failure:
 
 `Configs/QuestEvents/boss_hunt.cfg`:
 
-```
+```cfg
 [boss_hunt]
 OnAcceptQuest: GiveItem, SwordIron, 1, 3
 OnCancelQuest: RemoveItem, SwordIron, 1
@@ -74,7 +74,7 @@ Announce a completion in Discord:
 
 `Configs/QuestEvents/dragon_slayer.cfg`:
 
-```
+```cfg
 [dragon_slayer]
 OnCompleteQuest: SendWebhook, discord.com/api/webhooks/xxxx, %playername% slew the dragon!
 ```
@@ -83,7 +83,7 @@ Teleport to safety on timeout:
 
 `Configs/QuestEvents/timed_trial.cfg`:
 
-```
+```cfg
 [timed_trial]
 OnQuestTimeout: Teleport, 0, 30, 0
 ```

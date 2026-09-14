@@ -27,7 +27,7 @@ Every player pays a flat 5% tax per sale, and everyone can list up to 20 items a
 
 `Configs/Traders/general_store.cfg` (full format: [Traders](../configs/traders.md)):
 
-```
+```cfg
 [general_store]
 Wood, 10, Coins, 5
 Coins, 50, SwordIron, 1, 2
@@ -56,7 +56,7 @@ Which items can be banked at all — separate from which ones earn interest — 
 
 `Configs/Bankers/main_bank.cfg`:
 
-```
+```cfg
 [main_bank]
 Coins
 Ruby
@@ -67,7 +67,7 @@ Amber
 
 `Configs/Gamblers/tavern_dice.cfg` (full format: [Gamblers](../configs/gamblers.md)):
 
-```
+```cfg
 [tavern_dice]
 Coins, 20, Coins, 10-40, Wood, 20-50, Ruby, 1
 ```

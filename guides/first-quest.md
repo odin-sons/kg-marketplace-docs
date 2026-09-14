@@ -6,7 +6,7 @@ A complete, start-to-finish example: writing a quest, assigning it to an NPC, an
 
 Create a file, for example `Configs/Quests/starter.cfg`:
 
-```
+```cfg
 [wolf_pelts]
 Kill
 Wolf Culling
@@ -30,7 +30,7 @@ Full field-by-field reference: [Quests](../configs/quests.md).
 
 Quests are not attached directly to an NPC — you assign them through a profile. Create `Configs/QuestProfiles/starter.cfg`:
 
-```
+```cfg
 [village_elder]
 wolf_pelts
 ```
