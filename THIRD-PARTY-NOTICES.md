@@ -4,7 +4,7 @@ Code vendored into this repo from other projects, and the license each one ships
 
 ## MicroLighter
 
-`scripts/syntax-highlight/highlight.js` (forked — see the file's own header comment for what changed), `scripts/syntax-highlight/grammar-dependencies.js` (unmodified), and `scripts/syntax-highlight/grammars/{yaml,ini}.js` (unmodified, two of the package's own bundled grammars) are vendored from [davatron5000/microlighter](https://github.com/davatron5000/microlighter).
+`scripts/syntax-highlight/highlight.js` is forked from it (see the file's own header comment for what changed) and committed as a real file, since it's modified. Everything else this site's syntax highlighting uses from the package — `grammar-dependencies.js` and the `grammars/{yaml,ini}.js` bundled grammars — is unmodified, so instead of a hand-copy it's pulled from the pinned `microlighter` devDependency and copied into `scripts/syntax-highlight/` at build time (see `eleventy.config.js`); those files aren't committed. Either way, this is all still [davatron5000/microlighter](https://github.com/davatron5000/microlighter) code shipped to every visitor, so it's still covered by its license here:
 
 ```
 MIT License

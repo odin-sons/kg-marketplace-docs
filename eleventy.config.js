@@ -48,6 +48,11 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("scripts");
   eleventyConfig.addPassthroughCopy({
     "node_modules/kg-marketplace-syntax/syntaxes/kg-marketplace.tmLanguage.json": "scripts/syntax-highlight/kg-marketplace-grammar.json",
+    // Unmodified MicroLighter files — highlight.js itself is the one part we fork
+    // (see its own header comment), so it stays a real file under scripts/.
+    "node_modules/microlighter/dist/grammar-dependencies.js": "scripts/syntax-highlight/grammar-dependencies.js",
+    "node_modules/microlighter/dist/grammars/yaml.js": "scripts/syntax-highlight/grammars/yaml.js",
+    "node_modules/microlighter/dist/grammars/ini.js": "scripts/syntax-highlight/grammars/ini.js",
   });
   eleventyConfig.addPassthroughCopy("icons");
   eleventyConfig.addPassthroughCopy("favicon.ico");
