@@ -32,7 +32,7 @@ In version 9.4.0, the mod changed how it stores player data — moving from indi
 
 If you are updating a server from a version older than 9.4.0, have every player withdraw their marketplace listings, banked items, and mail attachments **before** you install the update — anything left in those systems at the moment of the switch may not carry over.
 
-This mod version documented here (9.9.2) is well past this change; it only matters if you are jumping to a modern version from something very old.
+This mod version documented here (9.9.3) is well past this change; it only matters if you are jumping to a modern version from something very old.
 
 ## Since 9.0.8: Transmogrification's visual-effects field is gone
 

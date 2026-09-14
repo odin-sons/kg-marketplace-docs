@@ -1,11 +1,14 @@
 # Changelog
 
-The mod's own version history, 69 versions from 8.4.0 through 9.9.2.
+The mod's own version history, 70 versions from 8.4.0 through 9.9.3.
 
-This documentation covers **9.9.2**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
+This documentation covers **9.9.3**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
 
 ---
 
+
+## [9.9.3]
+- Fixed faction system bugs
 
 ## [9.9.2]
 - **Breaking change:** `IsVIP` and all related VIP functionality removed — see [Migrations](migrations.md#updating-to-992-the-vip-system-is-gone).

@@ -1,6 +1,6 @@
 # Known gaps and traps
 
-Things in the **current mod version (9.9.2)** that look like they should work based on folder names, in-game text, or their own naming, but do not — or that behave differently from what their name suggests. Every entry below is checked directly against the mod's own source, not guessed. This page is about present-day behavior, not about updating between versions; for that, see [Migrations](migrations.md).
+Things in the **current mod version (9.9.3)** that look like they should work based on folder names, in-game text, or their own naming, but do not — or that behave differently from what their name suggests. Every entry below is checked directly against the mod's own source, not guessed. This page is about present-day behavior, not about updating between versions; for that, see [Migrations](migrations.md).
 
 ## `IsVIP` / `NotIsVIP` still parse, but never do anything
 
