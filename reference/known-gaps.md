@@ -1,6 +1,10 @@
 # Known gaps and traps
 
-Things in the **current mod version (10.0.0)** that look like they should work based on folder names, in-game text, or their own naming, but do not — or that behave differently from what their name suggests. Every entry below is checked directly against the mod's own source, not guessed. This page is about present-day behavior, not about updating between versions; for that, see [Migrations](migrations.md).
+Things in the **current mod version (10.0.1)** that look like they should work based on folder names, in-game text, or their own naming, but do not — or that behave differently from what their name suggests. Every entry below is checked directly against the mod's own source, not guessed. This page is about present-day behavior, not about updating between versions; for that, see [Migrations](migrations.md).
+
+## Quest cooldown values other than a number or an `s`/`d` suffix silently become 0
+
+Since 10.0.1 the [cooldown line](../configs/quests.md#cooldown-and-time-limit) of a quest takes a plain number or a number with a `d` (in-game days) or `s` (seconds) suffix. Anything else — `30m`, `2h`, `1.5d`, a typo — is not rejected: the cooldown is silently read as `0`, so the quest just has no cooldown and nothing in the server log says why. The time limit after the comma has the same behaviour and takes plain seconds only. If a quest repeats when it shouldn't, check that line first.
 
 ## `IsVIP` / `NotIsVIP` still parse, but never do anything
 

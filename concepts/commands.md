@@ -47,6 +47,7 @@ This is a 40% chance of the Coins firing and a *separate* 15% chance of the Ruby
 | `GiveQuest` | quest ID | Gives the player a quest directly, without them needing to talk to the quest-giving NPC. |
 | `RemoveQuest` | quest ID, [count as cancelled?] | Removes an active quest from the player. |
 | `FinishQuest` | quest ID | Force-completes a quest immediately. |
+| `ForceQuestCooldown` | quest ID, seconds | Puts a quest on cooldown for the player right now, for exactly that many seconds — regardless of the quest's own cooldown setting. Whole seconds only; an unknown quest ID does nothing. See [Quests](../configs/quests.md#cooldown-and-time-limit). |
 | `GiveItem` | item, amount, level | Adds an item to the player's inventory. |
 | `GiveItemWithData` | item, amount, level, data set name | Same, but stamps extra custom values onto the item — see [Custom Spawn Data](../configs/custom-spawn-data.md). |
 | `RemoveItem` | item, amount | Removes items from the player's inventory. |

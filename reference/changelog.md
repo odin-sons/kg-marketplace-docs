@@ -1,11 +1,18 @@
 # Changelog
 
-The mod's own version history, 72 versions from 8.4.0 through 10.0.0.
+The mod's own version history, 73 versions from 8.4.0 through 10.0.1.
 
-This documentation covers **10.0.0**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
+This documentation covers **10.0.1**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
 
 ---
 
+
+## [10.0.1]
+- Fixed some bugs related to cloth items sitting at a weird offset on an NPC
+- Added a new command, [`ForceQuestCooldown`](../concepts/commands.md), `questid, seconds` — forcefully puts a quest on cooldown
+- Quests now support a cooldown in seconds, not just in-game days. The legacy cooldown stays in in-game days; add an `s` to the end of the value to make it seconds. Example: `60s` = 60 seconds, `1d` = 1 day — see [Quests](../configs/quests.md#cooldown-and-time-limit).
+- **Since quest cooldowns were changed, the author highly recommends testing on a local server first before using it on a live one, and reporting any bugs** — see [Migrations](migrations.md#updating-to-1001-quest-cooldowns-now-count-in-seconds-too-test-first).
+- Added a new config option, `AlwaysProgressServerTime` — when on, the server always advances its time, even with no players online. Useful for quests with cooldowns and time restrictions; the author recommends turning it on if you have any — see [Server config](../setup/server-config.md).
 
 ## [10.0.0]
 - Updated for DN 1.0 — see [Migrations](migrations.md#updating-to-1000-the-valheim-10-release-beta-at-the-time).

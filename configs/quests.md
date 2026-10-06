@@ -67,7 +67,7 @@ Item: Coins, 50 | Skill_EXP: Bows, 20
 | 3 | `The village needs...` | The description text. |
 | 4 | `Wolf, 5, 1` | The target: kill Wolves, 5 of them, minimum star level 1 — see [the target line format](#the-target-line-by-type) for exactly how this field works. |
 | 5 | `Item: Coins, 50 \| Skill_EXP: Bows, 20` | Rewards: 50 Coins and 20 Bow skill experience. |
-| 6 | `0` | Cooldown in seconds — `0` means the quest is repeatable immediately after completion. |
+| 6 | `0` | Cooldown — `0` means the quest is repeatable immediately after completion. A plain number counts in-game days; add `s` for seconds (`90s`). See [Cooldown and time limit](#cooldown-and-time-limit). |
 | 7 (not shown above, optional) | unlock requirements | Left empty here — no requirements, so this quest is available right away. See [Conditions](../concepts/conditions.md). |
 
 If you leave off the requirements line entirely, that is fine — it defaults to "no requirements."
@@ -143,10 +143,16 @@ Item: Coins, 200 | Item: Ruby, 1 | Skill_EXP: Swords, 100
 ## Cooldown and time limit
 
 ```cfg
-3600, 600
+1d, 600
 ```
 
-First number is the cooldown in seconds before the quest can be taken again after completion (`0` = always available). Second, optional number is a time limit — how long the player has after accepting before it auto-fails (`0` or omitted = no time limit).
+The first value is the **cooldown** before the quest can be taken again after completion (`0` = always available). A plain number or a `d` suffix counts **in-game days** (`1` and `1d` are the same); an `s` suffix counts **seconds** (`90s`). One in-game day is 20 minutes of real time in vanilla Valheim. The second, optional number is a **time limit in seconds** — how long the player has after accepting before the quest auto-fails (`0` or omitted = no time limit). So `1d, 600` means: repeatable one in-game day after completion, and the player has 10 minutes to finish it.
+
+Only `d` and `s` are recognised — anything else (`30m`, `2h`, `1.5d`) is silently read as `0`, with no error, so the quest would simply have no cooldown. The time limit takes a plain number of seconds only.
+
+Before 10.0.1 the cooldown could only be whole in-game days; the seconds form needs 10.0.1 or newer.
+
+The countdown runs on the server's world clock, which in vanilla Valheim stands still while nobody is online — so a cooldown doesn't tick down on an empty server. If your quests have cooldowns or time restrictions, turn on `AlwaysProgressServerTime` in the [server config](../setup/server-config.md) to keep it moving. To start a cooldown yourself — say, to lock a quest for a set time after a dialogue choice — use the [`ForceQuestCooldown`](../concepts/commands.md) command.
 
 ## Unlock requirements
 
@@ -176,7 +182,7 @@ Without either tag, a quest whose requirements are not yet met still shows up in
 
 ## Cooldown and quest-list visibility
 
-A quest that is on cooldown still shows in the NPC's list (with a countdown) as long as the remaining cooldown is under 5000 in-game days. Past that, it disappears from the list entirely once completed — this is the trick behind "one-time" quests: set the cooldown to something like `10000` and the quest vanishes for that player for good after their first completion, instead of reappearing once the cooldown would normally expire.
+A quest that is on cooldown still shows in the NPC's list (with a countdown) as long as the remaining cooldown is under 5000 in-game days. Past that, it disappears from the list entirely once completed — this is the trick behind "one-time" quests: set the cooldown to something like `10000` (in-game days) and the quest vanishes for that player for good after their first completion, instead of reappearing once the cooldown would normally expire.
 
 ## A full worked example
 
@@ -197,11 +203,11 @@ Timber Run
 Bring me wood and craft me a good axe.
 Wood, 20 | AxeFlint, 1, 2
 Item: Coins, 100 | Skill_EXP: WoodCutting, 50
-3600, 600
+3600s, 600
 QuestFinished, wolf_pelts
 ```
 
-Here, `timber_run` stays hidden until `wolf_pelts` is completed, and once accepted the player has 10 minutes (600 seconds) to finish it before it auto-fails; it can then be repeated once per hour (3600 seconds).
+Here, `timber_run` stays hidden until `wolf_pelts` is completed, and once accepted the player has 10 minutes (600 seconds) to finish it before it auto-fails; it can then be repeated once per hour (`3600s` — the `s` suffix needs 10.0.1 or newer; on older versions a plain `3600` would mean 3600 in-game days).
 
 ## Related
 

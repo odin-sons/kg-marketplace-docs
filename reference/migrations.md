@@ -4,6 +4,21 @@ Most updates to this mod are safe to install directly. This page lists the excep
 
 If you are updating across a version not listed here, a plain update is expected to be safe. When in doubt, back up your `Marketplace` folder and save file before updating a live server either way.
 
+## Updating to 10.0.1: quest cooldowns now count in seconds too (test first)
+
+The author's warning, from the 10.0.1 notes: **"Since quests cooldown were changed highly recommend to test it on local server first before using it on live server. If you find any bugs please report them to me."**
+
+What actually changed, from the code:
+
+- The cooldown field now accepts a suffix — `60s` for seconds, `1d` for in-game days. A plain number still means in-game days, so existing quest files need no edits.
+- Cooldowns are now stored per player as a fractional in-game day instead of a whole day number. Existing saved cooldowns are still read, and by my reading of the code one that was already running ends at the same moment it would have before — but that's exactly the part to test locally.
+- The quest list now shows a live countdown (like `01d 02h 03m 04s`) instead of a "days left" number.
+- A malformed cooldown used to be a parse error; now an unrecognised suffix is silently read as `0` — see [Known gaps](known-gaps.md#quest-cooldown-values-other-than-a-number-or-an-sd-suffix-silently-become-0).
+
+One correction to earlier versions of this documentation, which described the cooldown as seconds: a plain number has **always** counted in-game days (20 real minutes each by default). If you copied a value like `3600` from an old example believing it was seconds, it was really 3600 days — write `3600s` if you meant seconds.
+
+Separately, 10.0.1 adds the [`AlwaysProgressServerTime`](../setup/server-config.md) option; the author recommends enabling it if you have quests with cooldowns or time limits.
+
 ## Updating to 10.0.0: the Valheim 1.0 release (beta at the time)
 
 10.0.0 is the release the author updated for Valheim 1.0 (the changelog says "DN 1.0"), and shipped it as a beta. The author's own warning, verbatim: **"There still can be super many amount of bugs, that's why its beta. Please make backups and test it on local server first before using it on live server. If you find any bugs please report them to me."** The beta label was lifted in 10.0.2.
@@ -40,7 +55,7 @@ In version 9.4.0, the mod changed how it stores player data — moving from indi
 
 If you are updating a server from a version older than 9.4.0, have every player withdraw their marketplace listings, banked items, and mail attachments **before** you install the update — anything left in those systems at the moment of the switch may not carry over.
 
-This mod version documented here (10.0.0) is well past this change; it only matters if you are jumping to a modern version from something very old.
+This mod version documented here (10.0.1) is well past this change; it only matters if you are jumping to a modern version from something very old.
 
 ## Since 9.0.8: Transmogrification's visual-effects field is gone
 

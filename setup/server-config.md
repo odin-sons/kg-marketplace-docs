@@ -39,6 +39,7 @@ This example: interest pays out every 6 hours at 2%, players can list 25 items w
 | `AllowMultipleQuestsScore` | `false` | Whether one kill/harvest/craft can count toward more than one matching quest at once. |
 | `MaxAcceptedQuests` | `7` | Maximum active quests per player. |
 | `AllowKillQuestsInParty` | `true` | Whether a party member's kills count toward your Kill quests. |
+| `AlwaysProgressServerTime` | `false` | Keeps the server's world clock running even when nobody is online (vanilla Valheim pauses it). The author recommends turning it on if you have quests with [cooldowns or time limits](../configs/quests.md#cooldown-and-time-limit), so they don't stall whenever the server is empty. Added in 10.0.1. |
 | `EnableKGChat` | `true` | Turns the custom chat window on or off. |
 | <a id="mail"></a>`MailPostRecipe` | `SwordCheat, 1` | What it costs to craft a mailbox — `item, amount`. |
 | `MailPostWaitTime` | `5` | Minutes before sent mail can be picked up. |
