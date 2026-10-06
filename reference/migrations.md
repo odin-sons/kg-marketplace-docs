@@ -21,7 +21,7 @@ Separately, 10.0.1 adds the [`AlwaysProgressServerTime`](../setup/server-config.
 
 ## Updating to 10.0.0: the Valheim 1.0 release (beta at the time)
 
-10.0.0 is the release the author updated for Valheim 1.0 (the changelog says "DN 1.0"), and shipped it as a beta. The author's own warning, verbatim: **"There still can be super many amount of bugs, that's why its beta. Please make backups and test it on local server first before using it on live server. If you find any bugs please report them to me."** The beta label was lifted in 10.0.2.
+10.0.0 is the release the author updated for Valheim 1.0 (the changelog says "DN 1.0"), and shipped it as a beta. The author's own warning, verbatim: **"There still can be super many amount of bugs, that's why its beta. Please make backups and test it on local server first before using it on live server. If you find any bugs please report them to me."** The beta label was lifted in 10.0.2 ("Out of beta now" in its notes).
 
 If you are updating a live server from 9.x, back up your `Marketplace` config folder and save data, and try the new version on a local copy first.
 
@@ -55,7 +55,7 @@ In version 9.4.0, the mod changed how it stores player data — moving from indi
 
 If you are updating a server from a version older than 9.4.0, have every player withdraw their marketplace listings, banked items, and mail attachments **before** you install the update — anything left in those systems at the moment of the switch may not carry over.
 
-This mod version documented here (10.0.1) is well past this change; it only matters if you are jumping to a modern version from something very old.
+This mod version documented here (10.0.2) is well past this change; it only matters if you are jumping to a modern version from something very old.
 
 ## Since 9.0.8: Transmogrification's visual-effects field is gone
 

@@ -1,11 +1,15 @@
 # Changelog
 
-The mod's own version history, 73 versions from 8.4.0 through 10.0.1.
+The mod's own version history, 74 versions from 8.4.0 through 10.0.2.
 
-This documentation covers **10.0.1**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
+This documentation covers **10.0.2**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
 
 ---
 
+
+## [10.0.2]
+- Small bugfixes. Out of beta now
+- You can now equip multiple Fashion NPC items in the same slot. Example: `SwordIron, ShieldBlackmetal` in the left back item; `ArmorRootChest, ArmorTrollLeatherChest` in the chest slot. For hair and beard you can also equip multiple. Example: `4, 10` (hair) and `12, 13` (beard) — see [NPC system](../npc/npc-system.md#wearing-several-items-in-one-slot), including a catch for Saved NPC templates.
 
 ## [10.0.1]
 - Fixed some bugs related to cloth items sitting at a weird offset on an NPC

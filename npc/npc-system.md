@@ -43,9 +43,23 @@ Every NPC also has an optional **Dialogue** field, separate from its Type — an
 
 Set through the NPC's fashion panel: left/right hand items, helmet, chest, legs, cape, hair, hair color, beard, beard color, skin color, model scale, hidden-item toggles, greeting/farewell text and animations, crafting animation, interact sound and animation, text size/height, and periodic idle animation/sound.
 
-Most appearance fields accept a **space-separated list** of options — one is picked at random each time the NPC spawns, so a single NPC setup can produce visual variety across several placements. Greeting/farewell text also supports [dynamic placeholders](../concepts/prefabs-and-assets.md#dynamic-text-keyword) like `%playername%`.
+Most appearance fields accept a **space-separated list** of options — when you place a [Saved NPC](../configs/saved-npcs.md) template, one of them is picked at random, so a single template can produce visual variety across several placements. Greeting/farewell text also supports [dynamic placeholders](../concepts/prefabs-and-assets.md#dynamic-text-keyword) like `%playername%`.
 
 Periodic animation and periodic sound make the NPC occasionally play an idle animation or sound on their own — separate from [Random NPC Speech](../configs/random-npc-speech.md), which handles idle *text* barks instead.
+
+### Wearing several items in one slot
+
+Since 10.0.2 the item fields — left/right hand, left/right back (the hidden-item slots), helmet, cape, chest, legs, hair and beard — also take a **comma-separated** list, and *every* entry is equipped at once:
+
+| Field | Example | Result |
+|---|---|---|
+| Left back item | `SwordIron, ShieldBlackmetal` | Both carried on the NPC's back. |
+| Chest | `ArmorRootChest, ArmorTrollLeatherChest` | Both layered on. |
+| Hair / beard | `4, 10` / `12, 13` | Both styles worn together. |
+
+Mind the difference between the two list styles: **spaces** mean "pick one at random", **commas** mean "wear all of them". You can combine them — put spaces between the alternatives and none inside a group: `4,10 7` is either hairstyles 4 and 10 together, or hairstyle 7.
+
+That matters when the NPC comes from a [Saved NPC](../configs/saved-npcs.md) template: placing one cuts every list at its spaces and keeps a single piece *before* any commas are read, so `SwordIron, ShieldBlackmetal` (note the space) ends up as just one of the two. In a template, write a group with no spaces — `SwordIron,ShieldBlackmetal`. In the fashion panel of an NPC you've already placed there's no random step, so the spaced form works.
 
 ## Patrol routes
 

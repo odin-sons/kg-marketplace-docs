@@ -1,6 +1,10 @@
 # Known gaps and traps
 
-Things in the **current mod version (10.0.1)** that look like they should work based on folder names, in-game text, or their own naming, but do not — or that behave differently from what their name suggests. Every entry below is checked directly against the mod's own source, not guessed. This page is about present-day behavior, not about updating between versions; for that, see [Migrations](migrations.md).
+Things in the **current mod version (10.0.2)** that look like they should work based on folder names, in-game text, or their own naming, but do not — or that behave differently from what their name suggests. Every entry below is checked directly against the mod's own source, not guessed. This page is about present-day behavior, not about updating between versions; for that, see [Migrations](migrations.md).
+
+## Several items in one slot: a comma list with spaces gets cut in a Saved NPC template
+
+The 10.0.2 multi-item syntax (`SwordIron, ShieldBlackmetal`) works as written when you type it into the fashion panel of an NPC you've placed. In a [Saved NPC](../configs/saved-npcs.md) template it doesn't: placing a template first picks one random option from every space-separated list, and the space after the comma splits that list in two — so only one of the items is worn, no error shown. Write the group without spaces in a template: `SwordIron,ShieldBlackmetal`. Details on [the NPC system page](../npc/npc-system.md#wearing-several-items-in-one-slot).
 
 ## Quest cooldown values other than a number or an `s`/`d` suffix silently become 0
 

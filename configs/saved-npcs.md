@@ -15,6 +15,8 @@ Reusable NPC "stamps" — you build and configure an NPC once, save it, and can 
 
 Any appearance field in a saved template — model, item, color, animation — can hold a **space-separated list** of options instead of one value. Every time you place a copy of the template, one option is picked at random, so one saved NPC can produce visually varied instances instead of identical clones.
 
+Don't confuse this with wearing *several* items in one slot (10.0.2+), which uses commas — see [Wearing several items in one slot](../npc/npc-system.md#wearing-several-items-in-one-slot). The two interact: because the random pick happens first and cuts at spaces, a group in a template must be written without spaces (`SwordIron,ShieldBlackmetal`).
+
 ## Related
 
 - [Marketplace Hammer](../npc/marketplace-hammer.md) — the tool that creates and uses these files.
