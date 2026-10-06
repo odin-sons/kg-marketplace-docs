@@ -4,11 +4,12 @@
   if (!doc || !rail) return;
 
   var STACK_GAP = 32;
+  var MAX_LEAD = 400;
   var RESIZE_DEBOUNCE = 150;
 
   var items = Array.prototype
     .filter.call(doc.querySelectorAll(":scope > p"), function (p) {
-      return p.querySelector(":scope > picture:only-child");
+      return p.querySelector(":scope > picture:only-child, :scope > iframe:only-child");
     })
     .map(function (p) {
       var marker = document.createComment("image-rail-marker");
@@ -32,6 +33,7 @@
 
   function restoreToDocument() {
     items.forEach(function (item) {
+      item.wrapper.style.marginTop = "";
       item.wrapper.style.minHeight = "";
       item.wrapper.style.marginBottom = "";
       if (item.el.parentNode === item.wrapper) {
@@ -51,16 +53,18 @@
     items.forEach(function (item) {
       item.wrapper.style.minHeight = "";
       item.wrapper.style.marginBottom = "";
-      item.wrapper.appendChild(item.el);
-      rail.appendChild(item.wrapper);
+      if (item.el.parentNode !== item.wrapper) item.wrapper.appendChild(item.el);
+      if (item.wrapper.parentNode !== rail) rail.appendChild(item.wrapper);
     });
 
     var tops = items.map(function (item) {
       return markerTop(item.marker);
     });
     var docBottom = doc.getBoundingClientRect().bottom + window.scrollY;
+    var railTop = rail.getBoundingClientRect().top + window.scrollY;
 
     items.forEach(function (item, i) {
+      item.wrapper.style.marginTop = i === 0 ? Math.max(0, tops[0] - railTop - MAX_LEAD) + "px" : "";
       var next = i + 1 < items.length ? tops[i + 1] : docBottom;
       var minHeight = Math.max(0, next - tops[i] - STACK_GAP);
       item.wrapper.style.minHeight = minHeight + "px";

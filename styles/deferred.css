@@ -30,6 +30,14 @@ html:root {
   }
 }
 
+.doc .video-embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 6px;
+}
+
 body.lightbox-open {
   overflow: hidden;
 }
