@@ -43,7 +43,7 @@ Every NPC also has an optional **Dialogue** field, separate from its Type — an
 
 Set through the NPC's fashion panel: left/right hand items, helmet, chest, legs, cape, hair, hair color, beard, beard color, skin color, model scale, hidden-item toggles, greeting/farewell text and animations, crafting animation, interact sound and animation, text size/height, and periodic idle animation/sound.
 
-Most appearance fields accept a **space-separated list** of options — when you place a [Saved NPC](../configs/saved-npcs.md) template, one of them is picked at random, so a single template can produce visual variety across several placements. Greeting/farewell text also supports [dynamic placeholders](../concepts/prefabs-and-assets.md#dynamic-text-keyword) like `%playername%`.
+Most appearance fields accept a **space-separated list** of options — when you place a [Saved NPC](../configs/saved-npcs.md) template, one of them is picked at random (an even chance for each, first and last included), so a single template can produce visual variety across several placements. The pick is made once, at the moment you place the NPC, and is stored on that NPC — it never re-rolls, not on a reload and not on a restart. There is a catch with placing several copies in a row, see [Known gaps](../reference/known-gaps.md#a-saved-npc-template-rolls-its-random-picks-only-once-per-session). Greeting/farewell text also supports [dynamic placeholders](../concepts/prefabs-and-assets.md#dynamic-text-keyword) like `%playername%`.
 
 Periodic animation and periodic sound make the NPC occasionally play an idle animation or sound on their own — separate from [Random NPC Speech](../configs/random-npc-speech.md), which handles idle *text* barks instead.
 
@@ -57,9 +57,9 @@ Since 10.0.2 the item fields — left/right hand, left/right back (the hidden-it
 | Chest | `ArmorRootChest, ArmorTrollLeatherChest` | Both layered on. |
 | Hair / beard | `4, 10` / `12, 13` | Both styles worn together. |
 
-Mind the difference between the two list styles: **spaces** mean "pick one at random", **commas** mean "wear all of them". You can combine them — put spaces between the alternatives and none inside a group: `4,10 7` is either hairstyles 4 and 10 together, or hairstyle 7.
+Mind the difference between the two list styles: **spaces** mean "pick one at random" (only when placing a Saved NPC template — nothing picks for you in the fashion panel), **commas** mean "wear all of them". You can combine them — put spaces between the alternatives and none inside a group: `4,10 7` is either hairstyles 4 and 10 together, or hairstyle 7.
 
-That matters when the NPC comes from a [Saved NPC](../configs/saved-npcs.md) template: placing one cuts every list at its spaces and keeps a single piece *before* any commas are read, so `SwordIron, ShieldBlackmetal` (note the space) ends up as just one of the two. In a template, write a group with no spaces — `SwordIron,ShieldBlackmetal`. In the fashion panel of an NPC you've already placed there's no random step, so the spaced form works.
+That matters when the NPC comes from a [Saved NPC](../configs/saved-npcs.md) template: placing one cuts every list at its spaces and keeps a single piece *before* any commas are read, so `SwordIron, ShieldBlackmetal` (note the space) ends up as just one of the two. In a template, write a group with no spaces — `SwordIron,ShieldBlackmetal`. In the fashion panel of an NPC you've already placed there's no random step, so a comma list with spaces after the commas works as written — and a space-separated list of alternatives does not get split into options there, so don't type one.
 
 ## Patrol routes
 
