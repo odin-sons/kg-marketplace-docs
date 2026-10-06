@@ -71,7 +71,7 @@
     <div class="site-nav__version">
       <label class="sr-only" for="version-switcher">Documentation version</label>
       <select id="version-switcher" class="site-nav__version-select" data-own-version="{{ currentVersion }}">
-        {% for v in versions %}
+        {% for v in versions | reverse %}
         <option value="{{ v.url }}"{% if v.current %} selected{% endif %}>v{{ v.version }}{% if v.current %} (current){% endif %}</option>
         {% endfor %}
       </select>

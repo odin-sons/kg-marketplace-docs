@@ -18,7 +18,7 @@
 
       var ownVersion = select.dataset.ownVersion;
       select.textContent = "";
-      versions.forEach(function (v) {
+      versions.slice().reverse().forEach(function (v) {
         var option = document.createElement("option");
         option.value = v.url;
         option.textContent = "v" + v.version + (v.current ? " (current)" : "");
