@@ -1,11 +1,17 @@
 # Changelog
 
-The mod's own version history, 71 versions from 8.4.0 through 9.9.4.
+The mod's own version history, 72 versions from 8.4.0 through 10.0.0.
 
-This documentation covers **9.9.4**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
+This documentation covers **10.0.0**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
 
 ---
 
+
+## [10.0.0]
+- Updated for DN 1.0 — see [Migrations](migrations.md#updating-to-1000-the-valheim-10-release-beta-at-the-time).
+- Bugfixes
+- Gambler small rework — see [Gamblers](../configs/gamblers.md#prize-pool-size).
+- **There still can be super many amount of bugs, that's why its beta. Please make backups and test it on local server first before using it on live server. If you find any bugs please report them to me**
 
 ## [9.9.4]
 - Fixed Jere's UpgradeWorld's `world_clean` command clearing NPCs

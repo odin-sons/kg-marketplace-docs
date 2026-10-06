@@ -4,5 +4,6 @@ export default [
   { version: "9.9.0", url: "https://version-9-9-0.kg-marketplace.pages.dev/" },
   { version: "9.9.2", url: "https://version-9-9-2.kg-marketplace.pages.dev/" },
   { version: "9.9.3", url: "https://version-9-9-3.kg-marketplace.pages.dev/" },
-  { version: "9.9.4", url: "/", current: true },
+  { version: "9.9.4", url: "https://version-9-9-4.kg-marketplace.pages.dev/" },
+  { version: "10.0.0", url: "/", current: true },
 ];

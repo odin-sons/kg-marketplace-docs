@@ -4,6 +4,14 @@ Most updates to this mod are safe to install directly. This page lists the excep
 
 If you are updating across a version not listed here, a plain update is expected to be safe. When in doubt, back up your `Marketplace` folder and save file before updating a live server either way.
 
+## Updating to 10.0.0: the Valheim 1.0 release (beta at the time)
+
+10.0.0 is the release the author updated for Valheim 1.0 (the changelog says "DN 1.0"), and shipped it as a beta. The author's own warning, verbatim: **"There still can be super many amount of bugs, that's why its beta. Please make backups and test it on local server first before using it on live server. If you find any bugs please report them to me."** The beta label was lifted in 10.0.2.
+
+If you are updating a live server from 9.x, back up your `Marketplace` config folder and save data, and try the new version on a local copy first.
+
+One change not flagged by the author: the [Gambler](../configs/gamblers.md#prize-pool-size) prize-pool cap went from 19 to 21 prizes per profile. It only ever raises the limit, so there is nothing to do.
+
 ## Updating to 9.9.2: the VIP system is gone
 
 The changelog calls this out as a **breaking change**, and checking the diff confirms it's thorough — this isn't just one setting:
@@ -32,7 +40,7 @@ In version 9.4.0, the mod changed how it stores player data — moving from indi
 
 If you are updating a server from a version older than 9.4.0, have every player withdraw their marketplace listings, banked items, and mail attachments **before** you install the update — anything left in those systems at the moment of the switch may not carry over.
 
-This mod version documented here (9.9.4) is well past this change; it only matters if you are jumping to a modern version from something very old.
+This mod version documented here (10.0.0) is well past this change; it only matters if you are jumping to a modern version from something very old.
 
 ## Since 9.0.8: Transmogrification's visual-effects field is gone
 

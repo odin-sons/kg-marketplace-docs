@@ -25,6 +25,10 @@ costItem, costAmount, prizeItem1, amount1, prizeItem2, amount2, ...
 
 **The first pair is always the cost.** Everything after it is the prize pool. An amount can be a fixed number (`5`) or a range (`10-40`), rolled fresh each time.
 
+## Prize pool size
+
+A profile holds at most **21 prizes**, not counting the cost pair. Anything past the 21st prize on the line is silently dropped — no error, it just never shows up in the roll table — so split a bigger pool across several profiles. (Before 10.0.0 the cap was 19.)
+
 ## Limiting simultaneous rolls
 
 Add a number to the header to cap how many rolls a player can queue at once:

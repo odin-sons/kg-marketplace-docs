@@ -58,7 +58,7 @@ This is a 40% chance of the Coins firing and a *separate* 15% chance of the Ruby
 | `Teleport` | x, y, z, [allow while carrying ore?] | Teleports the player to a fixed position. |
 | `Damage` | amount | Deals flat damage to the player. |
 | `Heal` | amount | Heals the player. |
-| `GiveBuff` | buff name, [duration] | Applies a buff. Note: the duration argument here is unreliable for anything longer than about a second — if you need a buff to last a specific amount of time, set its duration on the buff itself instead (see [Buffers](../configs/buffers.md)) and leave this argument out. |
+| `GiveBuff` | buff name, [duration] | Applies a buff. The optional duration (in seconds) overrides how long it lasts; leave it out to use the buff's own duration (see [Buffers](../configs/buffers.md)). |
 | `AddPin` | label, x, y, z | Drops a permanent map pin and centers the map on it. |
 | `PingMap` | text, x, y, z | Shows a temporary map ping (like a player ping), not a permanent pin. |
 | `AddEpicMMOExp` | amount | Grants EpicMMO experience (only if that mod is installed). |
@@ -84,6 +84,8 @@ This is a 40% chance of the Coins firing and a *separate* 15% chance of the Ruby
 ## A caution on `ConsoleCommand`
 
 `ConsoleCommand` can run **any** admin command, including cheat and world-editing commands — not just mod-specific ones. Anyone who can trigger the dialogue option or quest event that contains it effectively gets that admin access for that one command. Only use it in content you trust, and avoid handing it to untested or community-submitted dialogue/quest files.
+
+Since Valheim 1.0 the game also guards its own cheat-flagged commands (`spawn`, `inventorysize`, and the like): unless the player's profile already counts as having cheated — or the world is flagged as cheated, or they carry a cheated item — a cheat command run through `ConsoleCommand` is refused with the game's "confirm cheats" message instead of executing. When one does run, it marks that player's profile as having used cheats, which affects their achievements. So don't count on `ConsoleCommand` for cheat commands with ordinary players. (Read from the game's code; not tested in-game.)
 
 ## Related
 
