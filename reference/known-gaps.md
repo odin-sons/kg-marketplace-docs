@@ -1,6 +1,6 @@
 # Known gaps and traps
 
-Things in the **current mod version (10.0.2)** that look like they should work based on folder names, in-game text, or their own naming, but do not — or that behave differently from what their name suggests. Every entry below is checked directly against the mod's own source, not guessed. This page is about present-day behavior, not about updating between versions; for that, see [Migrations](migrations.md).
+Things in the **current mod version (10.0.3)** that look like they should work based on folder names, in-game text, or their own naming, but do not — or that behave differently from what their name suggests. Every entry below is checked directly against the mod's own source, not guessed. This page is about present-day behavior, not about updating between versions; for that, see [Migrations](migrations.md).
 
 ## Several items in one slot: a comma list with spaces gets cut in a Saved NPC template
 

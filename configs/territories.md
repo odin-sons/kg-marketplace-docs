@@ -118,6 +118,7 @@ NoAttack, PeriodicHeal = 2, ForceBiome = 2, MonstersAddStars = 1
 | `JoinOtherServer` | connection info | Sends players who enter to a different server. |
 | `RevealOnMap` | — | Reveals this area on the map automatically. |
 | `CustomJereSpawner` | spawner name | Attaches a named custom spawner (repeat the flag to add more than one). |
+| `ZoneMusic` | sound name | Plays a looping music track while the player is inside the zone, in place of Valheim's normal environment music, fading in over 3 seconds. The name is an `.mp3` file name without the extension, from the `Marketplace_Sounds/` folder — see [Custom assets](../assets/custom-assets.md). That folder is on each player's own computer, so every player needs the file; if it isn't found, the normal music plays. Added in 10.0.3. |
 
 ## Who is allowed in
 

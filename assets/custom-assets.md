@@ -4,7 +4,7 @@ Five folders on the player's own computer (next to `BepInEx/config/Marketplace/`
 
 | Folder | What goes here | Referenced by | Refresh command |
 |---|---|---|---|
-| `Marketplace_Sounds/` | `.mp3` files | File name, in `PlaySound` commands or an NPC's interact sound setting | `mreloadsounds` |
+| `Marketplace_Sounds/` | `.mp3` files | File name, in `PlaySound` commands, an NPC's interact sound setting, or a territory's [`ZoneMusic`](../configs/territories.md) flag | `mreloadsounds` |
 | `Marketplace_Models/` | `.obj` files | File name, as a model/prefab override | `mreloadmodels` |
 | `Marketplace_CachedImages/` | `.png` files | File name, in `<image=name>` tags | `mreloadimages` |
 | `Marketplace_VideoClips/` | video files | File name, in the `PlayVideo` command | loads automatically at startup |

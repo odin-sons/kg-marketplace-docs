@@ -1,11 +1,16 @@
 # Changelog
 
-The mod's own version history, 74 versions from 8.4.0 through 10.0.2.
+The mod's own version history, 75 versions from 8.4.0 through 10.0.3.
 
-This documentation covers **10.0.2**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
+This documentation covers **10.0.3**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
 
 ---
 
+
+## [10.0.3]
+- Small bugfix related to NPC patrol
+- KGchat got a `/guild` chat now (blaxxun's Guilds) — see [Client config](../setup/client-config.md#kg-chat).
+- Also in this build, though the author's notes don't mention them (found by reading the code): a new territory flag, [`ZoneMusic`](../configs/territories.md#extra-flags-a-second-set-same-syntax), and [draggable windows](../setup/client-config.md#dragui) for most of the mod's UI.
 
 ## [10.0.2]
 - Small bugfixes. Out of beta now
