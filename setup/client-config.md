@@ -43,9 +43,7 @@ The chat window has its own modes, switched by typing a command into the chat bo
 
 ## `[DragUI]`
 
-Since 10.0.3 you can move most of this mod's windows around the screen. With a window open and your mouse cursor free, hold **Left Ctrl + Left Alt** — each draggable window gets a dimmed, framed overlay. Drag it with the left mouse button; **right-click the overlay to put the window back** in its default spot. A window can't be dragged off-screen, and the new position is saved the moment you let go. A short demo is on [Streamable](https://streamable.com/nc56xp).
-
-<p class="video-embed"><iframe src="https://streamable.com/e/nc56xp" title="Dragging the mod's windows with Left Ctrl + Left Alt" loading="lazy" allowfullscreen></iframe></p>
+Since 10.0.3 you can move most of this mod's windows around the screen. With a window open and your mouse cursor free, hold **Left Ctrl + Left Alt** — each draggable window gets a dimmed, framed overlay. Drag it with the left mouse button; **right-click the overlay to put the window back** in its default spot. A window can't be dragged off-screen, and the new position is saved the moment you let go.
 
 It applies to the Marketplace, Trader, Banker, Gambler, Buffer, Transmogrification, Quest, Dialogue, Server Info, Leaderboard, Feedback and Distanced UI windows and the NPC settings panel. Each one is stored in this file as a pair of `…_DragUI_posX` / `…_DragUI_posY` entries — delete the pair to reset that window by hand. (The chat window keeps its own `UI_posX` / `UI_posY` above.)
 
