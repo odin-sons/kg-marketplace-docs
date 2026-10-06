@@ -13,7 +13,9 @@ Reusable NPC "stamps" — you build and configure an NPC once, save it, and can 
 
 ## A useful trick: randomized variety
 
-Any appearance field in a saved template — model, item, color, animation — can hold a **space-separated list** of options instead of one value. Every time you place a copy of the template, one option is picked at random, so one saved NPC can produce visually varied instances instead of identical clones.
+Any appearance field in a saved template — model, item, color, animation — can hold a **space-separated list** of options instead of one value. When you place a copy of the template, one option is picked at random (an even chance for each, first and last included) and stored on that NPC for good, so one saved NPC can produce visually varied instances instead of identical clones.
+
+One catch: for the item, color and animation fields the dice are rolled only for the **first** copy placed after the game starts (or after `mreloadnpcs`) — every later copy gets the same result. Only the model/prefab field is rolled again for each copy. See [Known gaps](../reference/known-gaps.md#a-saved-npc-template-rolls-its-random-picks-only-once-per-session).
 
 Don't confuse this with wearing *several* items in one slot (10.0.2+), which uses commas — see [Wearing several items in one slot](../npc/npc-system.md#wearing-several-items-in-one-slot). The two interact: because the random pick happens first and cuts at spaces, a group in a template must be written without spaces (`SwordIron,ShieldBlackmetal`).
 
