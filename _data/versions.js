@@ -10,5 +10,6 @@ export default [
   { version: "10.0.2", url: "https://version-10-0-2.kg-marketplace.pages.dev/" },
   { version: "10.0.3", url: "https://version-10-0-3.kg-marketplace.pages.dev/" },
   { version: "10.0.4", url: "https://version-10-0-4.kg-marketplace.pages.dev/" },
-  { version: "10.0.5", url: "/", current: true },
+  { version: "10.0.5", url: "https://version-10-0-5.kg-marketplace.pages.dev/" },
+  { version: "10.0.6", url: "/", current: true },
 ];
