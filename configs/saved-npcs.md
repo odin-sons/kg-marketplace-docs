@@ -2,7 +2,7 @@
 
 **Folder:** `Marketplace_SavedNPCs/` (`.yml` files — a folder next to `Marketplace/`, on the player's own computer)
 
-Reusable NPC "stamps" — you build and configure an NPC once, save it, and can then place identical copies anywhere, or share the file with other admins. These files are created by [Marketplace Hammer](../npc/marketplace-hammer.md)'s own save feature; you normally do not hand-write them.
+Reusable NPC "stamps" — you build and configure an NPC once, save it, and can then place identical copies anywhere, or share the file with other admins. These files are created by [Marketplace Hammer](../npc/marketplace-hammer.md)'s own save feature; you normally do not hand-write them. Not to be confused with [Spawned NPCs](spawned-npcs.md) — those are player-summoned and temporary, not admin-placed.
 
 ## Workflow
 

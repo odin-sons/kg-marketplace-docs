@@ -52,6 +52,7 @@ export default [
           { title: "Marketplace Hammer", href: "/npc/marketplace-hammer/" },
           { title: "Saved NPCs", href: "/configs/saved-npcs/" },
           { title: "Random NPC Speech", href: "/configs/random-npc-speech/" },
+          { title: "Spawned NPCs", href: "/configs/spawned-npcs/" },
         ],
       },
       {

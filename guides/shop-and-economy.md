@@ -18,12 +18,10 @@ Also in `MarketPlace.cfg`:
 
 ```ini
 MarketTaxes = 5
-VIPplayersTaxes = 2
-VIPplayersList = 76561198000000001, 76561198000000002
 ItemMarketLimit = 20
 ```
 
-Regular players pay a 5% tax per sale; the two listed VIP players pay only 2%; everyone can list up to 20 items at once.
+Every player pays a flat 5% tax per sale, and everyone can list up to 20 items at once. There's no per-player tax tier — if you want some players paying less, gate a discount some other way (a [Trader](../configs/traders.md) with cheaper prices behind a [condition](../concepts/conditions.md), for instance), since the mod itself no longer has a concept of a privileged player class.
 
 ## A fixed-price NPC shop
 
@@ -49,11 +47,10 @@ Configs/Traders/18-00_23-00/evening_specials.cfg
 ```ini
 BankerIncomeTime = 6
 BankerIncomeMultiplier = 0.02
-BankerVIPIncomeMultiplier = 0.04
 BankerInterestItems = Coins, Ruby
 ```
 
-Every 6 hours, deposited Coins and Ruby earn 2% interest — 4% for VIP players. Set `BankerIncomeTime = 0` to switch off interest payouts entirely, without removing your banker NPCs.
+Every 6 hours, deposited Coins and Ruby earn 2% interest — the same rate for every player. Set `BankerIncomeTime = 0` to switch off interest payouts entirely, without removing your banker NPCs.
 
 Which items can be banked at all — separate from which ones earn interest — is set per profile in [Bankers](../configs/bankers.md):
 
