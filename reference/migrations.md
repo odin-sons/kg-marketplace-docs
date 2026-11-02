@@ -4,9 +4,9 @@ Most updates to this mod are safe to install directly. This page lists the excep
 
 If you are updating across a version not listed here, a plain update is expected to be safe. When in doubt, back up your `Marketplace` folder and save file before updating a live server either way.
 
-## Unreleased: third-party integrations moved to the mod API
+## Updating to 10.0.8: third-party integrations moved to the mod API
 
-The mod's source after the 10.0.8 release removes the code that talked to EpicMMO, Cozyheim's leveling system, RustyClasses, Battlepass and blaxxun's Guilds and Groups. Once this ships, content that uses any of the following **stops working** until you replace it (read from the mod's source; the author's notes do not call this out):
+10.0.8 removes the code that talked to EpicMMO, Cozyheim's leveling system, RustyClasses, Battlepass and blaxxun's Guilds and Groups. Content that uses any of the following **stops working** until you replace it (read from the mod's source; the author's notes do not call this out):
 
 - Quest rewards `EpicMMO_EXP`, `Cozyheim_EXP`, `Battlepass_EXP`, `RustyClasses_EXP`, `GuildAddLevel`.
 - Dialogue and quest-event commands `AddEpicMMOExp`, `AddCozyheimExp`, `AddRustyClassesEXP`, `Battlepass_EXP`, `GuildAddLevel`, `SetPlayerGuild`, `SetPlayerGuildRank`.

@@ -7,15 +7,13 @@ This documentation covers **10.0.8**, the top entry below. If your server is run
 ---
 
 
-## [Unreleased]
-Read from the mod's source after the 10.0.8 release; the author has published no notes for it yet, and it may change before it ships.
-- **Breaking:** the built-in EpicMMO, Cozyheim, RustyClasses, Battlepass and Guilds quest rewards, commands and conditions, and the `CanLeaveGuild` option, are gone; other mods now register their own through the [mod API](../api/modder-api.md) — see [Migrations](migrations.md#unreleased-third-party-integrations-moved-to-the-mod-api)
-- New option `AllowLeaderboardKillsInParty` (default on) in [Server config](../setup/server-config.md)
-- The chat accepts the short guild command a guild mod registers (`/g` by default)
-- The zone-flag and NPC-type lists exposed to other mods are now complete (`Mail`, `ZoneMusic` and the other newer flags)
-
 ## [10.0.8]
 - Small bugfix for timeout handlers
+- Also in this build, though the author's notes don't mention them (found by reading the code):
+  - **Breaking:** the built-in EpicMMO, Cozyheim, RustyClasses, Battlepass and Guilds quest rewards, commands and conditions, and the `CanLeaveGuild` option, are gone; other mods now register their own through the [mod API](../api/modder-api.md) — see [Migrations](migrations.md#updating-to-1008-third-party-integrations-moved-to-the-mod-api)
+  - New option `AllowLeaderboardKillsInParty` (default on) in [Server config](../setup/server-config.md)
+  - The chat accepts the short guild command a guild mod registers (`/g` by default)
+  - The zone-flag and NPC-type lists exposed to other mods are now complete (`Mail`, `ZoneMusic` and the other newer flags)
 
 ## [10.0.7]
 - **New feature: Automatic Asset Sync.** The server now also holds the client folders (`Marketplace_Sounds`, `Marketplace_CachedImages` and so on), and players connecting to your server automatically download any custom images, sounds, videos and models — no resource pack needed. See [Automatic file sync](../assets/custom-assets.md#automatic-file-sync).

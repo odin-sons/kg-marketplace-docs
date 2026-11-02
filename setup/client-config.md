@@ -39,7 +39,7 @@ Unlike most of this documentation, this page isn't admin-only — anyone playing
 | `UI_sizeX` / `UI_sizeY` | — | Chat window size. |
 | `UI_posX` / `UI_posY` | — | Chat window position. |
 
-The chat window has its own modes, switched by typing a command into the chat box: `/say`, `/shout`, `/whisper` and `/faction` always; `/group` (or `/party`) when a groups mod is installed; and `/guild` when a guild mod is installed (in the development build after 10.0.8 the short command that mod registers works too, `/g` by default). Group and guild mods connect through the [mod API](../api/modder-api.md); the mod no longer looks for a specific one.
+The chat window has its own modes, switched by typing a command into the chat box: `/say`, `/shout`, `/whisper` and `/faction` always; `/group` (or `/party`) when a groups mod is installed; and `/guild` when a guild mod is installed (since 10.0.8 the short command that mod registers works too, `/g` by default). Group and guild mods connect through the [mod API](../api/modder-api.md); the mod no longer looks for a specific one.
 
 ## `[DragUI]`
 

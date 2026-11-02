@@ -77,7 +77,7 @@ This is a 40% chance of the Coins firing and a *separate* 15% chance of the Ruby
 
 ### Commands added by other mods
 
-In the development build after 10.0.8 the built-in integrations for EpicMMO, Cozyheim, RustyClasses, Battlepass and the guild mod are gone from this list. Instead, another mod can register its own command name through the [mod API](../api/modder-api.md), and you then use it exactly like a built-in one — `name, arg1, arg2`, matched case-insensitively and ignoring spaces. The arguments are handed to that mod and run on the player's client. A name nobody registered is logged as an unknown dialogue command and does nothing. Which names exist is up to each mod, so check its own documentation. See [Migrations](../reference/migrations.md#unreleased-third-party-integrations-moved-to-the-mod-api).
+Since 10.0.8 the built-in integrations for EpicMMO, Cozyheim, RustyClasses, Battlepass and the guild mod are gone from this list. Instead, another mod can register its own command name through the [mod API](../api/modder-api.md), and you then use it exactly like a built-in one — `name, arg1, arg2`, matched case-insensitively and ignoring spaces. The arguments are handed to that mod and run on the player's client. A name nobody registered is logged as an unknown dialogue command and does nothing. Which names exist is up to each mod, so check its own documentation. See [Migrations](../reference/migrations.md#updating-to-1008-third-party-integrations-moved-to-the-mod-api).
 
 ## A caution on `ConsoleCommand`
 
