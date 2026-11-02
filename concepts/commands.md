@@ -62,25 +62,22 @@ This is a 40% chance of the Coins firing and a *separate* 15% chance of the Ruby
 | `GiveBuff` | buff name, [duration] | Applies a buff. The optional duration (in seconds) overrides how long it lasts; leave it out to use the buff's own duration (see [Buffers](../configs/buffers.md)). |
 | `AddPin` | label, x, y, z | Drops a permanent map pin and centers the map on it. |
 | `PingMap` | text, x, y, z | Shows a temporary map ping (like a player ping), not a permanent pin. |
-| `AddEpicMMOExp` | amount | Grants EpicMMO experience (only if that mod is installed). |
-| `AddCozyheimExp` | amount | Grants Cozyheim leveling experience. |
-| `AddRustyClassesEXP` | amount | Grants RustyClasses experience. |
 | `PlayAnimation` | animation name | Plays an animation on the NPC. |
 | `EnterPassword` | title, password, success command, fail command | Opens a password-entry popup and branches based on the result. |
-| `GuildAddLevel` | amount | Adds levels to the player's own guild. |
-| `Battlepass_EXP` | amount | Grants Battlepass experience (only if that separate mod is installed). |
 | `ConsoleCommand` | command text | Runs any admin console command as if the player had typed it themselves — see the caution note below. |
 | `AddCustomValue` / `SetCustomValue` | key, amount / value | Adds to, or sets, a [custom value](prefabs-and-assets.md#custom-values). |
 | `PlayVideo` | video name, [speed %] | Plays a clip you dropped into the video folder. |
 | `SendWebhook` | webhook address suffix, text | Posts a message to a Discord channel. |
 | `AddPlayerKey` / `RemovePlayerKey` | key name | Adds/removes a personal one-time flag on the player — this is what `HasPlayerKey` checks. |
-| `SetPlayerGuild` | guild ID or name | Moves the player into a specific guild. |
-| `SetPlayerGuildRank` | rank name | Sets the player's rank within their current guild. |
 | `SetNPCModelLocal` / `SetNPCModelGlobal` | model name | Changes the current NPC's model — `Local` only for the player who triggered it, `Global` for everyone. |
 | `SetNPCNameLocal` / `SetNPCNameGlobal` | name | Same, for the NPC's displayed name. |
 | `SetNPCPatrol` | patrol route data | Sets the NPC's patrol path — normally pasted in from a route you recorded, see [Marketplace Hammer](../npc/marketplace-hammer.md). |
 | `AddFaction` / `RemoveFaction` | faction key | Adds/removes one faction from the player. |
 | `RemoveAllFactions` | — | Clears every faction from the player. |
+
+### Commands added by other mods
+
+In the development build after 10.0.8 the built-in integrations for EpicMMO, Cozyheim, RustyClasses, Battlepass and the guild mod are gone from this list. Instead, another mod can register its own command name through the [mod API](../api/modder-api.md), and you then use it exactly like a built-in one — `name, arg1, arg2`, matched case-insensitively and ignoring spaces. The arguments are handed to that mod and run on the player's client. A name nobody registered is logged as an unknown dialogue command and does nothing. Which names exist is up to each mod, so check its own documentation. See [Migrations](../reference/migrations.md#unreleased-third-party-integrations-moved-to-the-mod-api).
 
 ## A caution on `ConsoleCommand`
 

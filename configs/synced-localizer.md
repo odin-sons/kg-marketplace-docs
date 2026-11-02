@@ -10,10 +10,10 @@ Lets you override or add translation text server-wide, sent to every connected p
 
 ```yaml
 mpasn_Banker: Vault Keeper
-marketplace_cannotleaveguild: You cannot abandon your clan right now.
+mpasn_Trader: Merchant
 ```
 
-Players whose game language is English now see "Vault Keeper" wherever the game would normally show "Banker", and a custom message wherever `marketplace_cannotleaveguild` is used.
+Players whose game language is English now see "Vault Keeper" wherever the game would normally show "Banker", and "Merchant" wherever it would show "Trader".
 
 ## Format
 

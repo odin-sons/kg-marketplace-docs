@@ -136,8 +136,7 @@ Item: Coins, 200 | Item: Ruby, 1 | Skill_EXP: Swords, 100
 | `RandomItem` | `pool name` | Picks from a random-item pool you have set up elsewhere. |
 | `Skill` / `Skill_EXP` | `skill, amount` | Skill points / raw experience. |
 | `Pet` | `creature, amount, level` | Gives a tamed pet. |
-| `EpicMMO_EXP` / `Cozyheim_EXP` / `Battlepass_EXP` / `RustyClasses_EXP` | `amount` | Experience for the matching integration, if that mod is installed. |
-| `GuildAddLevel` | `amount` | Adds levels to the player's guild. |
+| *any other name* | `amount` | A reward registered by another mod through the [mod API](../api/modder-api.md), e.g. experience for a leveling mod — written `name: amount`, case-insensitive. The reward text, tooltip and icon in the quest window come from the mod that registered it. A name nobody registered gives nothing. In the development build after 10.0.8; replaces the built-in `EpicMMO_EXP`, `Cozyheim_EXP`, `Battlepass_EXP`, `RustyClasses_EXP` and `GuildAddLevel`. |
 | `SetCustomValue` / `AddCustomValue` | `key, amount` | Sets/adds to a [custom value](../concepts/prefabs-and-assets.md#custom-values) — good for reputation-style systems. |
 
 ## Cooldown and time limit

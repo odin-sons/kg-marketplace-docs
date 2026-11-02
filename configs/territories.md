@@ -113,7 +113,7 @@ NoAttack, PeriodicHeal = 2, ForceBiome = 2, MonstersAddStars = 1
 | `DropMultiplier` | number | Multiplies loot drops. |
 | `ForceWind` | number | Sets a fixed wind strength. |
 | `GodMode` | — | Players are invincible. |
-| `OnlyForGuild` | guild name | Only members of that guild may enter. |
+| `OnlyForGuild` | guild name | Only members of that guild may enter. Needs a guild mod connected through the [mod API](../api/modder-api.md). |
 | `OnlyForFaction` | faction key | Only members of that faction may enter. |
 | `JoinOtherServer` | connection info | Sends players who enter to a different server. |
 | `RevealOnMap` | — | Reveals this area on the map automatically. |

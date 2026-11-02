@@ -53,7 +53,7 @@ Example — reskinning the Enchanter NPC as "Rune Master" server-wide, using [Sy
 mpasn_Buffer: Rune Master
 ```
 
-A few messages are referenced directly by name rather than through the `mpasn_` prefix — `marketplace_cannotleaveguild`, `kg_banker_putall`, plus any custom message key you invent yourself for use with [Synced Localizer](../configs/synced-localizer.md).
+A few messages are referenced directly by name rather than through the `mpasn_` prefix — `kg_banker_putall`, plus any custom message key you invent yourself for use with [Synced Localizer](../configs/synced-localizer.md).
 
 ## Related
 

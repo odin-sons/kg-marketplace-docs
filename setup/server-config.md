@@ -38,10 +38,11 @@ This example: interest pays out every 6 hours at 2%, players can list 25 items w
 | `GamblerEnableWinNotifications` | `false` | Broadcast a server-wide message whenever someone wins a gamble. |
 | `AllowMultipleQuestsScore` | `false` | Whether one kill/harvest/craft can count toward more than one matching quest at once. |
 | `MaxAcceptedQuests` | `7` | Maximum active quests per player. |
-| `AllowKillQuestsInParty` | `true` | Whether a party member's kills count toward your Kill quests. |
-| <a id="file-sync"></a>`UseAutomaticFileSync` | `true` | Under a `[File Sync]` heading in the file. Players who connect automatically download your custom images, sounds, videos and models — see [Custom assets](../assets/custom-assets.md#automatic-file-sync). Turn it off if you would rather ship those files yourself. Added in 10.0.7. |
-| `CustomFileSyncPort` | `0` | Also under `[File Sync]`. `0` sends the files through the normal Steam connection, which is slower but works behind NAT and firewalls. Set it to a port you have forwarded and opened for incoming TCP on the server to use a faster direct transfer. Added in 10.0.7. |
+| `AllowKillQuestsInParty` | `true` | Whether a party member's kills count toward your Kill quests. Needs a mod that registers a group provider through the [mod API](../api/modder-api.md) (for example a Groups mod). |
+| `AllowLeaderboardKillsInParty` | `true` | Whether a party member's kills also count toward [Leaderboard](../configs/leaderboard-achievements.md) kill statistics. Turn it off so only your own kills score. Added after 10.0.8. |
 | `AlwaysProgressServerTime` | `false` | Keeps the server's world clock running even when nobody is online (vanilla Valheim pauses it). The author recommends turning it on if you have quests with [cooldowns or time limits](../configs/quests.md#cooldown-and-time-limit), so they don't stall whenever the server is empty. Added in 10.0.1. |
+| <a id="file-sync"></a>`UseAutomaticFileSync` | `true` | Under a `[File Sync]` heading in the file. Players who connect automatically download your custom images, sounds, videos and models — see [Custom assets](../assets/custom-assets.md#automatic-file-sync). Turn it off if you would rather ship those files yourself. Added after 10.0.8. |
+| `CustomFileSyncPort` | `0` | Also under `[File Sync]`. `0` sends the files through the normal Steam connection, which is slower but works behind NAT and firewalls. Set it to a port you have forwarded and opened for incoming TCP on the server to use a faster direct transfer. Added after 10.0.8. |
 | `EnableKGChat` | `true` | Turns the custom chat window on or off. |
 | <a id="mail"></a>`MailPostRecipe` | `SwordCheat, 1` | What it costs to craft a mailbox — `item, amount`. |
 | `MailPostWaitTime` | `5` | Minutes before sent mail can be picked up. |
@@ -51,7 +52,6 @@ This example: interest pays out every 6 hours at 2%, players can list 25 items w
 | `OverrideDebug` | — | Steam IDs with admin access — build-mode NPC placement, admin console commands. |
 | `BlockedChatUsers` | — | Steam IDs muted from chat. |
 | `PossibleCurrencies` | `Coins` | Every item usable as marketplace currency. |
-| `CanLeaveGuild` | `true` | Whether players can voluntarily leave their guild. |
 | `FactionNameplateOffset` | `0, 0` | Pixel offset for the faction tag shown above player nameplates. |
 
 Looking for a setting that used to be here and isn't anymore? A few were removed in 9.9.2 — see [Migrations](../reference/migrations.md#updating-to-992-the-vip-system-is-gone).
