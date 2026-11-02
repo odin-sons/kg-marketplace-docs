@@ -68,6 +68,17 @@ Give an NPC a patrol route two ways:
 - **Record it in-game**: while holding Marketplace Hammer, drop waypoints as you walk the route, then confirm — the route is copied for you to paste into a `SetNPCPatrol` command (see [Commands](../concepts/commands.md)).
 - **Script it**: use the `SetNPCPatrol` command from a dialogue or quest event to set or change a patrol route on the fly.
 
+A route is a list of coordinates followed by optional tags written straight after the data:
+
+| Part | Meaning |
+|---|---|
+| `X1, Z1, X2, Z2, ...` | Plain 2D points — the default format. |
+| `X1, Y1, Z1, X2, Y2, Z2, ...` plus `@3d` | 3D points, the better choice for NPCs that walk on a navigation mesh. Since 10.0.5 the `@3d` tag is **required**; without it the numbers are read as 2D pairs. Routes recorded with the Hammer get the tag added for you. |
+| `@Number` | Custom walking speed. |
+| `@noreturn` | Loop around to the first point instead of walking back and forth. |
+| `@relative` | Points are relative to where the NPC was placed, so one route works wherever it is spawned. |
+| `@onetime` | Walk the route once, then stop at the last point. |
+
 ## Related
 
 - [Marketplace Hammer](marketplace-hammer.md) — the placement tool.

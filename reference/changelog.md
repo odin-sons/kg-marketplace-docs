@@ -1,11 +1,14 @@
 # Changelog
 
-The mod's own version history, 76 versions from 8.4.0 through 10.0.4.
+The mod's own version history, 77 versions from 8.4.0 through 10.0.5.
 
-This documentation covers **10.0.4**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
+This documentation covers **10.0.5**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
 
 ---
 
+
+## [10.0.5]
+- Patrol bugfix. A 3D patrol array now requires the `@3d` tag so it works for XYZ and not XZ, to preserve compatibility with old patrols — see [Migrations](migrations.md#updating-to-1005-3d-patrol-routes-need-3d)
 
 ## [10.0.4]
 - Added the [`ZoneMusic`](../configs/territories.md#extra-flags-a-second-set-same-syntax) territory flag to use a sound from the cached sounds for territory ambient music
