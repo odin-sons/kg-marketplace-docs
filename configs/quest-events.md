@@ -16,11 +16,11 @@ OnAcceptQuest: GiveItem, SwordIron, 1, 3
 OnAcceptQuest: GiveItem, HealthPotion, 3, 1
 OnCompleteQuest: AddPlayerKey, boss_01_defeated
 OnCompleteQuest: Teleport, 0, 30, 0
-OnCompleteQuest: AddCustomValue, boss_kills, 1
+OnCompleteQuest: GuildAddLevel, 5
 OnDeath: RemoveItem, SwordIron, 1
 ```
 
-This lends the player a sword and potions when they accept a "boss hunt" quest, takes the borrowed sword back if they die mid-fight, and on success marks a permanent flag, teleports them home, and bumps a kill counter.
+This lends the player a sword and potions when they accept a "boss hunt" quest, takes the borrowed sword back if they die mid-fight, and on success marks a permanent flag, teleports them home, and gives their guild a level.
 
 ## Format
 

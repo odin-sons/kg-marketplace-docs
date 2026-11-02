@@ -4,18 +4,9 @@ Most updates to this mod are safe to install directly. This page lists the excep
 
 If you are updating across a version not listed here, a plain update is expected to be safe. When in doubt, back up your `Marketplace` folder and save file before updating a live server either way.
 
-## Updating to 10.0.7: third-party integrations moved to the mod API
+## Updating to 10.0.7: automatic file sync is on by default
 
-10.0.7 removed the code that talked to EpicMMO, Cozyheim's leveling system, RustyClasses, Battlepass and blaxxun's Guilds and Groups. Content that used any of the following **stops working** until you replace it (read from the mod's code and release notes; the author's notes do not call this out):
-
-- Quest rewards `EpicMMO_EXP`, `Cozyheim_EXP`, `Battlepass_EXP`, `RustyClasses_EXP`, `GuildAddLevel`.
-- Dialogue and quest-event commands `AddEpicMMOExp`, `AddCozyheimExp`, `AddRustyClassesEXP`, `Battlepass_EXP`, `GuildAddLevel`, `SetPlayerGuild`, `SetPlayerGuildRank`.
-- Conditions `EpicMMOLevelMore`/`Less`, `CozyheimLevelMore`/`Less`, `RustyClassesLevelMore`/`Less`, `HasGuild`/`NotHasGuild`, `HasGuildWithName`/`NotHasGuildWithName`, `GuildLevelMore`/`Less`, `GuildHasAchievement`/`GuildNotHasAchievement`.
-- The `CanLeaveGuild` server option (and the `marketplace_cannotleaveguild` message it used).
-
-What to do: search your `Quests`, `QuestEvents` and `Dialogues` folders for those names. An unrecognised reward or command name is passed on to other mods; if none registered it, it silently does nothing, and an unrecognised condition always fails — so a gated dialogue option may suddenly be locked for everyone. Check whether the other mod now registers an equivalent name through the [mod API](../api/modder-api.md) (see its own documentation) and use that, or rebuild the logic with [custom values](../concepts/prefabs-and-assets.md#custom-values) and [player keys](../concepts/commands.md). `AllowKillQuestsInParty` and the `/group` and `/guild` chat modes likewise only work when a mod supplies a group or guild provider.
-
-Also new in 10.0.7 and safe to ignore: [automatic file sync](../assets/custom-assets.md#automatic-file-sync) is **on by default** — connecting players will start downloading the contents of the server's custom images, sounds, videos and models folders. Set `UseAutomaticFileSync = false` if you do not want that.
+[Automatic file sync](../assets/custom-assets.md#automatic-file-sync) is **on by default**: connecting players start downloading the contents of the server's custom images, sounds, videos and models folders. Set `UseAutomaticFileSync = false` if you do not want that. Nothing else in your configs needs to change.
 
 ## Updating to 10.0.5: 3D patrol routes need `@3d`
 

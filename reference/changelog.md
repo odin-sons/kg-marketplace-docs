@@ -22,7 +22,6 @@ This documentation covers **10.0.8**, the top entry below. If your server is run
 - Groups and Guilds API updated to the newest versions
 - New test item `MarketplaceNPCTransformer`: use it from the hotbar on any character to turn it into a Lite Marketplace NPC with a settable name, the NPC UI and dialogue/visibility support. **Currently in test mode, use with caution** — see [NPC system](../npc/npc-system.md#lite-npcs-test)
 - Added a Delete button to the NPC UI to remove the NPC component from a Lite Character Object or Marketplace NPC
-- Also in this build, though the author's notes don't mention them (found by reading the code): **breaking** — the built-in EpicMMO, Cozyheim, RustyClasses, Battlepass and Guilds quest rewards, commands and conditions, and the `CanLeaveGuild` option, are gone; other mods now register their own through the [mod API](../api/modder-api.md) — see [Migrations](migrations.md#updating-to-1007-third-party-integrations-moved-to-the-mod-api). New option `AllowLeaderboardKillsInParty` (default on) in [Server config](../setup/server-config.md). The chat accepts the short guild command a guild mod registers (`/g` by default). The patrol editor tooltip documents the `@noreturn`, `@relative` and `@onetime` tags — see [Patrol routes](../npc/npc-system.md#patrol-routes)
 
 ## [10.0.6]
 - Fixed NPC rescaling not being applied to attached fashion items

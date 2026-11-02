@@ -54,7 +54,7 @@ SkillMore, WoodCutting, 3 | HasItem, AxeFlint, 1
 HasItem, Wood, 20 || HasItem, Stone, 20 || HasItem, Coins, 50
 
 # Require finishing an earlier quest AND being a guild member
-QuestFinished, chain_step_1 | HasFaction, merchants
+QuestFinished, chain_step_1 | HasGuild
 ```
 
 ## Reference: all conditions
@@ -68,11 +68,18 @@ QuestFinished, chain_step_1 | HasFaction, merchants
 | `HasQuest` / `NotHasQuest` | quest ID | Player currently has that quest accepted. |
 | `QuestProgressDone` / `QuestProgressNotDone` | quest ID | That quest's objective is complete, whether or not it has been turned in yet. |
 | `QuestFinished` / `QuestNotFinished` | quest ID | That quest has been completed and turned in — this is what quest chains use. |
+| `EpicMMOLevelMore` / `EpicMMOLevelLess` | level | Player's EpicMMO level compares (only if that mod is installed). |
+| `CozyheimLevelMore` / `CozyheimLevelLess` | level | Player's Cozyheim leveling level compares. |
+| `RustyClassesLevelMore` / `RustyClassesLevelLess` | level | Player's RustyClasses level compares. |
 | `HasAchievement` / `NotHasAchievement` | achievement ID | Player has earned a specific leaderboard achievement. |
 | `HasAchievementScore` / `NotHasAchievementScore` | score | Player's total achievement score compares to a number. |
 | `CustomValueMore` / `CustomValueLess` | key, value, [custom message] | Compares a [custom value](prefabs-and-assets.md#custom-values) you set yourself elsewhere. The optional third argument replaces the default failure message; use `{current}` and `{value}` inside it to show the numbers. |
 | `ModInstalled` / `NotModInstalled` | mod ID | Whether another mod is installed on the server. |
 | `IronGateStatMore` / `IronGateStatLess` | stat name, amount | Compares a built-in Valheim player stat. |
+| `HasGuild` / `NotHasGuild` | — | Player is (or is not) in a guild. |
+| `HasGuildWithName` / `NotHasGuildWithName` | guild name | Player's guild has a specific name. |
+| `GuildLevelMore` / `GuildLevelLess` | level | Player's guild level compares. |
+| `GuildHasAchievement` / `GuildNotHasAchievement` | achievement ID | Player's guild has earned a specific achievement. |
 | `IsVIP` / `NotIsVIP` | — | No longer functional since 9.9.2 removed the VIP system — `IsVIP` always fails, `NotIsVIP` always passes. See [Known gaps](../reference/known-gaps.md). |
 | `HasPlayerKey` / `NotHasPlayerKey` | key name | Player has a personal flag previously set with the `AddPlayerKey` command — useful for tracking one-time story beats per player. |
 | `NPCModelEquals` / `NotNPCModelEquals` | model name | The NPC in this dialogue currently uses a specific model. |
@@ -84,10 +91,6 @@ QuestFinished, chain_step_1 | HasFaction, merchants
 | `EitrMore` / `EitrLess`, `MaxEitrMore` / `MaxEitrLess` | value | Player's current/max eitr compares. |
 | `PlayerHasAllCustomDataKeys` | data set name, message | Checks the player against a whole [custom data set](../configs/custom-spawn-data.md) — true only if every value in the set matches the player exactly. |
 | `PlayerHasOneOfCustomDataKeys` | data set name, message | Checks the same way, but is true if the player differs from the data set on at least one value — despite the name, this is a "does not fully match" check, not a "has one of" check. Test it before relying on it for something important. |
-
-### Conditions added by other mods
-
-Level checks for EpicMMO, Cozyheim and RustyClasses, and the guild conditions (`HasGuild`, `HasGuildWithName`, `GuildLevelMore`, ...), were built into the mod up to 10.0.3 and no longer are. Since 10.0.7 another mod can register a condition of its own through the [mod API](../api/modder-api.md); you write it like any other — `name, arg1, arg2`, case-insensitive. A name nobody registered always fails with an "Unknown condition" message. Which names exist depends on the mods you run, so check their documentation. See [Migrations](../reference/migrations.md#updating-to-1007-third-party-integrations-moved-to-the-mod-api).
 
 ## Related
 

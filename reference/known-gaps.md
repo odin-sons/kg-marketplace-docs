@@ -16,7 +16,7 @@ Since 10.0.1 the [cooldown line](../configs/quests.md#cooldown-and-time-limit) o
 
 ## `IsVIP` / `NotIsVIP` still parse, but never do anything
 
-Since 9.9.2 removed the VIP system (see [Migrations](migrations.md#updating-to-992-the-vip-system-is-gone)), these two [conditions](../concepts/conditions.md) are still valid syntax — they will not error out — but `IsVIP` always evaluates to false and `NotIsVIP` always evaluates to true, regardless of the player. There is no VIP list left to check against. If you're writing new content, use a real condition instead (`HasFaction`/a [custom value](../concepts/prefabs-and-assets.md#custom-values) you set yourself) to gate anything that used to be VIP-only.
+Since 9.9.2 removed the VIP system (see [Migrations](migrations.md#updating-to-992-the-vip-system-is-gone)), these two [conditions](../concepts/conditions.md) are still valid syntax — they will not error out — but `IsVIP` always evaluates to false and `NotIsVIP` always evaluates to true, regardless of the player. There is no VIP list left to check against. If you're writing new content, use a real condition instead (`HasGuild`/`HasFaction`/a [custom value](../concepts/prefabs-and-assets.md#custom-values) you set yourself) to gate anything that used to be VIP-only.
 
 ## Related
 
