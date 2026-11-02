@@ -50,7 +50,7 @@ Talk, "Village Elder", 1
 [weekly_bounty_events]
 OnAcceptQuest: GiveItemWithData, TrackingCollar, 1, 3, wolfhunt
 OnCompleteQuest: HasAchievement, wolfslayer | GiveItem, Coins, 500
-OnCompleteQuest: AddEpicMMOExp, 250 | GuildAddLevel, 1
+OnCompleteQuest: AddCustomValue, reputation, 250 | ForceQuestCooldown, weekly_bounty, 3600
 OnQuestTimeout: SetCustomValue, weekly_failed, true
 
 [market_square@2]

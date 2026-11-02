@@ -6,16 +6,18 @@ This mod provides a small integration surface for other mods to hook into — ch
 
 - **Check zone membership.** Ask whether the local player, or any object, is currently standing inside a [Territory](../configs/territories.md), and read which behavior flags that zone has active. Useful for a mod that wants to behave differently inside PvP zones, guild land, and so on.
 - **Read and change an NPC's settings.** Every setting on an NPC — its type, profile, model, name, dialogue, and all appearance fields (see [NPC system](../npc/npc-system.md)) — can be read or changed by another mod, the same data this mod's own build tool edits.
+- **Add its own quest rewards, dialogue conditions and dialogue commands.** Since 10.0.7 another mod registers a name, and from then on server admins can use it in [Quests](../configs/quests.md#reward-types), [Conditions](../concepts/conditions.md) and [Commands](../concepts/commands.md) like a built-in one — for example a leveling mod offering an experience reward. A quest reward can also supply its own player-facing name, icon and tooltip.
+- **Provide groups and guilds.** A group mod tells this mod who is in the local player's party, which is what makes party members' kills count for Kill quests (see `AllowKillQuestsInParty` in [Server config](../setup/server-config.md)). A guild mod tells it the player's guild name (for the `OnlyForGuild` territory flag), its chat command, and when the player joins or leaves a guild — which is what powers the `/guild` chat mode.
 - **Trigger a couple of built-in actions.** Refresh a trader's stock, or open the quest journal, from another mod's own code.
 
 ## Things worth knowing if you are integrating
 
-- A small number of the newer zone flags are not currently visible through this integration, even though they work correctly when set directly in a [Territories](../configs/territories.md) file — see [Known gaps](../reference/known-gaps.md).
-- The NPC type list exposed to other mods is missing the `Mail` type compared to the full list available in-game (see [NPC system](../npc/npc-system.md#npc-types)) — if you need to detect a Mail NPC specifically from another mod, this is a current limitation.
+- Since 10.0.7 the zone-flag list exposed to other mods covers every flag in [Territories](../configs/territories.md), including `OnlyForGuild`, `OnlyForFaction`, `JoinOtherServer`, `RevealOnMap`, `CustomJereSpawner` and `ZoneMusic`, and the NPC type list includes `Mail`. Before 10.0.7 those were missing from the interface file.
+- The registration calls should be made once, early (in the other mod's startup). They only work on the player's client, and do nothing if this mod is not installed.
 
-## Related integrations this mod already has
+## What the mod no longer does by itself
 
-Separately from the above, this mod already talks to a handful of other popular mods on its own — EpicMMO, Cozyheim's leveling system, and RustyClasses all have experience-granting commands and level-check conditions built in (see [Commands](../concepts/commands.md) and [Conditions](../concepts/conditions.md)), and guild-related actions and checks are available the same way if a guild mod is installed.
+Up to 10.0.3 this mod talked to EpicMMO, Cozyheim's leveling system, RustyClasses, Battlepass and blaxxun's Guilds and Groups directly. From 10.0.7 it does not: it has no built-in knowledge of those mods, and the matching commands, conditions and rewards are supplied by the mods themselves through the calls above. If a mod you rely on has not been updated to register them, the old names stop working — see [Migrations](../reference/migrations.md#updating-to-1007-third-party-integrations-moved-to-the-mod-api).
 
 ## Related
 

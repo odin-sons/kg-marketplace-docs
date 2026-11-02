@@ -30,7 +30,7 @@ Every NPC also has an optional **Dialogue** field, separate from its Type — an
 | Setting | What it does |
 |---|---|
 | Type | One of the types above. |
-| Name Override | A custom display name. |
+| Name Override | A custom display name. Since 10.0.7 it can be a localization key written as `$key` (for example `$npcname_1`), so each player sees the name in their own language — add the keys through [Synced Localizer](../configs/synced-localizer.md). |
 | Profile | Which profile this NPC uses, from the folder matching its Type. |
 | Model/Prefab Override | Swaps the NPC's appearance for a different creature/character model — supports the animation-swap trick and randomized pools, see [Prefabs and text markup](../concepts/prefabs-and-assets.md). |
 | Dialogue | A dialogue ID from [Dialogues](../configs/dialogues.md). |
@@ -67,6 +67,21 @@ Give an NPC a patrol route two ways:
 
 - **Record it in-game**: while holding Marketplace Hammer, drop waypoints as you walk the route, then confirm — the route is copied for you to paste into a `SetNPCPatrol` command (see [Commands](../concepts/commands.md)).
 - **Script it**: use the `SetNPCPatrol` command from a dialogue or quest event to set or change a patrol route on the fly.
+
+A route is a list of coordinates followed by optional tags written straight after the data:
+
+| Part | Meaning |
+|---|---|
+| `X1, Z1, X2, Z2, ...` | Plain 2D points — the default format. |
+| `X1, Y1, Z1, X2, Y2, Z2, ...` plus `@3d` | 3D points, the better choice for NPCs that walk on a navigation mesh. Since 10.0.5 the `@3d` tag is **required**; without it the numbers are read as 2D pairs. Routes recorded with the Hammer get the tag added for you. |
+| `@Number` | Custom walking speed. |
+| `@noreturn` | Loop around to the first point instead of walking back and forth. |
+| `@relative` | Points are relative to where the NPC was placed, so one route works wherever it is spawned. |
+| `@onetime` | Walk the route once, then stop at the last point. |
+
+## Lite NPCs (test)
+
+Since 10.0.7 the item `MarketplaceNPCTransformer` can be used from the hotbar on almost any creature (a Skeleton, a Draugr, ...) to turn it into a **Lite Marketplace NPC**: it gets a settable name and the same settings panel, including type, dialogue and visibility. The author marks this as test mode, so use it with caution. The panel also has a **Delete** button that removes the NPC component from a Lite NPC or a regular Marketplace NPC.
 
 ## Related
 
