@@ -4,6 +4,10 @@ Most updates to this mod are safe to install directly. This page lists the excep
 
 If you are updating across a version not listed here, a plain update is expected to be safe. When in doubt, back up your `Marketplace` folder and save file before updating a live server either way.
 
+## Updating to 10.0.7: automatic file sync is on by default
+
+[Automatic file sync](../assets/custom-assets.md#automatic-file-sync) is **on by default**: connecting players start downloading the contents of the server's custom images, sounds, videos and models folders. Set `UseAutomaticFileSync = false` if you do not want that. Nothing else in your configs needs to change.
+
 ## Updating to 10.0.5: 3D patrol routes need `@3d`
 
 A patrol route written with three numbers per point (X, Y, Z) is now read as 2D (X, Z) unless it ends with the `@3d` tag, which keeps old routes working as before. If you wrote 3D routes by hand or in a Saved NPC since 10.0.0, add `@3d`; routes recorded with the Hammer include it already. See [Patrol routes](../npc/npc-system.md#patrol-routes).
@@ -59,7 +63,7 @@ In version 9.4.0, the mod changed how it stores player data — moving from indi
 
 If you are updating a server from a version older than 9.4.0, have every player withdraw their marketplace listings, banked items, and mail attachments **before** you install the update — anything left in those systems at the moment of the switch may not carry over.
 
-This mod version documented here (10.0.6) is well past this change; it only matters if you are jumping to a modern version from something very old.
+This mod version documented here (10.0.7) is well past this change; it only matters if you are jumping to a modern version from something very old.
 
 ## Since 9.0.8: Transmogrification's visual-effects field is gone
 

@@ -1,11 +1,24 @@
 # Changelog
 
-The mod's own version history, 78 versions from 8.4.0 through 10.0.6.
+The mod's own version history, 79 versions from 8.4.0 through 10.0.7.
 
-This documentation covers **10.0.6**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
+This documentation covers **10.0.7**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
 
 ---
 
+
+## [10.0.7]
+- **New feature: Automatic Asset Sync.** The server now also holds the client folders (`Marketplace_Sounds`, `Marketplace_CachedImages` and so on), and players connecting to your server automatically download any custom images, sounds, videos and models — no resource pack needed. See [Automatic file sync](../assets/custom-assets.md#automatic-file-sync).
+- While syncing, the client shows a small progress window with the current file and the overall count (X/Y files)
+- Only new or changed files are downloaded (compared by hash with the server), so repeat connections are fast
+- Downloads are written safely (temporary file, then swapped in), so an interrupted connection won't leave a corrupted asset
+- New config option `UseAutomaticFileSync` (default: on) — see [Server config](../setup/server-config.md#file-sync)
+- New config option `CustomFileSyncPort` (default: `0`, disabled) — an open, forwarded TCP port for a faster transfer; `0` uses the Steam relay, which is slower but works through NAT and firewalls
+- Bugfixes and optimizations
+- NPC name can now use `$localizestring` for multi-language support, e.g. `$npcname_1`; add the strings through [Synced Localizer](../configs/synced-localizer.md) — see [NPC system](../npc/npc-system.md#core-identity-settings)
+- Groups and Guilds API updated to the newest versions
+- New test item `MarketplaceNPCTransformer`: use it from the hotbar on any character to turn it into a Lite Marketplace NPC with a settable name, the NPC UI and dialogue/visibility support. **Currently in test mode, use with caution** — see [NPC system](../npc/npc-system.md#lite-npcs-test)
+- Added a Delete button to the NPC UI to remove the NPC component from a Lite Character Object or Marketplace NPC
 
 ## [10.0.6]
 - Fixed NPC rescaling not being applied to attached fashion items

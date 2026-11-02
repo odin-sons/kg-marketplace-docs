@@ -62,6 +62,8 @@ Live next to `BepInEx/config/Marketplace/`, not inside it — present on every i
 | `Marketplace_SavedNPCs/` | Hammer-built NPC templates — see [Saved NPCs](../configs/saved-npcs.md). |
 | `Marketplace_KGChat_Emojis/` | Custom chat emoji images. |
 
+Since 10.0.7 the server creates the images, sounds, videos and models folders too, and [automatic file sync](../assets/custom-assets.md#automatic-file-sync) sends their contents to connecting players — so on a server you normally fill them once and players need nothing installed by hand.
+
 Once you know where a file lives, the natural next question is what happens after you edit it — most of the time, nothing more than saving is needed; see [Hot reload](hot-reload.md) for exactly what applies live and what needs a manual refresh.
 
 ## Related

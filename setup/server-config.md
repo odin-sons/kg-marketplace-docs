@@ -39,6 +39,8 @@ This example: interest pays out every 6 hours at 2%, players can list 25 items w
 | `AllowMultipleQuestsScore` | `false` | Whether one kill/harvest/craft can count toward more than one matching quest at once. |
 | `MaxAcceptedQuests` | `7` | Maximum active quests per player. |
 | `AllowKillQuestsInParty` | `true` | Whether a party member's kills count toward your Kill quests. |
+| <a id="file-sync"></a>`UseAutomaticFileSync` | `true` | Under a `[File Sync]` heading in the file. Players who connect automatically download your custom images, sounds, videos and models — see [Custom assets](../assets/custom-assets.md#automatic-file-sync). Turn it off if you would rather ship those files yourself. Added in 10.0.7. |
+| `CustomFileSyncPort` | `0` | Also under `[File Sync]`. `0` sends the files through the normal Steam connection, which is slower but works behind NAT and firewalls. Set it to a port you have forwarded and opened for incoming TCP on the server to use a faster direct transfer. Added in 10.0.7. |
 | `AlwaysProgressServerTime` | `false` | Keeps the server's world clock running even when nobody is online (vanilla Valheim pauses it). The author recommends turning it on if you have quests with [cooldowns or time limits](../configs/quests.md#cooldown-and-time-limit), so they don't stall whenever the server is empty. Added in 10.0.1. |
 | `EnableKGChat` | `true` | Turns the custom chat window on or off. |
 | <a id="mail"></a>`MailPostRecipe` | `SwordCheat, 1` | What it costs to craft a mailbox — `item, amount`. |
