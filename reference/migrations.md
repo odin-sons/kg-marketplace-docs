@@ -15,6 +15,8 @@ If you are updating across a version not listed here, a plain update is expected
 
 What to do: search your `Quests`, `QuestEvents` and `Dialogues` folders for those names. An unrecognised reward or command name is passed on to other mods; if none registered it, it silently does nothing, and an unrecognised condition always fails — so a gated dialogue option may suddenly be locked for everyone. Check whether the other mod now registers an equivalent name through the [mod API](../api/modder-api.md) (see its own documentation) and use that, or rebuild the logic with [custom values](../concepts/prefabs-and-assets.md#custom-values) and [player keys](../concepts/commands.md). `AllowKillQuestsInParty` and the `/group` and `/guild` chat modes likewise only work when a mod supplies a group or guild provider.
 
+Separate API bridges for these mods are planned. Until they are released, the old names do not work — please wait for them.
+
 ## Updating to 10.0.7: automatic file sync is on by default
 
 [Automatic file sync](../assets/custom-assets.md#automatic-file-sync) is **on by default**: connecting players start downloading the contents of the server's custom images, sounds, videos and models folders. Set `UseAutomaticFileSync = false` if you do not want that. Nothing else in your configs needs to change.

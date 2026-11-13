@@ -19,6 +19,8 @@ This mod provides a small integration surface for other mods to hook into — ch
 
 Up to 10.0.7 this mod talked to EpicMMO, Cozyheim's leveling system, RustyClasses, Battlepass and blaxxun's Guilds and Groups directly. Since 10.0.8 it does not: it has no built-in knowledge of those mods, and the matching commands, conditions and rewards are supplied by the mods themselves through the calls above. If a mod you rely on has not been updated to register them, the old names stop working — see [Migrations](../reference/migrations.md#updating-to-1008-third-party-integrations-moved-to-the-mod-api).
 
+Separate API bridges for these mods are planned. Until they are released, the old names do not work — please wait for them.
+
 ## Related
 
 - [Territories](../configs/territories.md), [NPC system](../npc/npc-system.md).
