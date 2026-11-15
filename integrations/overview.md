@@ -18,7 +18,7 @@ A bridge is a BepInEx plugin that depends on Marketplace and on one other mod. I
 | [EpicMMO](bridges/epicmmo.md) | [EpicMMO](https://thunderstore.io/c/valheim/p/WackyMole/WackyEpicMMOSystem/) | Experience reward and command, level conditions | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_EpicMMO) |
 | [Cozyheim](bridges/cozyheim.md) | [Cozyheim LevelingSystem](https://cozyheim.dk/mods/levelingsystem/) | Experience reward and command, level conditions | not published yet |
 | [RustyClasses](bridges/rustyclasses.md) | [RustyClasses](https://thunderstore.io/c/valheim/p/RustyMods/AlmanacClassSystem/) (Almanac Class System) | Experience reward and command, level conditions | not published yet |
-| [Battlepass](bridges/battlepass.md) | Battlepass | Experience reward and command | not published yet |
+| [Battlepass](bridges/battlepass.md) | Battlepass (not a public mod; ask KG in a private message) | Experience reward and command | not published yet |
 
 Without the matching bridge, the names stop working: an unknown reward shows a red `Wrong reward 'name'` in the quest window and gives nothing, an unknown command is logged and does nothing, and an unknown condition always fails. See [Migrations](../reference/migrations.md#updating-to-1009-third-party-integrations-moved-to-bridge-mods) if you are updating from an older version.
 

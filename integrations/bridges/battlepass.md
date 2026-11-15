@@ -7,7 +7,7 @@ This bridge has no download page yet; it will appear here once it is published. 
 ## What you need
 
 - Marketplace 10.0.9 or newer.
-- The Battlepass mod.
+- The Battlepass mod. It is not a public mod, so there is no download page; ask KG in a private message if you want to know more about it.
 - The bridge installed next to them, on every player's client (the bridge runs on the client, like the [mod API](../api-reference.md) it uses).
 
 No config edits are needed. The names below are spelled exactly as they were when Marketplace handled this mod itself, so existing quest, dialogue and quest-event files work unchanged.
