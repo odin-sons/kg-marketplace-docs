@@ -88,7 +88,7 @@ QuestFinished, chain_step_1 | HasFaction, merchants
 
 ### Conditions added by other mods
 
-Level checks for EpicMMO, Cozyheim and RustyClasses, and the guild conditions (`HasGuild`, `HasGuildWithName`, `GuildLevelMore`, ...), were built into the mod up to 10.0.8 and no longer are. Since 10.0.9 they come from the matching [bridge mod](../integrations/overview.md) and work only while it is installed. Any other mod can register a condition of its own through the [mod API](../integrations/your-mod.md); you write it like any other — `name, arg1, arg2`, case-insensitive. A name nobody registered always fails with an "Unknown condition" message. See [Migrations](../reference/migrations.md#updating-to-1009-third-party-integrations-moved-to-the-mod-api).
+Conditions for other mods, such as the EpicMMO level checks and the guild conditions (`HasGuild`, `HasGuildWithName`, `GuildLevelMore`, ...), were built into the mod up to 10.0.8 and no longer are. Since 10.0.9 they come from the matching [bridge mod](../integrations/overview.md) and work only while it is installed. Any other mod can register a condition of its own through the [mod API](../integrations/your-mod.md); you write it like any other — `name, arg1, arg2`, case-insensitive. A name nobody registered always fails with an "Unknown condition" message. See [Migrations](../reference/migrations.md#updating-to-1009-third-party-integrations-moved-to-the-mod-api).
 
 ## Related
 

@@ -77,7 +77,7 @@ This is a 40% chance of the Coins firing and a *separate* 15% chance of the Ruby
 
 ### Commands added by other mods
 
-Since 10.0.9 the integrations for EpicMMO, Cozyheim, RustyClasses, Battlepass and the guild mod are no longer built in. Their commands (`AddEpicMMOExp`, `AddCozyheimExp`, `AddRustyClassesEXP`, `Battlepass_EXP`, `GuildAddLevel`, `SetPlayerGuild`, `SetPlayerGuildRank`) come from the matching [bridge mod](../integrations/overview.md) and work only while it is installed. Any other mod can also register its own command name through the [mod API](../integrations/your-mod.md); you use it exactly like a built-in one — `name, arg1, arg2`, matched case-insensitively and ignoring spaces. The arguments are handed to that mod and run on the player's client. A name nobody registered is logged as an unknown dialogue command and does nothing. See [Migrations](../reference/migrations.md#updating-to-1009-third-party-integrations-moved-to-the-mod-api).
+Since 10.0.9 the integrations with other mods are no longer built in. Commands such as `AddEpicMMOExp`, `GuildAddLevel`, `SetPlayerGuild` and `SetPlayerGuildRank` come from the matching [bridge mod](../integrations/overview.md) and work only while it is installed. Any other mod can also register its own command name through the [mod API](../integrations/your-mod.md); you use it exactly like a built-in one — `name, arg1, arg2`, matched case-insensitively and ignoring spaces. The arguments are handed to that mod and run on the player's client. A name nobody registered is logged as an unknown dialogue command and does nothing. See [Migrations](../reference/migrations.md#updating-to-1009-third-party-integrations-moved-to-the-mod-api).
 
 ## A caution on `ConsoleCommand`
 

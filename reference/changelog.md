@@ -8,7 +8,7 @@ This documentation covers **10.0.9**, the top entry below. If your server is run
 
 
 ## [10.0.9]
-- **Breaking:** native support for Guilds, Groups, EpicMMO, Cozyheim, RustyClasses and Battlepass is removed from the mod. It now lives in separate [bridge mods](../integrations/overview.md) (`kg.MarketplaceBridge.*.dll`); install only the ones for the mods you use. See [Migrations](migrations.md#updating-to-1009-third-party-integrations-moved-to-bridge-mods)
+- **Breaking:** native support for other mods (such as Guilds, Groups and EpicMMO) is removed from Marketplace. It now lives in separate [bridge mods](../integrations/overview.md) (`kg.MarketplaceBridge.*.dll`) built on the open Marketplace API; install only the ones for the mods you use. See [Migrations](migrations.md#updating-to-1009-third-party-integrations-moved-to-bridge-mods)
 - New Marketplace API: any mod can now register its own integrations, without Marketplace knowing about it (see [For other mod developers](../integrations/your-mod.md)):
   - **Quest rewards** — custom reward types usable in quest files (for example `EpicMMO_EXP: 100`). A reward nobody registered shows a red `Wrong reward 'name'` instead of silently doing nothing
   - **Dialogue and quest conditions** — custom conditions (for example `HasGuild`, `EpicMMOLevelMore: 10`), combinable with `|` (AND) and `||` (OR)

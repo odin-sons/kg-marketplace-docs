@@ -136,7 +136,7 @@ Item: Coins, 200 | Item: Ruby, 1 | Skill_EXP: Swords, 100
 | `RandomItem` | `pool name` | Picks from a random-item pool you have set up elsewhere. |
 | `Skill` / `Skill_EXP` | `skill, amount` | Skill points / raw experience. |
 | `Pet` | `creature, amount, level` | Gives a tamed pet. |
-| *any other name* | `arg1, arg2, ...` | A reward registered by another mod through the [mod API](../integrations/your-mod.md), written `name: arg1, arg2` and matched case-insensitively. It takes whatever arguments that mod defines (spaces are removed, and an argument cannot contain `,`, `\|` or `:`). The reward text, tooltip and icon in the quest window come from the mod that registered it. A name nobody registered shows a red `Wrong reward 'name'` and gives nothing. Since 10.0.9. The `EpicMMO_EXP: 100`, `Cozyheim_EXP`, `Battlepass_EXP`, `RustyClasses_EXP` and `GuildAddLevel` rewards are provided by the [bridge mods](../integrations/overview.md). |
+| *any other name* | `arg1, arg2, ...` | A reward registered by another mod through the [mod API](../integrations/your-mod.md), written `name: arg1, arg2` and matched case-insensitively. It takes whatever arguments that mod defines (spaces are removed, and an argument cannot contain `,`, `\|` or `:`). The reward text, tooltip and icon in the quest window come from the mod that registered it. A name nobody registered shows a red `Wrong reward 'name'` and gives nothing. Since 10.0.9. Rewards such as `EpicMMO_EXP: 100` and `GuildAddLevel` are provided by the [bridge mods](../integrations/overview.md). |
 | `SetCustomValue` / `AddCustomValue` | `key, amount` | Sets/adds to a [custom value](../concepts/prefabs-and-assets.md#custom-values) — good for reputation-style systems. |
 
 ## Cooldown and time limit
