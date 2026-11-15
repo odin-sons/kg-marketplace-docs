@@ -1,5 +1,7 @@
 # EpicMMO bridge
 
+<img src="../../images/bridges/epicmmo.png" alt="EpicMMO bridge icon" style="width:96px;height:96px" eleventy:widths="96,192">
+
 Connects Marketplace to EpicMMO: quests and dialogues can give EpicMMO experience and check the player's level.
 
 [Download on Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_EpicMMO). Part of the [bridges](../overview.md#bridges).

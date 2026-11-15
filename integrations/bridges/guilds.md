@@ -1,5 +1,7 @@
 # Guilds bridge
 
+<img src="../../images/bridges/guilds.png" alt="Guilds bridge icon" style="width:96px;height:96px" eleventy:widths="96,192">
+
 Connects Marketplace to Guilds: territories can be limited to a guild, quests and dialogues can check and change the player's guild, and KG Chat gets a guild mode.
 
 [Download on Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Guilds). Part of the [bridges](../overview.md#bridges).

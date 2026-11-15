@@ -13,9 +13,9 @@ A bridge is a BepInEx plugin that depends on Marketplace and on one other mod. I
 
 | Bridge | For | What it adds | Download |
 |---|---|---|---|
-| [Guilds](bridges/guilds.md) | [Guilds](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) | Guild-only territories, `/g`, guild conditions and commands | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Guilds) |
-| [Groups](bridges/groups.md) | [Groups](https://thunderstore.io/c/valheim/p/Smoothbrain/Groups/) | Shared party kills, `/p` | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Groups) |
-| [EpicMMO](bridges/epicmmo.md) | [EpicMMO](https://thunderstore.io/c/valheim/p/WackyMole/WackyEpicMMOSystem/) | Experience reward and command, level conditions | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_EpicMMO) |
+| <img src="../images/bridges/guilds.png" alt="" style="width:24px;height:24px;vertical-align:middle" eleventy:widths="24,48"> [Guilds](bridges/guilds.md) | [Guilds](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) | Guild-only territories, `/g`, guild conditions and commands | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Guilds) |
+| <img src="../images/bridges/groups.png" alt="" style="width:24px;height:24px;vertical-align:middle" eleventy:widths="24,48"> [Groups](bridges/groups.md) | [Groups](https://thunderstore.io/c/valheim/p/Smoothbrain/Groups/) | Shared party kills, `/p` | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Groups) |
+| <img src="../images/bridges/epicmmo.png" alt="" style="width:24px;height:24px;vertical-align:middle" eleventy:widths="24,48"> [EpicMMO](bridges/epicmmo.md) | [EpicMMO](https://thunderstore.io/c/valheim/p/WackyMole/WackyEpicMMOSystem/) | Experience reward and command, level conditions | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_EpicMMO) |
 | [Cozyheim](bridges/cozyheim.md) | [Cozyheim LevelingSystem](https://cozyheim.dk/mods/levelingsystem/) | Experience reward and command, level conditions | not published yet |
 | [RustyClasses](bridges/rustyclasses.md) | [RustyClasses](https://thunderstore.io/c/valheim/p/RustyMods/AlmanacClassSystem/) (Almanac Class System) | Experience reward and command, level conditions | not published yet |
 | [Battlepass](bridges/battlepass.md) | Battlepass (not a public mod; ask KG in a private message) | Experience reward and command | not published yet |
