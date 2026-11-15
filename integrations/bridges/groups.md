@@ -7,7 +7,7 @@ Tells Marketplace who is in the player's party. Marketplace uses that to share q
 ## What you need
 
 - Marketplace 10.0.9 or newer.
-- blaxxun's Groups mod.
+- [Groups](https://thunderstore.io/c/valheim/p/Smoothbrain/Groups/) on Thunderstore.
 - The bridge installed next to them, on every player's client (the bridge runs on the client, like the [mod API](../api-reference.md) it uses).
 
 No config edits are needed. The names below are spelled exactly as they were when Marketplace handled this mod itself, so existing quest, dialogue and quest-event files work unchanged.

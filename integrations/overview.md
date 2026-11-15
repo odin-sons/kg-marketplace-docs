@@ -13,11 +13,11 @@ A bridge is a BepInEx plugin that depends on Marketplace and on one other mod. I
 
 | Bridge | For | What it adds | Download |
 |---|---|---|---|
-| [Guilds](bridges/guilds.md) | Guilds | Guild-only territories, `/g`, guild conditions and commands | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Guilds) |
-| [Groups](bridges/groups.md) | Groups | Shared party kills, `/p` | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Groups) |
-| [EpicMMO](bridges/epicmmo.md) | EpicMMO | Experience reward and command, level conditions | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_EpicMMO) |
-| [Cozyheim](bridges/cozyheim.md) | Cozyheim LevelingSystem | Experience reward and command, level conditions | not published yet |
-| [RustyClasses](bridges/rustyclasses.md) | RustyClasses | Experience reward and command, level conditions | not published yet |
+| [Guilds](bridges/guilds.md) | [Guilds](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) | Guild-only territories, `/g`, guild conditions and commands | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Guilds) |
+| [Groups](bridges/groups.md) | [Groups](https://thunderstore.io/c/valheim/p/Smoothbrain/Groups/) | Shared party kills, `/p` | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Groups) |
+| [EpicMMO](bridges/epicmmo.md) | [EpicMMO](https://thunderstore.io/c/valheim/p/WackyMole/WackyEpicMMOSystem/) | Experience reward and command, level conditions | [Hexium](https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_EpicMMO) |
+| [Cozyheim](bridges/cozyheim.md) | [Cozyheim LevelingSystem](https://cozyheim.dk/mods/levelingsystem/) | Experience reward and command, level conditions | not published yet |
+| [RustyClasses](bridges/rustyclasses.md) | [RustyClasses](https://thunderstore.io/c/valheim/p/RustyMods/AlmanacClassSystem/) (Almanac Class System) | Experience reward and command, level conditions | not published yet |
 | [Battlepass](bridges/battlepass.md) | Battlepass | Experience reward and command | not published yet |
 
 Without the matching bridge, the names stop working: an unknown reward shows a red `Wrong reward 'name'` in the quest window and gives nothing, an unknown command is logged and does nothing, and an unknown condition always fails. See [Migrations](../reference/migrations.md#updating-to-1009-third-party-integrations-moved-to-bridge-mods) if you are updating from an older version.

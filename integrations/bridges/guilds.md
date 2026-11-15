@@ -7,7 +7,7 @@ Connects Marketplace to Guilds: territories can be limited to a guild, quests an
 ## What you need
 
 - Marketplace 10.0.9 or newer.
-- blaxxun's Guilds mod.
+- [Guilds](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) on Thunderstore.
 - The bridge installed next to them, on every player's client (the bridge runs on the client, like the [mod API](../api-reference.md) it uses).
 
 No config edits are needed. The names below are spelled exactly as they were when Marketplace handled this mod itself, so existing quest, dialogue and quest-event files work unchanged.
