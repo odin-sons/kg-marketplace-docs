@@ -82,12 +82,13 @@ QuestFinished, chain_step_1 | HasFaction, merchants
 | `HealthMore` / `HealthLess`, `MaxHealthMore` / `MaxHealthLess` | value | Player's current/max health compares. |
 | `StaminaMore` / `StaminaLess`, `MaxStaminaMore` / `MaxStaminaLess` | value | Player's current/max stamina compares. |
 | `EitrMore` / `EitrLess`, `MaxEitrMore` / `MaxEitrLess` | value | Player's current/max eitr compares. |
+| `TimeOfDayBetween` / `NotTimeOfDayBetween` | `HH:mm-HH:mm` | The in-game time of day is inside (or, with `Not`, outside) the range, for example `TimeOfDayBetween: 12:00-18:00`. A range that crosses midnight, such as `22:00-04:00`, works. Since 10.0.9. |
 | `PlayerHasAllCustomDataKeys` | data set name, message | Checks the player against a whole [custom data set](../configs/custom-spawn-data.md) — true only if every value in the set matches the player exactly. |
 | `PlayerHasOneOfCustomDataKeys` | data set name, message | Checks the same way, but is true if the player differs from the data set on at least one value — despite the name, this is a "does not fully match" check, not a "has one of" check. Test it before relying on it for something important. |
 
 ### Conditions added by other mods
 
-Level checks for EpicMMO, Cozyheim and RustyClasses, and the guild conditions (`HasGuild`, `HasGuildWithName`, `GuildLevelMore`, ...), were built into the mod up to 10.0.7 and no longer are. Since 10.0.8 another mod can register a condition of its own through the [mod API](../api/modder-api.md); you write it like any other — `name, arg1, arg2`, case-insensitive. A name nobody registered always fails with an "Unknown condition" message. Which names exist depends on the mods you run, so check their documentation. See [Migrations](../reference/migrations.md#updating-to-1008-third-party-integrations-moved-to-the-mod-api).
+Level checks for EpicMMO, Cozyheim and RustyClasses, and the guild conditions (`HasGuild`, `HasGuildWithName`, `GuildLevelMore`, ...), were built into the mod up to 10.0.8 and no longer are. Since 10.0.9 they come from the matching [bridge mod](../bridges/overview.md) and work only while it is installed. Any other mod can register a condition of its own through the [mod API](../api/modder-api.md); you write it like any other — `name, arg1, arg2`, case-insensitive. A name nobody registered always fails with an "Unknown condition" message. See [Migrations](../reference/migrations.md#updating-to-1009-third-party-integrations-moved-to-the-mod-api).
 
 ## Related
 

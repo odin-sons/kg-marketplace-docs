@@ -28,7 +28,7 @@ const AI_PROVIDERS = [
   { name: "Claude Desktop", prefillUrl: (prompt) => `claude://claude.ai/new?q=${encodeURIComponent(prompt)}` },
 ].map((provider) => ({ ...provider, icon: AI_PROVIDER_ICONS[provider.name] }));
 
-export const MARKDOWN_CONTENT_DIRS = ["api", "assets", "concepts", "configs", "guides", "npc", "reference", "setup", "tooling"];
+export const MARKDOWN_CONTENT_DIRS = ["api", "assets", "bridges", "concepts", "configs", "guides", "npc", "reference", "setup", "tooling"];
 
 // Not dir/slug.md — collides with InputPathToUrlTransformPlugin rewriting the link back to the HTML page.
 function markdownPassthroughMap() {

@@ -4,16 +4,16 @@ Most updates to this mod are safe to install directly. This page lists the excep
 
 If you are updating across a version not listed here, a plain update is expected to be safe. When in doubt, back up your `Marketplace` folder and save file before updating a live server either way.
 
-## Updating to 10.0.8: third-party integrations moved to the mod API
+## Updating to 10.0.9: third-party integrations moved to bridge mods
 
-10.0.8 removes the code that talked to EpicMMO, Cozyheim's leveling system, RustyClasses, Battlepass and blaxxun's Guilds and Groups. Content that uses any of the following **stops working** until you replace it (read from the mod's source; the author's notes do not call this out):
+10.0.9 removes the code that talked to EpicMMO, Cozyheim's leveling system, RustyClasses, Battlepass and blaxxun's Guilds and Groups. That support now lives in separate [bridge mods](../bridges/overview.md). Content that uses any of the following **stops working** until you install the matching bridge:
 
 - Quest rewards `EpicMMO_EXP`, `Cozyheim_EXP`, `Battlepass_EXP`, `RustyClasses_EXP`, `GuildAddLevel`.
 - Dialogue and quest-event commands `AddEpicMMOExp`, `AddCozyheimExp`, `AddRustyClassesEXP`, `Battlepass_EXP`, `GuildAddLevel`, `SetPlayerGuild`, `SetPlayerGuildRank`.
 - Conditions `EpicMMOLevelMore`/`Less`, `CozyheimLevelMore`/`Less`, `RustyClassesLevelMore`/`Less`, `HasGuild`/`NotHasGuild`, `HasGuildWithName`/`NotHasGuildWithName`, `GuildLevelMore`/`Less`, `GuildHasAchievement`/`GuildNotHasAchievement`.
 - The `CanLeaveGuild` server option (and the `marketplace_cannotleaveguild` message it used).
 
-What to do: search your `Quests`, `QuestEvents` and `Dialogues` folders for those names. An unrecognised reward or command name is passed on to other mods; if none registered it, it silently does nothing, and an unrecognised condition always fails — so a gated dialogue option may suddenly be locked for everyone. Check whether the other mod now registers an equivalent name through the [mod API](../api/modder-api.md) (see its own documentation) and use that, or rebuild the logic with [custom values](../concepts/prefabs-and-assets.md#custom-values) and [player keys](../concepts/commands.md). `AllowKillQuestsInParty` and the `/group` and `/guild` chat modes likewise only work when a mod supplies a group or guild provider.
+What to do: install the [bridge](../bridges/overview.md) for each mod you use — the names above are registered again under the same spelling, so your quest, dialogue and quest-event files need no changes. The bridge for a mod you do not use can stay out. Without a bridge an unrecognised reward shows a red `Wrong reward 'name'` in the quest window and gives nothing, an unrecognised command is logged and does nothing, and an unrecognised condition always fails — so a gated dialogue option may be locked for everyone. `AllowKillQuestsInParty`, the `OnlyForGuild` territory flag and the `/group` and `/guild` chat modes likewise need the Groups or Guilds bridge.
 
 ## Updating to 10.0.7: automatic file sync is on by default
 
@@ -74,7 +74,7 @@ In version 9.4.0, the mod changed how it stores player data — moving from indi
 
 If you are updating a server from a version older than 9.4.0, have every player withdraw their marketplace listings, banked items, and mail attachments **before** you install the update — anything left in those systems at the moment of the switch may not carry over.
 
-This mod version documented here (10.0.8) is well past this change; it only matters if you are jumping to a modern version from something very old.
+This mod version documented here (10.0.9) is well past this change; it only matters if you are jumping to a modern version from something very old.
 
 ## Since 9.0.8: Transmogrification's visual-effects field is gone
 

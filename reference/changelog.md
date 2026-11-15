@@ -1,19 +1,31 @@
 # Changelog
 
-The mod's own version history, 80 versions from 8.4.0 through 10.0.8.
+The mod's own version history, 81 versions from 8.4.0 through 10.0.9.
 
-This documentation covers **10.0.8**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
+This documentation covers **10.0.9**, the top entry below. If your server is running an older version, some fields, flags, or quest types described elsewhere may not exist yet for you — check the entry for your version and everything above it.
 
 ---
 
 
+## [10.0.9]
+- **Breaking:** native support for Guilds, Groups, EpicMMO, Cozyheim, RustyClasses and Battlepass is removed from the mod. It now lives in separate [bridge mods](../bridges/overview.md) (`kg.MarketplaceBridge.*.dll`); install only the ones for the mods you use. See [Migrations](migrations.md#updating-to-1009-third-party-integrations-moved-to-bridge-mods)
+- New Marketplace API: any mod can now register its own integrations, without Marketplace knowing about it (see [For other mod developers](../api/modder-api.md)):
+  - **Quest rewards** — custom reward types usable in quest files (for example `EpicMMO_EXP: 100`). A reward nobody registered shows a red `Wrong reward 'name'` instead of silently doing nothing
+  - **Dialogue and quest conditions** — custom conditions (for example `HasGuild`, `EpicMMOLevelMore: 10`), combinable with `|` (AND) and `||` (OR)
+  - **Dialogue commands** — custom commands runnable from dialogue options
+  - **Group handler** — lets a party mod share quest kill progress between members
+  - **Guild handler** — lets a guild mod provide the player's guild name (for the `OnlyForGuild` territory flag) and tell Marketplace when the guild changes
+  - **Custom chat commands for KG Chat** — guild and group mods can register their own command (for example `/g`, `/p`) to switch KG Chat to guild or group mode
+- New config options `AllowKillQuestsInParty` (party members' kills progress your Kill quests) and `AllowLeaderboardKillsInParty` (party members' kills count for leaderboards) — see [Server config](../setup/server-config.md)
+- Quests: the Rewards header is hidden when a quest has no rewards, so a quest can be purely story or dialogue
+- Quests: much better handling of bad quest data (Activate and Move targets, corrupted saves, missing models). Problems are logged once instead of breaking the quest system
+- New dialogue condition `TimeOfDayBetween` (for example `TimeOfDayBetween: 12:00-18:00`)
+- Also in this build, though the author's notes don't mention them (found by reading the code):
+  - The `CanLeaveGuild` option is gone
+  - New synced option `SaveCharacterOnQuestComplete` (default off): saves the character when a quest is completed
+
 ## [10.0.8]
 - Small bugfix for timeout handlers
-- Also in this build, though the author's notes don't mention them (found by reading the code):
-  - **Breaking:** the built-in EpicMMO, Cozyheim, RustyClasses, Battlepass and Guilds quest rewards, commands and conditions, and the `CanLeaveGuild` option, are gone; other mods now register their own through the [mod API](../api/modder-api.md) — see [Migrations](migrations.md#updating-to-1008-third-party-integrations-moved-to-the-mod-api)
-  - New option `AllowLeaderboardKillsInParty` (default on) in [Server config](../setup/server-config.md)
-  - The chat accepts the short guild command a guild mod registers (`/g` by default)
-  - The zone-flag and NPC-type lists exposed to other mods are now complete (`Mail`, `ZoneMusic` and the other newer flags)
 
 ## [10.0.7]
 - **New feature: Automatic Asset Sync.** The server now also holds the client folders (`Marketplace_Sounds`, `Marketplace_CachedImages` and so on), and players connecting to your server automatically download any custom images, sounds, videos and models — no resource pack needed. See [Automatic file sync](../assets/custom-assets.md#automatic-file-sync).

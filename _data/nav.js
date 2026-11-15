@@ -134,6 +134,16 @@ export default [
     ],
   },
   {
+    title: "Bridges",
+    subtitle: "support for other mods",
+    items: [
+      { title: "Overview", href: "/bridges/overview/" },
+      { title: "Guilds bridge", href: "https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Guilds", external: true },
+      { title: "Groups bridge", href: "https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Groups", external: true },
+      { title: "EpicMMO bridge", href: "https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_EpicMMO", external: true },
+    ],
+  },
+  {
     title: "For mod developers",
     subtitle: "what other mods can access",
     items: [{ title: "Integrating with this mod", href: "/api/modder-api/" }],
