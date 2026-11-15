@@ -502,3 +502,8 @@ blockquote {
 ::highlight(deleted) {
   color: var(--syntax-keyword);
 }
+
+.doc img[alt$=" bridge icon"] {
+  width: 160px;
+  max-width: 100%;
+}

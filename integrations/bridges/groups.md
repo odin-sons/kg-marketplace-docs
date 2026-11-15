@@ -1,6 +1,6 @@
 # Groups bridge
 
-<img src="../../images/bridges/groups.png" alt="Groups bridge icon" style="width:96px;height:96px" eleventy:widths="96,192">
+![Groups bridge icon](../../images/bridges/groups.png)
 
 Tells Marketplace who is in the player's party. Marketplace uses that to share quest and leaderboard kills between party members and to switch KG Chat to party mode.
 
