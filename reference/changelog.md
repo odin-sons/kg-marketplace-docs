@@ -8,8 +8,8 @@ This documentation covers **10.0.9**, the top entry below. If your server is run
 
 
 ## [10.0.9]
-- **Breaking:** native support for Guilds, Groups, EpicMMO, Cozyheim, RustyClasses and Battlepass is removed from the mod. It now lives in separate [bridge mods](../bridges/overview.md) (`kg.MarketplaceBridge.*.dll`); install only the ones for the mods you use. See [Migrations](migrations.md#updating-to-1009-third-party-integrations-moved-to-bridge-mods)
-- New Marketplace API: any mod can now register its own integrations, without Marketplace knowing about it (see [For other mod developers](../api/modder-api.md)):
+- **Breaking:** native support for Guilds, Groups, EpicMMO, Cozyheim, RustyClasses and Battlepass is removed from the mod. It now lives in separate [bridge mods](../integrations/overview.md) (`kg.MarketplaceBridge.*.dll`); install only the ones for the mods you use. See [Migrations](migrations.md#updating-to-1009-third-party-integrations-moved-to-bridge-mods)
+- New Marketplace API: any mod can now register its own integrations, without Marketplace knowing about it (see [For other mod developers](../integrations/your-mod.md)):
   - **Quest rewards** — custom reward types usable in quest files (for example `EpicMMO_EXP: 100`). A reward nobody registered shows a red `Wrong reward 'name'` instead of silently doing nothing
   - **Dialogue and quest conditions** — custom conditions (for example `HasGuild`, `EpicMMOLevelMore: 10`), combinable with `|` (AND) and `||` (OR)
   - **Dialogue commands** — custom commands runnable from dialogue options
@@ -21,7 +21,7 @@ This documentation covers **10.0.9**, the top entry below. If your server is run
 - Quests: much better handling of bad quest data (Activate and Move targets, corrupted saves, missing models). Problems are logged once instead of breaking the quest system
 - New dialogue condition `TimeOfDayBetween` (for example `TimeOfDayBetween: 12:00-18:00`)
 - Also in this build, though the author's notes don't mention them (found by reading the code):
-  - The `CanLeaveGuild` option is gone
+  - The `CanLeaveGuild` option moved to the Guilds bridge's own config
   - New synced option `SaveCharacterOnQuestComplete` (default off): saves the character when a quest is completed
 
 ## [10.0.8]

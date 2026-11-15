@@ -38,7 +38,7 @@ This example: interest pays out every 6 hours at 2%, players can list 25 items w
 | `GamblerEnableWinNotifications` | `false` | Broadcast a server-wide message whenever someone wins a gamble. |
 | `AllowMultipleQuestsScore` | `false` | Whether one kill/harvest/craft can count toward more than one matching quest at once. |
 | `MaxAcceptedQuests` | `7` | Maximum active quests per player. |
-| `AllowKillQuestsInParty` | `true` | Whether a party member's kills count toward your Kill quests. Needs a mod that registers a group provider through the [mod API](../api/modder-api.md) (for example a Groups mod). |
+| `AllowKillQuestsInParty` | `true` | Whether a party member's kills count toward your Kill quests. Needs a mod that registers a group provider through the [mod API](../integrations/your-mod.md) (for example a Groups mod). |
 | `AllowLeaderboardKillsInParty` | `true` | Whether a party member's kills also count toward [Leaderboard](../configs/leaderboard-achievements.md) kill statistics. Turn it off so only your own kills score. Added in 10.0.9. |
 | `SaveCharacterOnQuestComplete` | `false` | Saves the player's character whenever a quest is completed or cancelled. Added in 10.0.9. |
 | `AlwaysProgressServerTime` | `false` | Keeps the server's world clock running even when nobody is online (vanilla Valheim pauses it). The author recommends turning it on if you have quests with [cooldowns or time limits](../configs/quests.md#cooldown-and-time-limit), so they don't stall whenever the server is empty. Added in 10.0.1. |

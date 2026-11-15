@@ -134,19 +134,25 @@ export default [
     ],
   },
   {
-    title: "Bridges",
-    subtitle: "support for other mods",
+    title: "Integrations",
+    subtitle: "bridges & mod API",
     items: [
-      { title: "Overview", href: "/bridges/overview/" },
-      { title: "Guilds bridge", href: "https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Guilds", external: true },
-      { title: "Groups bridge", href: "https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_Groups", external: true },
-      { title: "EpicMMO bridge", href: "https://valheim.hexium.gg/mods/KG/Marketplace_Bridge_EpicMMO", external: true },
+      { title: "Overview", href: "/integrations/overview/" },
+      {
+        title: "Bridges",
+        href: "/integrations/overview/#bridges",
+        children: [
+          { title: "Guilds", href: "/integrations/bridges/guilds/" },
+          { title: "Groups", href: "/integrations/bridges/groups/" },
+          { title: "EpicMMO", href: "/integrations/bridges/epicmmo/" },
+          { title: "Cozyheim", href: "/integrations/bridges/cozyheim/" },
+          { title: "RustyClasses", href: "/integrations/bridges/rustyclasses/" },
+          { title: "Battlepass", href: "/integrations/bridges/battlepass/" },
+        ],
+      },
+      { title: "Integrate your mod", href: "/integrations/your-mod/" },
+      { title: "API reference", href: "/integrations/api-reference/" },
     ],
-  },
-  {
-    title: "For mod developers",
-    subtitle: "what other mods can access",
-    items: [{ title: "Integrating with this mod", href: "/api/modder-api/" }],
   },
   {
     title: "Reference",

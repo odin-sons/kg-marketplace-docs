@@ -6,14 +6,14 @@ If you are updating across a version not listed here, a plain update is expected
 
 ## Updating to 10.0.9: third-party integrations moved to bridge mods
 
-10.0.9 removes the code that talked to EpicMMO, Cozyheim's leveling system, RustyClasses, Battlepass and blaxxun's Guilds and Groups. That support now lives in separate [bridge mods](../bridges/overview.md). Content that uses any of the following **stops working** until you install the matching bridge:
+10.0.9 removes the code that talked to EpicMMO, Cozyheim's leveling system, RustyClasses, Battlepass and blaxxun's Guilds and Groups. That support now lives in separate [bridge mods](../integrations/overview.md). Content that uses any of the following **stops working** until you install the matching bridge:
 
 - Quest rewards `EpicMMO_EXP`, `Cozyheim_EXP`, `Battlepass_EXP`, `RustyClasses_EXP`, `GuildAddLevel`.
 - Dialogue and quest-event commands `AddEpicMMOExp`, `AddCozyheimExp`, `AddRustyClassesEXP`, `Battlepass_EXP`, `GuildAddLevel`, `SetPlayerGuild`, `SetPlayerGuildRank`.
 - Conditions `EpicMMOLevelMore`/`Less`, `CozyheimLevelMore`/`Less`, `RustyClassesLevelMore`/`Less`, `HasGuild`/`NotHasGuild`, `HasGuildWithName`/`NotHasGuildWithName`, `GuildLevelMore`/`Less`, `GuildHasAchievement`/`GuildNotHasAchievement`.
-- The `CanLeaveGuild` server option (and the `marketplace_cannotleaveguild` message it used).
+- The `CanLeaveGuild` server option now lives in the [Guilds bridge](../integrations/bridges/guilds.md#config)'s own config file instead of Marketplace's.
 
-What to do: install the [bridge](../bridges/overview.md) for each mod you use — the names above are registered again under the same spelling, so your quest, dialogue and quest-event files need no changes. The bridge for a mod you do not use can stay out. Without a bridge an unrecognised reward shows a red `Wrong reward 'name'` in the quest window and gives nothing, an unrecognised command is logged and does nothing, and an unrecognised condition always fails — so a gated dialogue option may be locked for everyone. `AllowKillQuestsInParty`, the `OnlyForGuild` territory flag and the `/group` and `/guild` chat modes likewise need the Groups or Guilds bridge.
+What to do: install the [bridge](../integrations/overview.md) for each mod you use — the names above are registered again under the same spelling, so your quest, dialogue and quest-event files need no changes. The bridge for a mod you do not use can stay out. Without a bridge an unrecognised reward shows a red `Wrong reward 'name'` in the quest window and gives nothing, an unrecognised command is logged and does nothing, and an unrecognised condition always fails — so a gated dialogue option may be locked for everyone. `AllowKillQuestsInParty`, the `OnlyForGuild` territory flag and the `/group` and `/guild` chat modes likewise need the Groups or Guilds bridge.
 
 ## Updating to 10.0.7: automatic file sync is on by default
 

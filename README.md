@@ -71,7 +71,7 @@ Every config example is written with generous spacing (`Key: Value | Key2: Value
 
 ## For mod developers
 
-- [Integrating with this mod](api/modder-api.md) — what other mods can read and change.
+- [Integrations](integrations/overview.md) — bridges for other mods, and how to integrate your own mod.
 
 ## Reference
 
