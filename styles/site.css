@@ -478,6 +478,11 @@ pagefind-modal-trigger:not(:defined) {
   color: inherit;
 }
 
+.site-nav__group .site-nav__children li a[aria-current="page"],
+.site-nav__group .site-nav__children li a[aria-current="page"] .site-nav__external {
+  color: var(--bg);
+}
+
 .site-main {
   margin-left: var(--nav-width);
   padding: 2.5rem 2rem 5rem;
